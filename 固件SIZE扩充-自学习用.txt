@@ -1,0 +1,1 @@
+dd if=uni_app_release.bin of=uni_app_release_full.bin bs=1M count=2 conv=sync

@@ -1,0 +1,5 @@
+0x5AEF     唤醒词 FA:0.4 -1.52(1.48) ;   命令词  FA:0.5 -2.68(2.51)
+0x8E57     唤醒词 FA:0.4 -1.52(1.48) ;   命令词  FA:0.8 -2.51(2.51) 
+
+
+cp /home/yuxun/TELE-6-8/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/output/uni_app_*.bin /mnt/d/固件备份/
