@@ -799,7 +799,7 @@ static void deep_sleep_restore(void) {
     user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B0, 0);
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B1, 0);
+    user_gpio_set_value(GPIO_NUM_B1, 1);
     g_b1_power_state = 0;
 
     user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
@@ -845,6 +845,7 @@ static void enter_deep_sleep_with_wakeup(void) {
     GIE_DISABLE();
     uni_msleep(100);
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
+    uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA25,  WAKEUP_GPIONEGE);
     // ---------- 唤醒后从这里继续 ----------
     deep_sleep_restore();
 }
@@ -1036,7 +1037,7 @@ static void _goto_awakened_cb(USER_EVENT_TYPE event, user_event_context_t *conte
         }
         if(g_b1_power_state == 0)
         {
-            user_gpio_set_value(GPIO_NUM_B1, 1);
+            user_gpio_set_value(GPIO_NUM_B1, 0);
             g_b1_power_state = 1;
             int16_t angle = setting_session_get_last_doa_angle();  
             send_command_with_angle(0x46, angle);
@@ -1069,7 +1070,7 @@ static void _goto_sleeping_cb (USER_EVENT_TYPE event, user_event_context_t *cont
  //   user_player_reply_list_random(sleeping->reply_files);
     (void)sleeping;
     }
-    user_gpio_set_value(GPIO_NUM_B1, 0);
+    user_gpio_set_value(GPIO_NUM_B1, 1);
     g_b1_power_state = 0;
     
     uint8_t report_buf[9] = {
@@ -1140,7 +1141,7 @@ int hb_auto_gpio(void)
     user_gpio_set_value(GPIO_NUM_A26, 0);
  //   user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_OUT);
  //   user_gpio_set_value(GPIO_NUM_A27, 0); 
-     user_gpio_set_mode(GPIO_NUM_A28, GPIO_MODE_OUT);
+    user_gpio_set_mode(GPIO_NUM_A28, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A28, 0);
     
     user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
@@ -1151,7 +1152,7 @@ int hb_auto_gpio(void)
 
     g_b1_power_state = 0;
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B1, 0);
+    user_gpio_set_value(GPIO_NUM_B1, 1);
 
   //  adc_init();
 
