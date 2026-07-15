@@ -845,7 +845,7 @@ static void enter_deep_sleep_with_wakeup(void) {
     GIE_DISABLE();
     uni_msleep(100);
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
-    uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA25,  WAKEUP_GPIONEGE);
+  //  uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA25,  WAKEUP_GPIONEGE);
     // ---------- 唤醒后从这里继续 ----------
     deep_sleep_restore();
 }
