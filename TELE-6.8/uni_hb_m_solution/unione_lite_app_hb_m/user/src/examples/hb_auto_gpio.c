@@ -196,6 +196,7 @@ static void _wakeup_cb(int flag) {
     // 该回调在中断上下文执行，不建议使用 LOGT（可能阻塞）
     // 可置标志或空实现，恢复工作放在 deep_sleep_restore 中
     // 此处仅做简单记录（若需调试，可使用 uni_printf）
+    uni_hal_watchdog_feed();
     DBG("Woke up, flag=%d\n", flag);
 }
 
@@ -694,9 +695,9 @@ static void tts_handler_task(void *args)
     static bool last_sleeping_flag = false; // 用于检测 g_host_sleeping 变化
     
     while (1) {
-        // 喂狗（每1000ms喂一次）
+        // 喂狗（每200ms喂一次）
         now = uni_get_clock_time_ms();
-        if (now - last_feed_time >= 1000) {
+        if (now - last_feed_time >= 200) {
             uni_hal_watchdog_feed();
             last_feed_time = now;
         }
@@ -812,6 +813,7 @@ static void tts_handler_task(void *args)
 
 // ============ 唤醒后恢复硬件（不创建任务）============
 static void deep_sleep_restore(void) {
+    uni_hal_watchdog_feed();
     GPIO_PortBModeSet(GPIOB8, 0);
     user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
     user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
