@@ -23,7 +23,7 @@
 
 
 #define TAG "auto_gpio"
-#define DBG printf
+#define DBG(...) ((void)0)
 
 
 
@@ -40,6 +40,12 @@ static const tts_mapping_t g_tts_mapping[] = {
     {0x0D, "[512]"}, {0x0E, "[513]"}, {0x0F, "[514]"}, {0x10, "[515]"}, 
     {0x11, "[516]"}, {0x00, "[0]"}
 };
+
+// ============ CRC 校验相关 ============
+#define CRC_CMD_CODE        0xF0                 // CRC校验命令码
+#define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
+#define CRC_VALUE_LOW       0x41                 // CRC低字节
+#define CRC_VALUE_HIGH      0xC2                 // CRC高字节
 
 // ============ 功耗控制相关（上位机休眠/唤醒）============
 #define POWER_CMD_CODE        0xD0
@@ -180,6 +186,7 @@ void uart_send_safe(const char* buf, int len);
 static void _wakeup_cb(int flag);
 static void enter_deep_sleep_with_wakeup(void);
 static void deep_sleep_restore(void);
+static void process_crc_command(uint8_t *frame);
 
 extern volatile int16_t g_last_doa_angle;  
 
@@ -230,6 +237,24 @@ void restore_audio_settings(void) {
     }
     MediaPlayerVolumeSet(DEFAULT_VOLUME);
     LOGT(TAG, "Use default volume: %d", DEFAULT_VOLUME);
+}
+
+// ============ CRC 校验响应函数 ============
+static void process_crc_command(uint8_t *frame)
+{
+    // 直接构建CRC响应帧 (9字节)，回复固定的CRC值
+    uint8_t response[9] = {
+        0xAA, 0x55, CRC_CMD_CODE,    // 帧头 + 命令码
+        0x00, 
+        0x00,                       // 模式（固定为0x00）
+        CRC_VALUE_HIGH,              // CRC高字节 (0x04)
+        CRC_VALUE_LOW,               // CRC低字节 (0xF5)
+        0x55, 0xAA                   // 帧尾
+    };
+    
+    // 发送响应
+    uart_send_safe((char*)response, 9);
+    LOGT(TAG, "CRC response sent: 0x%02X 0x%02X", CRC_VALUE_HIGH, CRC_VALUE_LOW);
 }
 
 static void process_listen_command(uint8_t *frame)
@@ -713,6 +738,9 @@ static void tts_handler_task(void *args)
                     else if (cmd == POWER_CMD_CODE) {          // 新增
                         process_power_command((uint8_t*)g_rx_buffer);
                     }
+                    else if (cmd == CRC_CMD_CODE) {          // 新增CRC处理
+                        process_crc_command((uint8_t*)g_rx_buffer);
+                    }
                     else {
                         play_tts_by_cmd(cmd);
                         //user_uart_send((char*)g_rx_buffer, g_rx_len);
@@ -784,6 +812,10 @@ static void tts_handler_task(void *args)
 
 // ============ 唤醒后恢复硬件（不创建任务）============
 static void deep_sleep_restore(void) {
+    GPIO_PortBModeSet(GPIOB8, 0);
+    user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
+
     DBG("Woke up, reinitializing hardware...");
       GIE_ENABLE();
  //   user_gpio_init();
@@ -802,9 +834,7 @@ static void deep_sleep_restore(void) {
     user_gpio_set_value(GPIO_NUM_B1, 1);
     g_b1_power_state = 0;
 
-    user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
-    user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
-
+   
     // adc_init();
     // g_adc_enabled = true;
 
