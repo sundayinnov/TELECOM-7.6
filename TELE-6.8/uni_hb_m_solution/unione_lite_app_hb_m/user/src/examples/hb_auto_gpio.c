@@ -47,6 +47,13 @@ static const tts_mapping_t g_tts_mapping[] = {
 #define CRC_VALUE_LOW       0x41                 // CRC低字节
 #define CRC_VALUE_HIGH      0xC2                 // CRC高字节
 
+// ============ ADC 控制相关 ============
+#define ADC_CMD_CODE            0xA1                 // ADC操作命令码
+#define ADC_MODE_DISABLE        0x00                 // 去使能ADC
+#define ADC_MODE_ENABLE         0x01                 // 使能ADC，默认阈值为1200
+#define ADC_MODE_REPORT         0x02                 // 上报ADC值
+#define ADC_DEFAULT_THRESHOLD   1200                 // 默认阈值
+#define SENSOR_ENABLE_PIN       GPIO_NUM_B0          // 传感器电源使能引脚
 // ============ 功耗控制相关（上位机休眠/唤醒）============
 #define POWER_CMD_CODE        0xD0
 #define POWER_MODE_ENTER      0x01     // 上位机请求进入休眠
@@ -151,8 +158,11 @@ static bool g_sleep_by_command = false;
   
 static QueueHandle_t uart_tx_queue = NULL;
 
-//volatile bool g_adc_enabled = true;
-
+// ADC相关变量
+static volatile bool g_adc_enabled = false;           // ADC使能状态
+static volatile uint16_t g_adc_value = 0;            // 最近ADC值
+static volatile uint16_t g_adc_threshold = ADC_DEFAULT_THRESHOLD; // ADC阈值
+static volatile bool g_adc_triggered = false;        // ADC是否触发（值超过阈值）
 
 // ============ 函数声明 ============
 static const char* get_reply_files_by_cmd(uint8_t tts_cmd);
@@ -171,7 +181,7 @@ static void timeout_handler(eTIMER_IDX idx);
 static void bit_sampling_handler(eTIMER_IDX idx);
 static void gpio_intr_handler(GPIO_NUMBER num, uni_bool is_high);
 static void tts_handler_task(void *args);
-static void soft_uart_init(void);
+//static void soft_uart_init(void);
 static void soft_uart_hw_init(void);
 static void led_init(void);
 static void send_command_with_angle(uint8_t cmd_code, int16_t angle);
@@ -186,7 +196,10 @@ void uart_send_safe(const char* buf, int len);
 static void _wakeup_cb(int flag);
 static void enter_deep_sleep_with_wakeup(void);
 static void deep_sleep_restore(void);
+static void send_adc_response(uint8_t mode, uint16_t adc_value, uint8_t state);
+static void process_adc_command(uint8_t *frame);
 static void process_crc_command(uint8_t *frame);
+
 
 extern volatile int16_t g_last_doa_angle;  
 
@@ -256,6 +269,70 @@ static void process_crc_command(uint8_t *frame)
     // 发送响应
     uart_send_safe((char*)response, 9);
     LOGT(TAG, "CRC response sent: 0x%02X 0x%02X", CRC_VALUE_HIGH, CRC_VALUE_LOW);
+}
+
+static void send_adc_response(uint8_t mode, uint16_t adc_value, uint8_t state)
+{
+    uint8_t buf[9] = {
+        0xAA, 0x55, ADC_CMD_CODE, 
+        mode,
+        (adc_value >> 8) & 0xFF,   // 高位
+        adc_value & 0xFF,          // 低位
+        state,                      // 状态：0=正常，1=触发
+        0x55, 0xAA
+    };
+    uart_send_safe((char*)buf, 9);
+    LOGT(TAG, "Send ADC response: mode=%d, value=%d (0x%04X), state=%d", 
+         mode, adc_value, adc_value, state);
+}
+
+static void process_adc_command(uint8_t *frame)
+{
+    uint8_t mode = frame[3];
+    LOGT(TAG, "ADC command: mode=0x%02X", mode);
+    
+    switch (mode) {
+        case ADC_MODE_DISABLE:   // 去使能ADC
+            g_adc_enabled = false;
+            adc_deinit();
+            LOGT(TAG, "ADC disabled");
+            user_gpio_set_value(SENSOR_ENABLE_PIN, 0);
+            // 发送响应
+            send_adc_response(mode, 0, 0);
+            break;
+            
+        case ADC_MODE_ENABLE:    // 使能ADC
+            user_gpio_set_value(SENSOR_ENABLE_PIN, 1);
+            uni_msleep(50);
+
+            g_adc_enabled = true;
+            g_adc_threshold = ADC_DEFAULT_THRESHOLD;
+            adc_init(); // 在这里初始化ADC硬件
+            adc_reset_state();
+            LOGT(TAG, "ADC enabled, threshold=%d", g_adc_threshold);
+            // 发送响应
+            send_adc_response(mode, 0, 0);
+            break;
+            
+        case ADC_MODE_REPORT:    // 上报ADC值
+            if (g_adc_enabled && adc_is_initialized()) {
+                // 读取当前ADC值
+                int raw = adc_get();
+                uint8_t state = adc_is_triggered() ? 1 : 0;
+                uint16_t value = (raw >= 0) ? (uint16_t)raw : 0;
+                send_adc_response(mode, value, state);
+                LOGT(TAG, "ADC immediate report: value=%d, state=%d", value, state);
+            } else {
+                // ADC未使能，返回0
+                send_adc_response(mode, 0, 0);
+                LOGW(TAG, "ADC not enabled, report 0");
+            }
+            break;
+            
+        default:
+            LOGE(TAG, "Unknown ADC mode: %d", mode);
+            break;
+    }
 }
 
 static void process_listen_command(uint8_t *frame)
@@ -684,13 +761,12 @@ static void uart_tx_task(void *pvParameters) {
 static void tts_handler_task(void *args)
 {
     uint32_t last_feed_time = 0;
- //   uint32_t last_adc_time = 0;
+    uint32_t last_adc_time = 0;
     uint32_t now;
-    int i;
+ //   int i;
  
    // B8 检测状态变量（static 保证唤醒后值重置，但我们在每次进入检测分支时初始化）
     static int b8_state = 0;          // 0: 等待高电平, 1: 计时中
- //   static uint32_t last_adc_time = 0;
     static uint32_t high_start_time = 0;
     static bool last_sleeping_flag = false; // 用于检测 g_host_sleeping 变化
     
@@ -702,14 +778,21 @@ static void tts_handler_task(void *args)
             last_feed_time = now;
         }
         
-        // if (g_adc_enabled &&(now - last_adc_time >= 100)) {
-        //     adc_get();
-        //     last_adc_time = now;
-        // }
+        if (g_adc_enabled &&(now - last_adc_time >= 200)) {
+            adc_process_sample();
+            last_adc_time = now;
+
+              // 只有触发状态才上报
+            if (adc_is_initialized() && adc_is_triggered()) {
+                uint16_t report_value = (uint16_t)adc_get_report_value();
+                send_adc_response(ADC_MODE_REPORT, report_value, 1);
+                LOGT(TAG, "ADC triggered report: value=%d", report_value);
+            }
+        }
 
         if(g_rx_flag == true)
         {
-#if 1
+#if 0
             LOGT(TAG,"==========\n");
             LOGT(TAG,"len = %d, data: ", g_rx_len);
             
@@ -741,6 +824,9 @@ static void tts_handler_task(void *args)
                     }
                     else if (cmd == CRC_CMD_CODE) {          // 新增CRC处理
                         process_crc_command((uint8_t*)g_rx_buffer);
+                    }
+                    else if (cmd == ADC_CMD_CODE) {          // 新增ADC处理
+                        process_adc_command((uint8_t*)g_rx_buffer);
                     }
                     else {
                         play_tts_by_cmd(cmd);
@@ -827,18 +913,25 @@ static void deep_sleep_restore(void) {
     // 恢复 GPIO 输出状态（根据实际需求设置）
     user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A26, 0);
- //   user_gpio_set_value(GPIO_NUM_A27, 0);
     user_gpio_set_mode(GPIO_NUM_A28, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A28, 0);
+    GPIO_PortBModeSet(GPIOB0, 0);
     user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B0, 0);
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B1, 1);
     g_b1_power_state = 0;
-
-   
-    // adc_init();
-    // g_adc_enabled = true;
+  
+    // ============ ADC 恢复 ============
+    // 唤醒后 ADC 默认关闭，等待上位机重新使能
+    g_adc_enabled = false;
+    g_adc_threshold = ADC_DEFAULT_THRESHOLD;
+    g_adc_value = 0;
+    g_adc_triggered = false;
+    
+    // A27 恢复为输出低电平
+    user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
 
     // 重新初始化软件 UART 硬件（GPIO 中断 + 状态）
     soft_uart_hw_init();
@@ -926,7 +1019,7 @@ static void led_init(void)
     LOGT(TAG, "LED initialized with timer reuse pool");
 }
 
-
+/*
 // ============ 初始化软件 UART ============
 static void soft_uart_init(void)
 {
@@ -950,7 +1043,7 @@ static void soft_uart_init(void)
     uni_strncpy(param.task_name, "tts_task", sizeof(param.task_name) - 1);
     uni_pthread_create(&pid, &param, tts_handler_task, NULL);
 }
-
+*/
 // ============ 软件 UART 硬件初始化（不含任务创建）============
 static void soft_uart_hw_init(void) {
     // 1. 引脚配置
@@ -1171,8 +1264,7 @@ int hb_auto_gpio(void)
     // 配置其他GPIO
     user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A26, 0);
- //   user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_OUT);
- //   user_gpio_set_value(GPIO_NUM_A27, 0); 
+ 
     user_gpio_set_mode(GPIO_NUM_A28, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A28, 0);
     
@@ -1186,7 +1278,17 @@ int hb_auto_gpio(void)
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B1, 1);
 
-  //  adc_init();
+    //ADC初始化
+  // ============ ADC 初始化 ============
+    // 注意：ADC 默认是关闭状态，需要上位机发送使能命令后才工作
+    g_adc_enabled = false;                    // 默认关闭
+    g_adc_threshold = ADC_DEFAULT_THRESHOLD;  // 默认阈值 1200
+    g_adc_value = 0;                          // 清空ADC值
+    g_adc_triggered = false;                  // 默认未触发
+    
+    // A27 默认设置为输出低电平（ADC 未使能时保持低电平）
+    user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
 
     // 初始化 DOA UART
     if (doa_uart_init() != 0) {

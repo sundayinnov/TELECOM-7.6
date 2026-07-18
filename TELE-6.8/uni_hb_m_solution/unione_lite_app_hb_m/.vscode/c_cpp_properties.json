@@ -1,0 +1,52 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/user/inc",
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/include/include",
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/src/app/inc",
+                "${workspaceFolder}/src/app/inc/sessions",
+                "${workspaceFolder}/src/sdk/audio/audio_player/inc",
+                "${workspaceFolder}/src/sdk/idle_detect/inc",
+                "${workspaceFolder}/src/sdk/player/inc",
+                "${workspaceFolder}/src/sdk/uart/inc",
+                "${workspaceFolder}/src/sdk/vui/inc",
+                "${workspaceFolder}/src/utils/arpt/inc",
+                "${workspaceFolder}/src/utils/auto_string/inc",
+                "${workspaceFolder}/src/utils/bitmap/inc",
+                "${workspaceFolder}/src/utils/black_board/inc",
+                "${workspaceFolder}/src/utils/cJSON/inc",
+                "${workspaceFolder}/src/utils/config/inc",
+                "${workspaceFolder}/src/utils/crc16/inc",
+                "${workspaceFolder}/src/utils/data_buf/inc",
+                "${workspaceFolder}/src/utils/event/inc",
+                "${workspaceFolder}/src/utils/event_list/inc",
+                "${workspaceFolder}/src/utils/event_route/inc",
+                "${workspaceFolder}/src/utils/float2string/inc",
+                "${workspaceFolder}/src/utils/fsm/inc",
+                "${workspaceFolder}/src/utils/hash/inc",
+                "${workspaceFolder}/src/utils/interruptable_sleep/inc",
+                "${workspaceFolder}/src/utils/list/inc",
+                "${workspaceFolder}/src/utils/log/inc",
+                "${workspaceFolder}/src/utils/string/inc",
+                "${workspaceFolder}/src/utils/timer/inc",
+                "${workspaceFolder}/src/utils/uart/inc",
+                "${workspaceFolder}/middleware/rtos/freertos/inc",
+                "${workspaceFolder}/middleware/rtos/rtos_api",
+                "${workspaceFolder}/user/src/examples",
+                "${workspaceFolder}/user/src/examples/drivers",
+                "${workspaceFolder}/user/src/examples/protocol"
+            ],
+            "defines": [],
+            "compilerPath": "/opt/Andestech/BSPv422/toolchains/nds32le-elf-mculib-v3s/bin/nds32le-elf-gcc",
+            "cStandard": "c99",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}

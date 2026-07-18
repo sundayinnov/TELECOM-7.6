@@ -77,6 +77,7 @@ static void _system_startup_status(void) {
   wakeup_type type;
   type = uni_hal_get_boot_status();
   uni_hal_clear_boot_status();
+  printf("Boot status raw value: %d", type);
   switch (type) {
     case WAKEUP_BY_POWERON:
       LOGT(MAIN_TAG, "WAKEUP_BY_POWERON");
