@@ -38,14 +38,14 @@ static const tts_mapping_t g_tts_mapping[] = {
     {0x05, "[504]"}, {0x06, "[505]"}, {0x07, "[506]"}, {0x08, "[507]"},
     {0x09, "[508]"}, {0x0A, "[509]"}, {0x0B, "[510]"}, {0x0C, "[511]"},
     {0x0D, "[512]"}, {0x0E, "[513]"}, {0x0F, "[514]"}, {0x10, "[515]"}, 
-    {0x11, "[516]"}, {0x00, "[0]"}
+    {0x11, "[516]"}, {0x12, "[519]"}, {0x00, "[0]"}
 };
 
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0x41                 // CRC低字节
-#define CRC_VALUE_HIGH      0xC4                 // CRC高字节
+#define CRC_VALUE_LOW       0xB4                 // CRC低字节
+#define CRC_VALUE_HIGH      0x97                 // CRC高字节
 
 // ============ ADC 控制相关 ============
 #define ADC_CMD_CODE            0xA1                 // ADC操作命令码
