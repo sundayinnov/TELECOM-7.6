@@ -18,7 +18,7 @@ extern "C" {
 #define ADC_FILTER_SAMPLES      5
 
 // ADC 上报间隔（毫秒）
-#define ADC_REPORT_INTERVAL_MS  200
+//#define ADC_REPORT_INTERVAL_MS  200
 
 // ADC 状态机定义
 typedef enum {

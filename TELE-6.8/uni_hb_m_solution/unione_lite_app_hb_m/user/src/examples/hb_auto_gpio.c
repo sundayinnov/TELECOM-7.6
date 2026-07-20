@@ -44,8 +44,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0xB4                 // CRC低字节
-#define CRC_VALUE_HIGH      0x97                 // CRC高字节
+#define CRC_VALUE_LOW       0x08                 // CRC低字节
+#define CRC_VALUE_HIGH      0x30                 // CRC高字节
 
 // ============ ADC 控制相关 ============
 #define ADC_CMD_CODE            0xA1                 // ADC操作命令码
@@ -292,18 +292,18 @@ static void process_adc_command(uint8_t *frame)
     LOGT(TAG, "ADC command: mode=0x%02X", mode);
     
     switch (mode) {
-        case ADC_MODE_DISABLE: {  // 去使能ADC
+        case ADC_MODE_DISABLE:  // 去使能ADC
             g_adc_enabled = false;
             adc_deinit();
             LOGT(TAG, "ADC disabled");
             user_gpio_set_value(SENSOR_ENABLE_PIN, 0);
             // 发送响应
-            //send_adc_response(mode, 0, 0);
-            uint8_t resp[9] = {0xAA,0x55,ADC_CMD_CODE, mode,0,0,0,0x55,0xAA};
-            user_uart_send((char*)resp, 9);
+            send_adc_response(mode, 0, 0);
+            // uint8_t resp[9] = {0xAA,0x55,ADC_CMD_CODE, mode,0,0,0,0x55,0xAA};
+            // user_uart_send((char*)resp, 9);
             break;
-            }
-        case ADC_MODE_ENABLE:  {  // 使能ADC
+            
+        case ADC_MODE_ENABLE:    // 使能ADC
             user_gpio_set_value(SENSOR_ENABLE_PIN, 1);
             uni_msleep(50);
 
@@ -313,31 +313,31 @@ static void process_adc_command(uint8_t *frame)
             adc_reset_state();
             LOGT(TAG, "ADC enabled, threshold=%d", g_adc_threshold);
             // 发送响应
-            //send_adc_response(mode, 0, 0);
-            uint8_t resp[9] = {0xAA,0x55,ADC_CMD_CODE, mode,0,0,0,0x55,0xAA};
-            user_uart_send((char*)resp, 9);
+            send_adc_response(mode, 0, 0);
+            // uint8_t resp[9] = {0xAA,0x55,ADC_CMD_CODE, mode,0,0,0,0x55,0xAA};
+            // user_uart_send((char*)resp, 9);
             break;
-            }
-        case ADC_MODE_REPORT: {   // 上报ADC值
+            
+        case ADC_MODE_REPORT:    // 上报ADC值
             if (g_adc_enabled && adc_is_initialized()) {
                 // 读取当前ADC值
                 int raw = adc_get();
                 uint8_t state = adc_is_triggered() ? 1 : 0;
                 uint16_t value = (raw >= 0) ? (uint16_t)raw : 0;
-               //send_adc_response(mode, value, state);
-                uint8_t resp[9] = {0xAA,0x55,ADC_CMD_CODE, mode,
-                                   (value>>8)&0xFF, value&0xFF, state, 0x55,0xAA};
-                user_uart_send((char*)resp, 9);
+                send_adc_response(mode, value, state);
+                // uint8_t resp[9] = {0xAA,0x55,ADC_CMD_CODE, mode,
+                //                    (value>>8)&0xFF, value&0xFF, state, 0x55,0xAA};
+                // user_uart_send((char*)resp, 9);
                 LOGT(TAG, "ADC immediate report: value=%d, state=%d", value, state);
             } else {
                 // ADC未使能，返回0
-                //send_adc_response(mode, 0, 0);
-                uint8_t resp[9] = {0xAA,0x55,ADC_CMD_CODE, mode,0,0,0,0x55,0xAA};
-                user_uart_send((char*)resp, 9);
+                send_adc_response(mode, 0, 0);
+                // uint8_t resp[9] = {0xAA,0x55,ADC_CMD_CODE, mode,0,0,0,0x55,0xAA};
+                // user_uart_send((char*)resp, 9);
                 LOGW(TAG, "ADC not enabled, report 0");
             }
             break;
-            }
+            
         default:
             LOGE(TAG, "Unknown ADC mode: %d", mode);
             break;
@@ -787,7 +787,7 @@ static void tts_handler_task(void *args)
             last_feed_time = now;
         }
         
-        if (g_adc_enabled &&(now - last_adc_time >= 200)) {
+        if (g_adc_enabled &&(now - last_adc_time >= 100)) {
             adc_process_sample();
             last_adc_time = now;
 
@@ -954,7 +954,7 @@ static void deep_sleep_restore(void) {
     if (g_wakeup_ack_sem != NULL) {
     uni_sem_init(&g_wakeup_ack_sem, 0);
     
-    
+    user_gpio_interrupt_enable();
  
 }
 
@@ -968,9 +968,10 @@ static void enter_deep_sleep_with_wakeup(void) {
     // 进入深度睡眠，唤醒后继续执行本函数后的代码
     // g_adc_enabled = false;
     // uni_msleep(50);
-
+    user_gpio_interrupt_disable();
     // user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);   // 改为普通输入
 
+    uni_msleep(10);
     if (g_wakeup_ack_sem != NULL) {
     uni_sem_destroy(g_wakeup_ack_sem);
     g_wakeup_ack_sem = NULL;

@@ -21,12 +21,15 @@ static volatile adc_state_t g_adc_state = ADC_STATE_NORMAL;
 //static volatile bool g_adc_trigger_reported = false;
 //static volatile uint32_t g_adc_trigger_hold_time = 0;
 static volatile bool g_adc_enabled = false;
-static volatile bool g_filter_enabled = false;        // 滤波开关，默认关闭
+static volatile bool g_filter_enabled = true;        // 滤波开关，默认关闭
 
 // 滤波缓冲区（用于移动平均滤波）
 static uint16_t g_filter_buffer[ADC_FILTER_SAMPLES] = {0};
 static uint8_t g_filter_index = 0;
 static uint8_t g_filter_count = 0;
+
+// 滤波完成标志
+static volatile bool g_filter_ready = false;           // 是否已采集够5次
 
 // ============ 内部函数声明 ============
 static void _adc_reset_filter_buffer(void);
@@ -173,6 +176,14 @@ static uint16_t _adc_apply_filter(uint16_t raw_value)
         g_filter_count++;
     }
     
+ // 如果还没有采集够5次，返回当前值（但标记为未就绪）
+    if (g_filter_count < ADC_FILTER_SAMPLES) {
+        g_filter_ready = false;
+        return raw_value;
+    }
+    
+    g_filter_ready = true;
+
     uint32_t sum = 0;
     int i;
     for ( i = 0; i < g_filter_count; i++) {
@@ -200,6 +211,9 @@ void adc_process_sample(void)
     uint16_t processed_value = _adc_apply_filter((uint16_t)raw);
     g_adc_filtered_value = processed_value;  // 保存处理后的值
     
+    if (!g_filter_ready) {
+        return;
+    }
    // uint32_t now = uni_get_clock_time_ms();
     
     // 状态机处理
@@ -273,6 +287,7 @@ void adc_reset_state(void)
  //   g_adc_trigger_hold_time = 0;
     g_adc_report_value = 0;
     _adc_reset_filter_buffer();
+    g_filter_ready = false; 
  //   printf("[GP2Y] ADC state reset to NORMAL\n");
 }
 
