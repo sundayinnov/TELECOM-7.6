@@ -292,16 +292,18 @@ static void process_adc_command(uint8_t *frame)
     LOGT(TAG, "ADC command: mode=0x%02X", mode);
     
     switch (mode) {
-        case ADC_MODE_DISABLE:   // 去使能ADC
+        case ADC_MODE_DISABLE: {  // 去使能ADC
             g_adc_enabled = false;
             adc_deinit();
             LOGT(TAG, "ADC disabled");
             user_gpio_set_value(SENSOR_ENABLE_PIN, 0);
             // 发送响应
-            send_adc_response(mode, 0, 0);
+            //send_adc_response(mode, 0, 0);
+            uint8_t resp[9] = {0xAA,0x55,ADC_CMD_CODE, mode,0,0,0,0x55,0xAA};
+            user_uart_send((char*)resp, 9);
             break;
-            
-        case ADC_MODE_ENABLE:    // 使能ADC
+            }
+        case ADC_MODE_ENABLE:  {  // 使能ADC
             user_gpio_set_value(SENSOR_ENABLE_PIN, 1);
             uni_msleep(50);
 
@@ -311,24 +313,31 @@ static void process_adc_command(uint8_t *frame)
             adc_reset_state();
             LOGT(TAG, "ADC enabled, threshold=%d", g_adc_threshold);
             // 发送响应
-            send_adc_response(mode, 0, 0);
+            //send_adc_response(mode, 0, 0);
+            uint8_t resp[9] = {0xAA,0x55,ADC_CMD_CODE, mode,0,0,0,0x55,0xAA};
+            user_uart_send((char*)resp, 9);
             break;
-            
-        case ADC_MODE_REPORT:    // 上报ADC值
+            }
+        case ADC_MODE_REPORT: {   // 上报ADC值
             if (g_adc_enabled && adc_is_initialized()) {
                 // 读取当前ADC值
                 int raw = adc_get();
                 uint8_t state = adc_is_triggered() ? 1 : 0;
                 uint16_t value = (raw >= 0) ? (uint16_t)raw : 0;
-                send_adc_response(mode, value, state);
+               //send_adc_response(mode, value, state);
+                uint8_t resp[9] = {0xAA,0x55,ADC_CMD_CODE, mode,
+                                   (value>>8)&0xFF, value&0xFF, state, 0x55,0xAA};
+                user_uart_send((char*)resp, 9);
                 LOGT(TAG, "ADC immediate report: value=%d, state=%d", value, state);
             } else {
                 // ADC未使能，返回0
-                send_adc_response(mode, 0, 0);
+                //send_adc_response(mode, 0, 0);
+                uint8_t resp[9] = {0xAA,0x55,ADC_CMD_CODE, mode,0,0,0,0x55,0xAA};
+                user_uart_send((char*)resp, 9);
                 LOGW(TAG, "ADC not enabled, report 0");
             }
             break;
-            
+            }
         default:
             LOGE(TAG, "Unknown ADC mode: %d", mode);
             break;
