@@ -2,4 +2,18 @@
 0x8E57     唤醒词 FA:0.4 -1.52(1.48) ;   命令词  FA:0.8 -2.51(2.51) 
 
 
-cp /home/yuxun/TELE-6-8/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/output/uni_app_*.bin /mnt/d/固件备份/
+cp output/uni_app_*.bin /mnt/d/固件备份/
+
+cd /home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m
+git fetch --all
+git reset --hard origin/master
+
+cd /home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m
+git add .
+git commit -m "完整工程更新：同步所有本地修改"
+git push --force-with-lease origin master
+
+cd /home/TELECOM-7.6
+git add 灵敏度.txt
+git commit -m "添加灵敏度.txt文件"
+git push --force-with-lease origin master
