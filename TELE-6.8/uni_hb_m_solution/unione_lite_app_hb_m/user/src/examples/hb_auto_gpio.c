@@ -44,8 +44,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0x08                 // CRC低字节
-#define CRC_VALUE_HIGH      0x30                 // CRC高字节
+#define CRC_VALUE_LOW       0x7F                 // CRC低字节
+#define CRC_VALUE_HIGH      0x7F                // CRC高字节
 
 // ============ ADC 控制相关 ============
 #define ADC_CMD_CODE            0xA1                 // ADC操作命令码
@@ -416,7 +416,8 @@ static void process_power_command(uint8_t *frame)
                 g_host_sleeping = true;
                 g_valid_wakeup = false;
                 g_first_boot = false;   // 标记已进入过休眠
-                uart_send_safe((char*)frame, 9);
+                //uart_send_safe((char*)frame, 9);
+                user_uart_send((char*)frame, 9);
                 LOGT(TAG, "Host enter sleep acknowledged");
                 uni_msleep(50);
                 enter_deep_sleep_with_wakeup();
@@ -430,6 +431,7 @@ static void process_power_command(uint8_t *frame)
                 return;
                 }
             g_host_sleeping = false;
+            
             // 上报确认
             uart_send_safe((char*)frame, 9);
             LOGT(TAG, "Host exit sleep acknowledged");
@@ -785,7 +787,7 @@ static void tts_handler_task(void *args)
    // B8 检测状态变量（static 保证唤醒后值重置，但我们在每次进入检测分支时初始化）
     static int b8_state = 0;          // 0: 等待高电平, 1: 计时中
     static uint32_t high_start_time = 0;
-    static bool last_sleeping_flag = false; // 用于检测 g_host_sleeping 变化
+//    static bool last_sleeping_flag = false; // 用于检测 g_host_sleeping 变化
     
     while (1) {
         // 喂狗（每200ms喂一次）
@@ -859,55 +861,41 @@ static void tts_handler_task(void *args)
             g_rx_len = 0;
         }
 
-       // ----- 检测 g_host_sleeping 状态变化 -----
-        bool current_sleeping = g_host_sleeping;
-        if (current_sleeping != last_sleeping_flag) {
-            // 状态发生变化，如果变为 false，则重置 B8 检测状态机
-            if (!current_sleeping) {
-                b8_state = 0;
-                high_start_time = 0;
-                LOGT(TAG, "g_host_sleeping changed to false, reset B8 detector");
-            } else {
-                LOGT(TAG, "g_host_sleeping changed to true, start B8 detection");
-            }
-            last_sleeping_flag = current_sleeping;
-        }
-
-        // ----- 仅在 g_host_sleeping == true 时执行 B8 检测 -----
-        if (g_host_sleeping) {
-            int current_level = user_gpio_get_value(GPIO_NUM_B8);
-
-            if (b8_state == 0) {
-                // 等待高电平
-                if (current_level == 1) {
-                    high_start_time = uni_get_clock_time_ms();
-                    b8_state = 1;
-                    LOGT(TAG, "B8 high detected, start 30s timer");
-                }
-            } else { // b8_state == 1
-                if (current_level == 0) {
-                    // 检测到低电平，重置计时
-                    b8_state = 0;
-                    LOGT(TAG, "B1 low detected, reset timer");
-                } else {
-                    // 持续高电平，检查超时
-                    now = uni_get_clock_time_ms();
-                    if (now - high_start_time >= 30000) { // 30 秒
-                        LOGT(TAG, "B1 high for 30s, go to deep sleep");
-                        b8_state = 0;   // 重置状态，避免唤醒后立即再进
-                        enter_deep_sleep_with_wakeup();
-                        // 唤醒后继续循环，b8_state 已为 0，重新开始检测
-                    }
-                }
-            }
+     // ----- 超时自动休眠逻辑（基于 g_valid_wakeup）-----
+if (g_host_sleeping) {
+    if (!g_valid_wakeup) {
+        // 未收到有效唤醒确认：开始计时
+        if (b8_state == 0) {
+            high_start_time = uni_get_clock_time_ms();
+            b8_state = 1;
+            LOGT(TAG, "No valid wakeup, start 20s timer");
         } else {
-            // 如果 g_host_sleeping == false，确保状态机处于空闲状态（防止残留）
-            if (b8_state != 0) {
+            now = uni_get_clock_time_ms();
+            if (now - high_start_time >= 20000) { // 20秒
+                LOGT(TAG, "20s idle (no wakeup), go to deep sleep");
                 b8_state = 0;
                 high_start_time = 0;
-                // 可选择性打印调试信息，但减少日志量
+                // ★ 进入休眠前，确保 ASR 状态机已休眠
+                user_asr_goto_sleep();
+                uni_msleep(50);
+                enter_deep_sleep_with_wakeup();
             }
         }
+    } else {
+        // 已被有效唤醒，重置计时器
+        if (b8_state != 0) {
+            b8_state = 0;
+            high_start_time = 0;
+            LOGT(TAG, "Valid wakeup detected, reset idle timer");
+        }
+    }
+} else {
+    // g_host_sleeping == false，系统处于唤醒运行态，无需超时检测
+    if (b8_state != 0) {
+        b8_state = 0;
+        high_start_time = 0;
+    }
+}
 
         // ----- 5. 短暂延时，降低 CPU 占用 -----
         uni_msleep(50); 
@@ -924,7 +912,7 @@ static void deep_sleep_restore(void) {
     DBG("Woke up, reinitializing hardware...");
  //   GIE_ENABLE();
  //   user_gpio_init();
-
+    RecogLaunch(NULL);  // 恢复识别
  //   restore_audio_settings();
 
     // 恢复 GPIO 输出状态（根据实际需求设置）
@@ -968,14 +956,20 @@ static void deep_sleep_restore(void) {
 static void enter_deep_sleep_with_wakeup(void) {
     LOGT(TAG, "Entering deep sleep, wakeup by GPIO B1 falling edge...");
     // 进入深度睡眠，唤醒后继续执行本函数后的代码
+    user_timer_pause(TIMER_SAMPLING);
+    user_timer_pause(TIMER_TIMEOUT);
+    user_timer_pause(eTIMER2);
     // g_adc_enabled = false;
     // uni_msleep(50);
     user_gpio_interrupt_disable();
     // user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);   // 改为普通输入
-
+    // GPIO_RegSet(GPIO_B_SEP_INTC, 0xFFFFFFFF);
+    // GPIO_RegSet(GPIO_A_SEP_INTC, 0xFFFFFFFF);
     uni_msleep(10);
  
-//    GIE_DISABLE();
+    RecogStop();        // 停止识别，释放 DMA/I2S
+
+  //  GIE_DISABLE();
     uni_msleep(100);
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
   //  uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA25,  WAKEUP_GPIONEGE);
