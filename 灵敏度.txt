@@ -17,3 +17,7 @@ cd /home/TELECOM-7.6
 git add 灵敏度.txt
 git commit -m "添加灵敏度.txt文件"
 git push --force-with-lease origin master
+
+cd /home/TELECOM-7.6
+git fetch --all
+git reset --hard origin/master
