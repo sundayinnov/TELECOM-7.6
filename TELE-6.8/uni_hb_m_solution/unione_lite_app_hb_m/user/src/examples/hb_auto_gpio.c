@@ -61,8 +61,9 @@ static const tts_mapping_t g_tts_mapping[] = {
 #define WAKEUP_SEQ_LEN        4
 #define WAKEUP_SEQ_BYTE       0xCC
 
-static uni_sem_t g_wakeup_ack_sem = NULL;
+static bool g_first_boot = true;   // 新增全局变量
 static bool g_host_sleeping = false;
+static bool g_valid_wakeup = false;   // ★ 新增：是否为有效唤醒（唤醒词唤醒且完成握手）
 // ============ 聆听控制相关 ============
 #define LISTEN_CMD_CODE      0xC0
 #define LISTEN_MODE_END      0x01
@@ -406,7 +407,15 @@ static void process_power_command(uint8_t *frame)
     switch (mode) {
         case POWER_MODE_ENTER:   // 上位机请求进入休眠
             if (!g_host_sleeping) {
+            // ★ 仅对“上位机指令休眠”做有效唤醒检查
+                if (!g_valid_wakeup && !g_first_boot) {
+                    LOGT(TAG, "Ignored D0 01: not a valid wakeup (no ACK received)");
+                return;
+                }
+
                 g_host_sleeping = true;
+                g_valid_wakeup = false;
+                g_first_boot = false;   // 标记已进入过休眠
                 uart_send_safe((char*)frame, 9);
                 LOGT(TAG, "Host enter sleep acknowledged");
                 uni_msleep(50);
@@ -416,15 +425,14 @@ static void process_power_command(uint8_t *frame)
             
         case POWER_MODE_EXIT:    // 上位机请求退出休眠（唤醒确认）
             // 更新状态
+            if (!g_valid_wakeup) {
+                    LOGT(TAG, "Ignored D0 01: not a valid wakeup (no ACK received)");
+                return;
+                }
             g_host_sleeping = false;
             // 上报确认
             uart_send_safe((char*)frame, 9);
             LOGT(TAG, "Host exit sleep acknowledged");
-            // 释放信号量（如果有人在等待）
-            if (g_wakeup_ack_sem != NULL) {
-                uni_sem_post(g_wakeup_ack_sem);
-                LOGE(TAG,"Wakeup ack semaphore posted");
-            }
             break;
             
         default:
@@ -914,7 +922,7 @@ static void deep_sleep_restore(void) {
     user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
 
     DBG("Woke up, reinitializing hardware...");
-      GIE_ENABLE();
+ //   GIE_ENABLE();
  //   user_gpio_init();
 
  //   restore_audio_settings();
@@ -947,16 +955,10 @@ static void deep_sleep_restore(void) {
 
     // 重新初始化 LED 定时器
     led_init();
-
     
     doa_uart_reinit_hw();   // 替换原来的 doa_uart_init()
 
-    if (g_wakeup_ack_sem != NULL) {
-    uni_sem_init(&g_wakeup_ack_sem, 0);
-    
     user_gpio_interrupt_enable();
- 
-}
 
  // ！！！重要：上位机仍在休眠，g_host_sleeping 保持 true，不发送任何数据
     DBG( "Deep sleep wakeup complete, g_host_sleeping=%d", g_host_sleeping);
@@ -972,12 +974,8 @@ static void enter_deep_sleep_with_wakeup(void) {
     // user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);   // 改为普通输入
 
     uni_msleep(10);
-    if (g_wakeup_ack_sem != NULL) {
-    uni_sem_destroy(g_wakeup_ack_sem);
-    g_wakeup_ack_sem = NULL;
-}
-
-    GIE_DISABLE();
+ 
+//    GIE_DISABLE();
     uni_msleep(100);
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
   //  uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA25,  WAKEUP_GPIONEGE);
@@ -1147,6 +1145,7 @@ static void _goto_awakened_cb(USER_EVENT_TYPE event, user_event_context_t *conte
     if (context) 
     {
         awkened = &context->goto_awakend;
+       
         if (g_host_sleeping) 
         {
             LOGT(TAG, "Host is sleeping, sending wakeup sequence (0xCC x4)");
@@ -1154,21 +1153,9 @@ static void _goto_awakened_cb(USER_EVENT_TYPE event, user_event_context_t *conte
             // 发送唤醒序列
             uint8_t wakeup_seq[4] = {0xCC, 0xCC, 0xCC, 0xCC};
             user_uart_send((char*)wakeup_seq, 4);  // 直接发送，不经过队列
-        
-            // 等待上位机回复 0xD0,0x02，超时 2000ms
-            if (g_wakeup_ack_sem != NULL) 
-            {
-               // uni_sem_wait_ms(g_wakeup_ack_sem, 0);
-                if (uni_sem_wait_ms(g_wakeup_ack_sem, 500) == 0) 
-                {
-                    LOGT(TAG,"Got host wakeup ACK (0xD0,0x02)");
-                } else {
-                    LOGT(TAG,"Timeout waiting for host wakeup ACK");
-                }
-                LOGT(TAG,"After semaphore wait, going to play reply");
-            }else {
-                LOGE(TAG,"Wakeup semaphore not initialized");
-            }
+            g_valid_wakeup = true;
+            uni_msleep(200);
+           
         }
         if(g_b1_power_state == 0)
         {
@@ -1336,17 +1323,9 @@ int hb_auto_gpio(void)
         LOGT(TAG, "TTS handler task created");
     }
 
-    // 初始化二进制信号量，初始值为 0（不可用）
-    int ret = uni_sem_init(&g_wakeup_ack_sem, 0);
-    LOGT(TAG,"uni_sem_init ret=%d, sem=%p\n", ret, g_wakeup_ack_sem);
-    if (ret != 0) {      
-        LOGE(TAG,"Failed to init semaphore\n");
-        g_wakeup_ack_sem = NULL;
-    } else {
-        LOGT(TAG,"Semaphore initialized OK\n");
-    }   
     g_host_sleeping = false;
-
+    g_valid_wakeup = false;
+    g_first_boot = true;
     _register_event_callback();
     return 0;
 }
