@@ -44,8 +44,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0x7F                 // CRC低字节
-#define CRC_VALUE_HIGH      0x7F                // CRC高字节
+#define CRC_VALUE_LOW       0x0A                 // CRC低字节
+#define CRC_VALUE_HIGH      0x9F                // CRC高字节
 
 // ============ ADC 控制相关 ============
 #define ADC_CMD_CODE            0xA1                 // ADC操作命令码
@@ -904,6 +904,9 @@ if (g_host_sleeping) {
 
 // ============ 唤醒后恢复硬件（不创建任务）============
 static void deep_sleep_restore(void) {
+
+    uni_msleep(100);
+
     uni_hal_watchdog_feed();
     GPIO_PortBModeSet(GPIOB8, 0);
     user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
@@ -912,7 +915,7 @@ static void deep_sleep_restore(void) {
     DBG("Woke up, reinitializing hardware...");
  //   GIE_ENABLE();
  //   user_gpio_init();
-    RecogLaunch(NULL);  // 恢复识别
+ //   RecogLaunch(NULL);  // 恢复识别
  //   restore_audio_settings();
 
     // 恢复 GPIO 输出状态（根据实际需求设置）
@@ -946,6 +949,9 @@ static void deep_sleep_restore(void) {
     
     doa_uart_reinit_hw();   // 替换原来的 doa_uart_init()
 
+    uni_msleep(50);
+    RecogLaunch(NULL);  // 恢复识别
+
     user_gpio_interrupt_enable();
 
  // ！！！重要：上位机仍在休眠，g_host_sleeping 保持 true，不发送任何数据
@@ -959,6 +965,9 @@ static void enter_deep_sleep_with_wakeup(void) {
     user_timer_pause(TIMER_SAMPLING);
     user_timer_pause(TIMER_TIMEOUT);
     user_timer_pause(eTIMER2);
+
+    g_rx_len = 0;
+    g_rx_flag = false;
     // g_adc_enabled = false;
     // uni_msleep(50);
     user_gpio_interrupt_disable();
