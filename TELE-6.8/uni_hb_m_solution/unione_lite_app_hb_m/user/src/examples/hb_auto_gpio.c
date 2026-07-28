@@ -44,8 +44,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0xB3                 // CRC低字节
-#define CRC_VALUE_HIGH      0xCD                // CRC高字节
+#define CRC_VALUE_LOW       0x94                 // CRC低字节
+#define CRC_VALUE_HIGH      0xA6                // CRC高字节
 
 // ============ ADC 控制相关 ============
 #define ADC_CMD_CODE            0xA1                 // ADC操作命令码
@@ -929,7 +929,7 @@ static void deep_sleep_restore(void) {
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B1, 1);
     g_b1_power_state = 0;
-  
+    user_gpio_set_value(GPIO_NUM_A28, 0);
     // ============ ADC 恢复 ============
     // 唤醒后 ADC 默认关闭，等待上位机重新使能
     g_adc_enabled = false;
@@ -971,10 +971,12 @@ static void enter_deep_sleep_with_wakeup(void) {
     // g_adc_enabled = false;
     // uni_msleep(50);
     user_gpio_interrupt_disable();
+
     // user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);   // 改为普通输入
     // GPIO_RegSet(GPIO_B_SEP_INTC, 0xFFFFFFFF);
     // GPIO_RegSet(GPIO_A_SEP_INTC, 0xFFFFFFFF);
     uni_msleep(10);
+    user_gpio_set_value(GPIO_NUM_A28, 1);
  
     RecogStop();        // 停止识别，释放 DMA/I2S
 
