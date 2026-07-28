@@ -44,8 +44,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0x0A                 // CRC低字节
-#define CRC_VALUE_HIGH      0x9F                // CRC高字节
+#define CRC_VALUE_LOW       0xB3                 // CRC低字节
+#define CRC_VALUE_HIGH      0xCD                // CRC高字节
 
 // ============ ADC 控制相关 ============
 #define ADC_CMD_CODE            0xA1                 // ADC操作命令码

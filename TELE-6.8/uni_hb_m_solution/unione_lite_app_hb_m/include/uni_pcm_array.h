@@ -56,6 +56,7 @@ const PCM_RESOURCE g_pcm_arry[] = {
   {516, 0x348c0L, 0x1340},
   {517, 0x35c00L, 0x1980},
   {518, 0x37580L, 0x1880},
+  {519, 0x38e00L, 0x2880},
 };
 
 #endif
