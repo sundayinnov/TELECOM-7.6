@@ -17,6 +17,7 @@
 #include "uni_iot.h"
 #include "uni_recog_service.h"
 //#include "uni_vui_interface.h"   
+#include "uni_study_session.h"
 #include "queue.h"      // FreeRTOS 队列头文件
 #include "user_adc_gp2y.h"
 #include "uni_hal_power.h"
@@ -44,8 +45,12 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0x94                 // CRC低字节
-#define CRC_VALUE_HIGH      0xA6                // CRC高字节
+#define CRC_VALUE_LOW       0x31                 // CRC低字节
+#define CRC_VALUE_HIGH      0x43                // CRC高字节
+
+// ============ 学习结果调试反馈 ============
+#define STUDY_RESULT_CMD  0xE2
+#define CLEAR_STUDY_CMD  0xE3   // 清除学习数据命令
 
 // ============ ADC 控制相关 ============
 #define ADC_CMD_CODE            0xA1                 // ADC操作命令码
@@ -200,6 +205,7 @@ static void deep_sleep_restore(void);
 static void send_adc_response(uint8_t mode, uint16_t adc_value, uint8_t state);
 static void process_adc_command(uint8_t *frame);
 static void process_crc_command(uint8_t *frame);
+void study_send_result(uint8_t index, uint8_t success);
 
 
 extern volatile int16_t g_last_doa_angle;  
@@ -847,6 +853,28 @@ static void tts_handler_task(void *args)
                     else if (cmd == ADC_CMD_CODE) {          // 新增ADC处理
                         process_adc_command((uint8_t*)g_rx_buffer);
                     }
+                    else if (cmd == CLEAR_STUDY_CMD) {
+                        uint8_t clear_type = g_rx_buffer[3];  // byte3: 0x00清除全部
+                        LOGT(TAG, "Received clear study command, type=%d", clear_type);
+    
+                        // 只处理清除全部
+                        if (clear_type == 0x00) {
+                        // 1. 清除全部学习数据
+                        StudySessionClearGrammar();
+                        LOGT(TAG, "Cleared all study grammar");
+        
+                        // 2. 原样回传串口指令（应答）
+                        uart_send_safe((char*)g_rx_buffer, 9);
+                        LOGT(TAG, "Echo back clear command");
+        
+                        // 3. 播放音频 113
+                        user_player_reply_list_num("[113]", 0);
+                        LOGT(TAG, "Play audio 113");
+                        } else {
+                        LOGW(TAG, "Unsupported clear type: %d, only 0x00 supported", clear_type);
+                         // 可选：回传错误应答（如 0xE3 0xFF 等）
+                        }
+                    }
                     else {
                         play_tts_by_cmd(cmd);
                         //user_uart_send((char*)g_rx_buffer, g_rx_len);
@@ -1208,6 +1236,23 @@ static void _goto_sleeping_cb (USER_EVENT_TYPE event, user_event_context_t *cont
     };
     uart_send_safe((char*)report_buf, 9);
 //  LOGT(TAG, "Report sleep: cmd=0xC0, mode=0x%02X, A27 LOW", report_mode);
+}
+
+/**
+ * @brief 发送学习结果调试信息
+ * @param index 第几次尝试（从1开始）
+ * @param success 1:成功, 0:失败
+ */
+void study_send_result(uint8_t index, uint8_t success) {
+    uint8_t buf[9] = {
+        0xAA, 0x55, STUDY_RESULT_CMD,
+        index,
+        success,
+        0x00, 0x00,
+        0x55, 0xAA
+    };
+    uart_send_safe((char*)buf, 9);
+    LOGT(TAG, "Study result debug: index=%d, success=%d", index, success);
 }
 
 static void _study_event_cb(USER_EVENT_TYPE event, user_event_context_t *context) {

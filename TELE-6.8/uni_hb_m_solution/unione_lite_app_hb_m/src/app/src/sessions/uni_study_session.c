@@ -48,6 +48,8 @@
 
 #define TAG "study_session"
 
+extern void study_send_result(uint8_t index, uint8_t success);
+
 extern const unsigned char global_kws_lp_grammar[];
 extern const uni_u32 global_kws_lp_grammar_size;
 extern char g_mp3_ais_share_buf[];
@@ -468,6 +470,9 @@ static Result _action_finish() {
 }
 
 static void _action_success_get_result() {
+   // 调试：发送成功结果
+    study_send_result(g_study_session->succ_index + 1, 1);
+
   if (g_study_session->succ_index == (COLLECT_STUDY_RESULT_NUM - 1)) {
     if (E_OK == _action_finish()) {
       g_study_session->succ_index++;
@@ -494,6 +499,9 @@ static void _action_success_get_result() {
 }
 
 static void _action_failed_get_result() {
+   // 调试：发送失败结果
+  study_send_result(g_study_session->succ_index + 1, 0);
+
   g_study_session->failed_count++;
   if (g_study_session->failed_count >= STUDY_FAILED_EXIT_COUNT) {
 
