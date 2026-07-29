@@ -49,6 +49,11 @@
 #define TAG "study_session"
 
 extern void study_send_result(uint8_t index, uint8_t success);
+extern void study_send_approval_request(uint8_t type);
+
+// ============ 外部变量声明（新增） ============
+extern volatile bool g_esp32_online;
+extern volatile bool g_content_approved;
 
 extern const unsigned char global_kws_lp_grammar[];
 extern const uni_u32 global_kws_lp_grammar_size;
@@ -62,6 +67,8 @@ extern const char *const g_nlu_content_str[];
 
 static uni_bool g_clear_pending = FALSE;
 static uni_bool g_clear_is_wakeup = FALSE;
+
+static uni_bool g_study_approval_failed = FALSE;
 
 /** 学习命令词序号表
  * 如:
@@ -112,6 +119,7 @@ static Result _clear__audio_play_end(void *event);
 static Result _studying__audio_play_end(void *event);
 static Result _finish__audio_play_end(void *event);
 static Result _idle__audio_play_end(void *event);
+static Result _exit_studying(void);  // 添加这行
 
 typedef enum {
   STATE_IDLE = 0,
@@ -451,6 +459,14 @@ static Result _update_study_nlu_map(StudyTmpGrammarNode *node,
 }
 
 static Result _action_finish() {
+
+   if (!g_content_approved) {
+        LOGE(TAG, "Content not approved, abort study");
+        // 只需要返回失败，让调用者处理
+        // 节点数据不需要手动清空，下次学习会覆盖
+        return E_FAILED;
+    }
+
   if (E_OK != _update_new_grammar(g_study_session->node,
                                   g_study_session->is_study_wakeup)) {
     return E_FAILED;
@@ -470,8 +486,11 @@ static Result _action_finish() {
 }
 
 static void _action_success_get_result() {
+
+  study_send_approval_request(0x02);
+  uni_msleep(50);
    // 调试：发送成功结果
-    study_send_result(g_study_session->succ_index + 1, 1);
+  study_send_result(g_study_session->succ_index + 1, 1);
 
   if (g_study_session->succ_index == (COLLECT_STUDY_RESULT_NUM - 1)) {
     if (E_OK == _action_finish()) {
@@ -487,9 +506,16 @@ static void _action_success_get_result() {
       _response_pcm(
         uni_get_number_pcm(g_study_session->pcm_list, STUDY_PCM_FINISH));
     } else {
-      g_study_session->failed_count = STUDY_FAILED_EXIT_COUNT;
-      _response_pcm(
-        uni_get_number_pcm(g_study_session->pcm_list, STUDY_PCM_FAIL_EXIT));
+          // 学习失败：区分审核失败和语法合并失败
+        if (!g_content_approved) {
+          // 审核不通过：播放专用提示音
+           _response_pcm("114");  // "内容不合规"
+            g_study_approval_failed = TRUE; 
+        } else {
+            g_study_session->failed_count = STUDY_FAILED_EXIT_COUNT;
+            _response_pcm(
+            uni_get_number_pcm(g_study_session->pcm_list, STUDY_PCM_FAIL_EXIT));
+        }
     }
   } else {
     g_study_session->succ_index++;
@@ -624,6 +650,20 @@ static Result _finish__audio_play_end(void *event) {
 static Result _studying__audio_play_end(void *event) {
   Result rc;
   LOGT(TAG, "action called");
+
+ // 检查审核失败标志
+  if (g_study_approval_failed) {
+    LOGT(TAG, "Approval failed, exit studying");
+    g_study_approval_failed = FALSE;  // 重置标志
+    // 清空学习数据
+    // uni_memset(g_study_session->node, 0,
+    //             sizeof(StudyTmpGrammarNode) * COLLECT_STUDY_RESULT_NUM);
+    // g_study_session->succ_index = 0;
+    // g_study_session->failed_count = 0;
+    rc = _exit_studying();
+    return rc;
+  }
+
   if (g_study_session->succ_index == COLLECT_STUDY_RESULT_NUM) {
     rc = _exit_studying();
   } else {
@@ -675,6 +715,17 @@ static Result _idle__vui_app_study(void *event_info) {
       return E_HOLD;
     }
   } else if (uni_strcmp(content->cmd, "startStuWakeup") == 0) {
+
+     // 1. 发送联网审核请求（不等待）
+    study_send_approval_request(0x01);
+    uni_msleep(50);
+
+    // 2. 检查当前联网状态（上位机应该已经更新了 g_esp32_online）
+    if (!g_esp32_online) {
+       _response_pcm("113");
+      return E_FAILED;
+    }
+
     if (_check_has_study_data(true)) {
       _response_pcm(
         uni_get_number_pcm(g_study_session->pcm_list, STUDY_PCM_ADVICE_RESET));

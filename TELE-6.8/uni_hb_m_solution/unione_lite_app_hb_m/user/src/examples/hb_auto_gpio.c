@@ -49,6 +49,7 @@ static const tts_mapping_t g_tts_mapping[] = {
 #define CRC_VALUE_HIGH      0x43                // CRC高字节
 
 // ============ 学习结果调试反馈 ============
+#define STUDY_APPROVAL_CMD  0xE1
 #define STUDY_RESULT_CMD  0xE2
 #define CLEAR_STUDY_CMD  0xE3   // 清除学习数据命令
 
@@ -170,6 +171,11 @@ static volatile uint16_t g_adc_value = 0;            // 最近ADC值
 static volatile uint16_t g_adc_threshold = ADC_DEFAULT_THRESHOLD; // ADC阈值
 static volatile bool g_adc_triggered = false;        // ADC是否触发（值超过阈值）
 
+// ============ 审核相关全局变量（volatile 保证跨任务可见） ============
+volatile bool g_esp32_online = false;        // ESP32联网状态
+volatile bool g_content_approved = false;    // 内容审核结果
+volatile uint8_t g_approval_pending = 0;     // 0=无等待, 1=等待联网, 2=等待内容
+
 // ============ 函数声明 ============
 static const char* get_reply_files_by_cmd(uint8_t tts_cmd);
 static void play_tts_by_cmd(uint8_t tts_cmd);
@@ -206,7 +212,7 @@ static void send_adc_response(uint8_t mode, uint16_t adc_value, uint8_t state);
 static void process_adc_command(uint8_t *frame);
 static void process_crc_command(uint8_t *frame);
 void study_send_result(uint8_t index, uint8_t success);
-
+void study_send_approval_request(uint8_t type);
 
 extern volatile int16_t g_last_doa_angle;  
 
@@ -875,6 +881,24 @@ static void tts_handler_task(void *args)
                          // 可选：回传错误应答（如 0xE3 0xFF 等）
                         }
                     }
+                    else if (cmd == STUDY_APPROVAL_CMD) {
+                        uint8_t type = g_rx_buffer[3];      // 审核类型
+                        uint8_t result = g_rx_buffer[4];    // 0x00=不通过, 0x01=通过
+    
+                        LOGT(TAG, "Approval response: type=0x%02X, result=%d", type, result);
+    
+                        switch (type) {
+                                case 0x01:  // 联网审核
+                                g_esp32_online = (result == 0x01);
+                                break;
+                                case 0x02:  // 安全审核
+                                g_content_approved = (result == 0x01);
+                                break;
+                        default:
+                                LOGW(TAG, "Unknown approval type: 0x%02X", type);
+                                break;
+                        }
+                    }
                     else {
                         play_tts_by_cmd(cmd);
                         //user_uart_send((char*)g_rx_buffer, g_rx_len);
@@ -1236,6 +1260,17 @@ static void _goto_sleeping_cb (USER_EVENT_TYPE event, user_event_context_t *cont
     };
     uart_send_safe((char*)report_buf, 9);
 //  LOGT(TAG, "Report sleep: cmd=0xC0, mode=0x%02X, A27 LOW", report_mode);
+}
+
+void study_send_approval_request(uint8_t type) {
+    uint8_t buf[9] = {
+        0xAA, 0x55, STUDY_APPROVAL_CMD,
+        type,           // 0x01=联网, 0x02=安全
+        0x00, 0x00, 0x00,
+        0x55, 0xAA
+    };
+    uart_send_safe((char*)buf, 9);
+    LOGT(TAG, "Send approval request: type=0x%02X", type);
 }
 
 /**
