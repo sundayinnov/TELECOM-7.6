@@ -50,6 +50,7 @@
 
 extern void study_send_result(uint8_t index, uint8_t success);
 extern void study_send_approval_request(uint8_t type);
+extern void study_send_approval_result(uint8_t type, uint8_t result);
 
 // ============ 外部变量声明（新增） ============
 extern volatile bool g_esp32_online;
@@ -655,6 +656,7 @@ static Result _studying__audio_play_end(void *event) {
   if (g_study_approval_failed) {
     LOGT(TAG, "Approval failed, exit studying");
     g_study_approval_failed = FALSE;  // 重置标志
+    study_send_approval_result(0x02, 0x00);
     // 清空学习数据
     // uni_memset(g_study_session->node, 0,
     //             sizeof(StudyTmpGrammarNode) * COLLECT_STUDY_RESULT_NUM);
@@ -718,11 +720,12 @@ static Result _idle__vui_app_study(void *event_info) {
 
      // 1. 发送联网审核请求（不等待）
     study_send_approval_request(0x01);
-    uni_msleep(50);
+    uni_msleep(200);
 
     // 2. 检查当前联网状态（上位机应该已经更新了 g_esp32_online）
     if (!g_esp32_online) {
        _response_pcm("113");
+       study_send_approval_result(0x01, 0x00);  // 联网失败上报
       return E_FAILED;
     }
 

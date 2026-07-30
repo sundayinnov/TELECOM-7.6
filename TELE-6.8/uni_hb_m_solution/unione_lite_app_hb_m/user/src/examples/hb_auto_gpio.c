@@ -213,6 +213,7 @@ static void process_adc_command(uint8_t *frame);
 static void process_crc_command(uint8_t *frame);
 void study_send_result(uint8_t index, uint8_t success);
 void study_send_approval_request(uint8_t type);
+void study_send_approval_result(uint8_t type, uint8_t result);
 
 extern volatile int16_t g_last_doa_angle;  
 
@@ -1271,6 +1272,18 @@ void study_send_approval_request(uint8_t type) {
     };
     uart_send_safe((char*)buf, 9);
     LOGT(TAG, "Send approval request: type=0x%02X", type);
+}
+
+void study_send_approval_result(uint8_t type, uint8_t result) {
+    uint8_t buf[9] = {
+        0xAA, 0x55, STUDY_APPROVAL_CMD,
+        type,
+        0x00,
+        0x00, result,
+        0x55, 0xAA
+    };
+    uart_send_safe((char*)buf, 9);
+    LOGT(TAG, "Send approval result: type=0x%02X, result=%d", type, result);
 }
 
 /**
