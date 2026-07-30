@@ -21,3 +21,7 @@ git push --force-with-lease origin master
 cd /home/TELECOM-7.6
 git fetch --all
 git reset --hard origin/master
+
+cd /home/TELECOM-7.6/TELE-6.8
+rm -rf uni_hb_m_solution_backup
+cp -rf uni_hb_m_solution uni_hb_m_solution_backup
