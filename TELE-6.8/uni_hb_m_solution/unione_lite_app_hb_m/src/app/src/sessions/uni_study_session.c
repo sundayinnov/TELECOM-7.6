@@ -656,7 +656,7 @@ static Result _studying__audio_play_end(void *event) {
   if (g_study_approval_failed) {
     LOGT(TAG, "Approval failed, exit studying");
     g_study_approval_failed = FALSE;  // 重置标志
-    study_send_approval_result(0x02, 0x00);
+    study_send_approval_result(0x02, 0xFF);
     // 清空学习数据
     // uni_memset(g_study_session->node, 0,
     //             sizeof(StudyTmpGrammarNode) * COLLECT_STUDY_RESULT_NUM);
@@ -725,7 +725,7 @@ static Result _idle__vui_app_study(void *event_info) {
     // 2. 检查当前联网状态（上位机应该已经更新了 g_esp32_online）
     if (!g_esp32_online) {
        _response_pcm("113");
-       study_send_approval_result(0x01, 0x00);  // 联网失败上报
+       study_send_approval_result(0x01, 0xFF);  // 联网失败上报
       return E_FAILED;
     }
 
