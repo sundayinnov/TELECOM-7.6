@@ -39,9 +39,9 @@ Section Headers:
   [15] .bss              NOBITS          20003f60 184f38 01059c 00  WA  0   0  8
   [16] .comment          PROGBITS        00000000 184f38 00005e 01  MS  0   0  1
   [17] .debug_aranges    PROGBITS        00000000 184f98 0037d8 00      0   0  8
-  [18] .debug_info       PROGBITS        00000000 188770 07fe87 00      0   0  1
-  [19] .debug_abbrev     PROGBITS        00000000 2085f7 011e95 00      0   0  1
-  [20] .debug_line       PROGBITS        00000000 21a48c 04bc7c 00      0   0  1
+  [18] .debug_info       PROGBITS        00000000 188770 07fe86 00      0   0  1
+  [19] .debug_abbrev     PROGBITS        00000000 2085f6 011e95 00      0   0  1
+  [20] .debug_line       PROGBITS        00000000 21a48b 04bc7c 00      0   0  1
   [21] .debug_frame      PROGBITS        00000000 266108 00c430 00      0   0  4
   [22] .debug_str        PROGBITS        00000000 272538 0382e6 01  MS  0   0  1
   [23] .debug_loc        PROGBITS        00000000 2aa81e 048e75 00      0   0  1
