@@ -1003,7 +1003,22 @@ static void deep_sleep_restore(void) {
     doa_uart_reinit_hw();   // 替换原来的 doa_uart_init()
 
     uni_msleep(50);
-    RecogLaunch(NULL);  // 恢复识别
+    uni_hal_watchdog_feed();
+
+    // 尝试恢复 ASR（最多3次）
+    int retry = 3;
+    while (retry--) {
+    if (E_OK == RecogLaunch(NULL)) {
+        LOGT(TAG, "RecogLaunch success");
+        break;
+    }
+    LOGW(TAG, "RecogLaunch failed, retry %d", retry);
+    uni_msleep(100);
+    RecogStop();   // 清理残留状态
+    uni_msleep(50);
+    uni_hal_watchdog_feed();  // 重试前喂狗
+    }
+
 
     user_gpio_interrupt_enable();
 
