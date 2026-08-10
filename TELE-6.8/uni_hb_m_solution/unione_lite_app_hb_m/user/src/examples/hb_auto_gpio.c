@@ -46,7 +46,7 @@ static const tts_mapping_t g_tts_mapping[] = {
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
 #define CRC_VALUE_LOW       0x85                 // CRC低字节
-#define CRC_VALUE_HIGH      0xA4                // CRC高字节
+#define CRC_VALUE_HIGH      0x09                // CRC高字节
 
 // ============ 学习结果调试反馈 ============
 #define STUDY_APPROVAL_CMD  0xE1
@@ -875,7 +875,7 @@ static void tts_handler_task(void *args)
                         LOGT(TAG, "Echo back clear command");
         
                         // 3. 播放音频 113
-                        user_player_reply_list_num("[113]", 0);
+                        user_player_reply_list_num("[121]", 0);
                         LOGT(TAG, "Play audio 113");
                         } else {
                         LOGW(TAG, "Unsupported clear type: %d, only 0x00 supported", clear_type);
@@ -986,7 +986,7 @@ static void deep_sleep_restore(void) {
     user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B0, 0);
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B1, 1);
+    user_gpio_set_value(GPIO_NUM_B1, 0);
     g_b1_power_state = 0;
     user_gpio_set_value(GPIO_NUM_A28, 0);
     // ============ ADC 恢复 ============
@@ -1238,7 +1238,7 @@ static void _goto_awakened_cb(USER_EVENT_TYPE event, user_event_context_t *conte
         }
         if(g_b1_power_state == 0)
         {
-            user_gpio_set_value(GPIO_NUM_B1, 0);
+            user_gpio_set_value(GPIO_NUM_B1, 1);//新电路
             g_b1_power_state = 1;
             int16_t angle = setting_session_get_last_doa_angle();  
             send_command_with_angle(0x46, angle);
@@ -1271,7 +1271,7 @@ static void _goto_sleeping_cb (USER_EVENT_TYPE event, user_event_context_t *cont
  //   user_player_reply_list_random(sleeping->reply_files);
     (void)sleeping;
     }
-    user_gpio_set_value(GPIO_NUM_B1, 1);
+    user_gpio_set_value(GPIO_NUM_B1, 0);
     g_b1_power_state = 0;
     
     uint8_t report_buf[9] = {
@@ -1378,8 +1378,8 @@ int hb_auto_gpio(void)
    // 初始化LED
     led_init();
     // 配置其他GPIO
- //   user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
- //   user_gpio_set_value(GPIO_NUM_A26, 0);
+//    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
+//    user_gpio_set_value(GPIO_NUM_A26, 0);
     user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B8, 0);
 
@@ -1389,14 +1389,14 @@ int hb_auto_gpio(void)
     user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B0, 0);
     
- //   user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
- //   user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);  
+//    user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
+//    user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);  
     user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
     user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP); 
 
     g_b1_power_state = 0;
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B1, 1);
+    user_gpio_set_value(GPIO_NUM_B1, 0);
 
     //ADC初始化
   // ============ ADC 初始化 ============

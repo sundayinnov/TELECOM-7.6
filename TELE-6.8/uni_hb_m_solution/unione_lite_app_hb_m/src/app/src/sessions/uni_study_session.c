@@ -510,7 +510,7 @@ static void _action_success_get_result() {
           // 学习失败：区分审核失败和语法合并失败
         if (!g_content_approved) {
           // 审核不通过：播放专用提示音
-           _response_pcm("114");  // "内容不合规"
+           _response_pcm("120");  // "内容不合规"
             g_study_approval_failed = TRUE; 
         } else {
             g_study_session->failed_count = STUDY_FAILED_EXIT_COUNT;
@@ -724,7 +724,7 @@ static Result _idle__vui_app_study(void *event_info) {
 
     // 2. 检查当前联网状态（上位机应该已经更新了 g_esp32_online）
     if (!g_esp32_online) {
-       _response_pcm("113");
+       _response_pcm("119");
        study_send_approval_result(0x01, 0xFF);  // 联网失败上报
       return E_FAILED;
     }
