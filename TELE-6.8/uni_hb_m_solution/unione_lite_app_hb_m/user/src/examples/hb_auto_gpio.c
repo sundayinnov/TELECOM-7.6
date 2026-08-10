@@ -1462,17 +1462,15 @@ int hb_auto_gpio(void)
         LOGT(TAG, "TTS handler task created");
     }
 
-    if (g_boot_status == WAKEUP_BY_WATCHDOG || g_boot_status == WAKEUP_BY_RESET_PIN) {
-        uint8_t report[9] = {
-            0xAA, 0x55, RESET_REPORT_CODE,
-            (uint8_t)g_boot_status,   // 复位原因码（1=看门狗，2=复位引脚）
-            0x00, 0x00, 0x00,
-            0x55, 0xAA
-        };
-        uart_send_safe((char*)report, 9);
-        LOGT(TAG, "Report reset event: type=%d", g_boot_status);
-    }
-
+    uint8_t report[9] = {
+    0xAA, 0x55, RESET_REPORT_CODE,
+    (uint8_t)g_boot_status,   // 启动原因码（0=上电, 1=复位引脚, 2=看门狗, 3=LVD, 4=系统复位, 5=未知）
+    0x00, 0x00, 0x00,
+    0x55, 0xAA
+    };
+    uart_send_safe((char*)report, 9);
+    LOGT(TAG, "Report boot event: type=%d", g_boot_status);
+    
     g_host_sleeping = false;
     g_valid_wakeup = false;
     g_first_boot = true;
