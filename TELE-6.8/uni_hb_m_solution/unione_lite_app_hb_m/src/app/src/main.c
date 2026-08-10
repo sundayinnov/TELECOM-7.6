@@ -55,6 +55,9 @@
 #include "uni_hal_flash.h"
 #include "flash_config.h"   // 确保 USER_DATA_ADDR 被定义
 
+// 复位原因上报
+wakeup_type g_boot_status = WAKEUP_BY_UNKNOWN;
+
 #define MAIN_TAG                      "main"
 
 #define SN_STORAGE_ADDR   USER_DATA_ADDR   // 0x1DC000
@@ -76,6 +79,7 @@ static void _send_watchdog_feed_event() {
 static void _system_startup_status(void) {
   wakeup_type type;
   type = uni_hal_get_boot_status();
+  g_boot_status = type;//  保存到全局变量
   uni_hal_clear_boot_status();
   printf("Boot status raw value: %d", type);
   switch (type) {

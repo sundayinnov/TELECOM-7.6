@@ -21,7 +21,7 @@
 #include "queue.h"      // FreeRTOS 队列头文件
 #include "user_adc_gp2y.h"
 #include "uni_hal_power.h"
-
+#include "uni_hal_reset.h"
 
 #define TAG "auto_gpio"
 #define DBG(...) ((void)0)
@@ -47,6 +47,10 @@ static const tts_mapping_t g_tts_mapping[] = {
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
 #define CRC_VALUE_LOW       0x85                 // CRC低字节
 #define CRC_VALUE_HIGH      0x09                // CRC高字节
+
+// ============ 复位控制相关 ============
+#define REBOOT_CMD_CODE     0xF1   // 上位机请求系统复位
+#define RESET_REPORT_CODE   0xFA   // 复位事件上报（启动后通知上位机）
 
 // ============ 学习结果调试反馈 ============
 #define STUDY_APPROVAL_CMD  0xE1
@@ -216,7 +220,7 @@ void study_send_approval_request(uint8_t type);
 void study_send_approval_result(uint8_t type, uint8_t result);
 
 extern volatile int16_t g_last_doa_angle;  
-
+extern wakeup_type g_boot_status;
 
 // ============ 深度睡眠唤醒回调（中断上下文，尽量简单）============
 static void _wakeup_cb(int flag) {
@@ -900,6 +904,18 @@ static void tts_handler_task(void *args)
                                 break;
                         }
                     }
+                    else if (cmd == REBOOT_CMD_CODE) {
+                        LOGT(TAG, "Received reboot command from host");
+                        // 回复确认
+                        uint8_t resp[9] = {
+                                0xAA, 0x55, REBOOT_CMD_CODE,
+                                0x01, 0x00, 0x00, 0x00,
+                                0x55, 0xAA
+                        };
+                        uart_send_safe((char*)resp, 9);
+                        uni_msleep(50);
+                        uni_hal_reset_system();
+                    }
                     else {
                         play_tts_by_cmd(cmd);
                         //user_uart_send((char*)g_rx_buffer, g_rx_len);
@@ -1025,7 +1041,7 @@ static void deep_sleep_restore(void) {
     uni_hal_watchdog_feed();  // 重试前喂狗
     }
 
-
+    uni_hal_watchdog_enable(WDG_STEP_4S);
     user_gpio_interrupt_enable();
 
  // ！！！重要：上位机仍在休眠，g_host_sleeping 保持 true，不发送任何数据
@@ -1054,7 +1070,7 @@ static void enter_deep_sleep_with_wakeup(void) {
  
     RecogStop();        // 停止识别，释放 DMA/I2S
 
-  //  GIE_DISABLE();
+    uni_hal_watchdog_disable();
     uni_msleep(100);
  //   uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA26,  WAKEUP_GPIONEGE);
@@ -1444,6 +1460,17 @@ int hb_auto_gpio(void)
     } else {
         uni_pthread_detach(pid);
         LOGT(TAG, "TTS handler task created");
+    }
+
+    if (g_boot_status == WAKEUP_BY_WATCHDOG || g_boot_status == WAKEUP_BY_RESET_PIN) {
+        uint8_t report[9] = {
+            0xAA, 0x55, RESET_REPORT_CODE,
+            (uint8_t)g_boot_status,   // 复位原因码（1=看门狗，2=复位引脚）
+            0x00, 0x00, 0x00,
+            0x55, 0xAA
+        };
+        uart_send_safe((char*)report, 9);
+        LOGT(TAG, "Report reset event: type=%d", g_boot_status);
     }
 
     g_host_sleeping = false;

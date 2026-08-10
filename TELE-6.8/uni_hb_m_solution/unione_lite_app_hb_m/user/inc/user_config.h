@@ -89,7 +89,7 @@ Recognize configurations, default multiply dialogue and no AEC
 #define USER_DEMO_POWER_SLEEP 17      ///< a demo to support deep sleep power mode
 #define USER_RUN_DEMO_SELECT  USER_DEMO_AUTO_GPIO ///< select a demo to run
 
-#define AUTO_RESET_TIME       7200       ///< 系统自动重置时间（单位：s，0：关闭）
+#define AUTO_RESET_TIME       0       ///< 系统自动重置时间（单位：s，0：关闭）
                                       ///< 当语音模组长时间未使用后会自动进行系统级重启
                                       ///< 在一些常供电（特别是不易上下电）的产品上，建议设置2～4小时的自动重置时间，以防开发过程中引入bug导致产品不可用且无法恢复
 /** @}*/
