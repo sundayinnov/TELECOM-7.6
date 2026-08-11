@@ -10,7 +10,7 @@ ELF Header:
   Version:                           0x1
   Entry point address:               0x0
   Start of program headers:          52 (bytes into file)
-  Start of section headers:          3246116 (bytes into file)
+  Start of section headers:          3245852 (bytes into file)
   Flags:                             0x36808a52, ABI2 FP+, Andes ELF V1.4, Andes Star v3.0, PERF1, FPU_SP, DSP, ZOL, FPU_REG:32/16, STR
   Size of this header:               52 (bytes)
   Size of program headers:           32 (bytes)
@@ -39,17 +39,17 @@ Section Headers:
   [15] .bss              NOBITS          20003f60 18bf38 01059c 00  WA  0   0  8
   [16] .comment          PROGBITS        00000000 18bf38 00005e 01  MS  0   0  1
   [17] .debug_aranges    PROGBITS        00000000 18bf98 0037d0 00      0   0  8
-  [18] .debug_info       PROGBITS        00000000 18f768 080144 00      0   0  1
-  [19] .debug_abbrev     PROGBITS        00000000 20f8ac 011ea6 00      0   0  1
-  [20] .debug_line       PROGBITS        00000000 221752 04bcfb 00      0   0  1
-  [21] .debug_frame      PROGBITS        00000000 26d450 00c418 00      0   0  4
-  [22] .debug_str        PROGBITS        00000000 279868 038335 01  MS  0   0  1
-  [23] .debug_loc        PROGBITS        00000000 2b1b9d 048e52 00      0   0  1
-  [24] .debug_ranges     PROGBITS        00000000 2fa9f0 004298 00      0   0  8
-  [25] .debug_macro      PROGBITS        00000000 2fec88 019a59 00      0   0  1
-  [26] .shstrtab         STRTAB          00000000 3186e1 000140 00      0   0  1
-  [27] .symtab           SYMTAB          00000000 318cac 015200 10     28 4073  4
-  [28] .strtab           STRTAB          00000000 32deac 00c1be 00      0   0  1
+  [18] .debug_info       PROGBITS        00000000 18f768 08003e 00      0   0  1
+  [19] .debug_abbrev     PROGBITS        00000000 20f7a6 011ea6 00      0   0  1
+  [20] .debug_line       PROGBITS        00000000 22164c 04bcfb 00      0   0  1
+  [21] .debug_frame      PROGBITS        00000000 26d348 00c418 00      0   0  4
+  [22] .debug_str        PROGBITS        00000000 279760 038335 01  MS  0   0  1
+  [23] .debug_loc        PROGBITS        00000000 2b1a95 048e52 00      0   0  1
+  [24] .debug_ranges     PROGBITS        00000000 2fa8e8 004298 00      0   0  8
+  [25] .debug_macro      PROGBITS        00000000 2feb80 019a59 00      0   0  1
+  [26] .shstrtab         STRTAB          00000000 3185d9 000140 00      0   0  1
+  [27] .symtab           SYMTAB          00000000 318ba4 015200 10     28 4073  4
+  [28] .strtab           STRTAB          00000000 32dda4 00c1be 00      0   0  1
 Key to Flags:
   W (write), A (alloc), X (execute), M (merge), S (strings)
   I (info), L (link order), G (group), T (TLS), E (exclude), x (unknown)
