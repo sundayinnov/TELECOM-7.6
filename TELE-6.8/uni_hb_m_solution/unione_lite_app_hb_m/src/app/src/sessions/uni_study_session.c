@@ -995,6 +995,9 @@ void StudySessionClearGrammar() {
     uni_list_del(&item->link);
     uni_free(item);
   }
+  // ★★★ 新增：强制重置状态机到 IDLE ★★★
+  g_study_session->enter_studying = false;
+  FsmSetState(g_study_session->fsm, STATE_IDLE);
 
   RecogStop();
   if (VuiRecognUpdateGrammar(_get_cur_grammar()) != E_OK) {
