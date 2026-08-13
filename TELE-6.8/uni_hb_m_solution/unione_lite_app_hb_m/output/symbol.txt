@@ -576,1778 +576,1777 @@
 00011820 t _wakeup_cb	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:226
 00011830 t timeout_handler	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:721
 00011848 t uart_tx_task	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:787
-00011870 t led_init	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1086
-00011a00 t soft_uart_hw_init	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1154
-00011a60 t enter_deep_sleep_with_wakeup	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1055
-00011c40 t gpio_intr_handler	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:769
-00011c84 t bit_sampling_handler	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:728
-00011d4c T save_mute_to_flash	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:235
-00011d74 T restore_mute_from_flash	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:241
-00011dec T save_volume_to_flash	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:253
-00011e0c T restore_audio_settings	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:257
-00011eb4 T uart_send_safe	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:401
-00011f28 t send_adc_response	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:292
-00011fac t send_led_feedback	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:670
-00011ff4 t led_blink_cb	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:579
-00012094 t send_volume_response	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:464
-00012118 t tts_handler_task	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:797
-00012ef8 t _study_event_cb	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1346
-00013020 t _goto_sleeping_cb	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1274
-00013088 t send_command_with_angle	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1171
-0001310c t _goto_awakened_cb	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1240
-000131c4 t _custom_setting_cb	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1189
-00013374 T study_send_approval_request	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1306
-000133ec T study_send_approval_result	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1317
-00013468 T study_send_result	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1334
-000134e4 T hb_auto_gpio	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1387
-00013788 T doa_trigger_start	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:67
-000137cc T doa_trigger_stop	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:75
-0001380c t _doa_uart_recv	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:111
-0001398c T doa_get_latest_angle	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:207
-000139a8 T doa_is_data_valid	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:221
-000139c4 T doa_reset_data	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:260
-00013a34 T doa_wait_for_angle	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:174
-00013afc T doa_uart_init	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:281
-00013be8 T doa_uart_reinit_hw	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:314
-00013c68 t _adc_reset_filter_buffer	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:129
-00013c84 T adc_init	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:41
-00013ccc T adc_deinit	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:87
-00013d14 T adc_get	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:144
-00013d68 T adc_process_sample	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:197
-00013e44 T adc_is_initialized	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:263
-00013e4c T adc_reset_state	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:283
-00013e6c T adc_is_triggered	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:307
-00013e78 T adc_get_report_value	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:320
-00013e8c t _user_timer_handle	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/drivers/user_sw_timer.c:52
-00013f80 T user_sw_timer_remove	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/drivers/user_sw_timer.c:81
-000140a8 T user_sw_timer_add	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/drivers/user_sw_timer.c:114
-000141a4 T user_sw_timer_init	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/drivers/user_sw_timer.c:144
-00014200 T UalAikInit	/workspace/src/kit/aik-kit.c:36
-00014276 T UalAikStart	/workspace/src/kit/aik-kit.c:56
-00014284 T UalAikStop	/workspace/src/kit/aik-kit.c:68
-00014292 T UalAikSet	/workspace/src/kit/aik-kit.c:81
-000142a0 T UalAikGet	/workspace/src/kit/aik-kit.c:93
-000142ae T UalAikRelease	/workspace/src/kit/aik-kit.c:103
-000142ee T UalAikAuthConfirmFail	/workspace/src/kit/aik-kit-auth.c:26
-000142f2 t ModeIsInvalid	/workspace/src/kit/aik-kit-manager.c:83
-00014302 t KitManagerGetParam	/workspace/src/kit/aik-kit-manager.c:428
-00014374 t KitManagerSetParam	/workspace/src/kit/aik-kit-manager.c:392
-000143f0 t KitManagerDestroy	/workspace/src/kit/aik-kit-manager.c:357
-0001445a t KitManagerCreate	/workspace/src/kit/aik-kit-manager.c:296
-000145c6 t KitManagerUpdate	/workspace/src/kit/aik-kit-manager.c:54
-00014652 t KitManagerEventProcess	/workspace/src/kit/aik-kit-manager.c:109
-00014818 T KitManagerModuleRegister	/workspace/src/kit/aik-kit-manager.c:457
-0001486a T KitManagerInit	/workspace/src/kit/aik-kit-manager.c:481
-00014926 T KitManagerStart	/workspace/src/kit/aik-kit-manager.c:510
-000149f8 T KitManagerStop	/workspace/src/kit/aik-kit-manager.c:543
-00014a86 T KitManagerSet	/workspace/src/kit/aik-kit-manager.c:612
-00014b7a T KitManagerGet	/workspace/src/kit/aik-kit-manager.c:661
-00014c46 t KitManagerMonitor	/workspace/src/kit/aik-kit-manager.c:181
-00014d6a t KitManagerEntry	/workspace/src/kit/aik-kit-manager.c:220
-00014f32 T KitManagerRelease	/workspace/src/kit/aik-kit-manager.c:705
-00014fc0 T KitManagerMonitorRegister	/workspace/src/kit/aik-kit-manager.c:726
-00015066 t EalObserverableNotify	/workspace/src/eal/aik-eal-handle.c:114
-000150ec t EalObserverableClear	/workspace/src/eal/aik-eal-handle.c:143
-00015140 t EalObserverableDettach	/workspace/src/eal/aik-eal-handle.c:83
-000151a2 t EalObserverableAttach	/workspace/src/eal/aik-eal-handle.c:45
-00015234 t EalModuleRegister	/workspace/src/eal/aik-eal-handle.c:284
-000152ae T EalHandleGetByObserver	/workspace/src/eal/aik-eal-handle.c:167
-000152e8 T EalHandleObserverableNotify	/workspace/src/eal/aik-eal-handle.c:212
-0001531e T EalObserverHandleSet	/workspace/src/eal/aik-eal-handle.c:309
-00015358 T EalCreate	/workspace/src/eal/aik-eal-handle.c:334
-0001548a T EalDestroy	/workspace/src/eal/aik-eal-handle.c:379
-0001550a t EalUploaderGetParam	/workspace/src/eal/aik-eal-uploader.c:165
-0001554a t EalUploaderSetParam	/workspace/src/eal/aik-eal-uploader.c:146
-00015588 t EalUploaderEventProcess	/workspace/src/eal/aik-eal-uploader.c:69
-000155c6 t EalUploaderDestroy	/workspace/src/eal/aik-eal-uploader.c:124
-0001560c t EalUploaderCreate	/workspace/src/eal/aik-eal-uploader.c:89
-000156c0 t EalUploaderUpdate	/workspace/src/eal/aik-eal-uploader.c:26
-00015764 T EalUploaderModuleRegister	/workspace/src/eal/aik-eal-uploader.c:183
-000157b6 t KitHandleUninit	/workspace/src/kit/aik-kit-config.c:120
-000157e4 t KitAddModuleToMap	/workspace/src/kit/aik-kit-config.c:56
-00015838 t KitHandleInit	/workspace/src/kit/aik-kit-config.c:79
-0001590a t KitGetTargetObjectItem	/workspace/src/kit/aik-kit-config.c:1963
-00015a2a t KitConfigParseFromData	/workspace/src/kit/aik-kit-config.c:2692
-00015b8a t KitConfigParse	/workspace/src/kit/aik-kit-config.c:2790
-00015b98 t KitUploaderBuilder	/workspace/src/kit/aik-kit-config.c:2546
-00015c82 t KitTtsBuilder	/workspace/src/kit/aik-kit-config.c:1361
-00016248 t KitFaceRecognizeBuilder	/workspace/src/kit/aik-kit-config.c:1172
-00016480 t KitDirectionalSspBuilder	/workspace/src/kit/aik-kit-config.c:455
-00016798 t KitSspBuilder	/workspace/src/kit/aik-kit-config.c:708
-00016a90 t KitAudioStreamBuilder	/workspace/src/kit/aik-kit-config.c:187
-00016cd8 t KitOnlineTtsBuilder	/workspace/src/kit/aik-kit-config.c:1560
-000172c0 t KitFaceDetectBuilder	/workspace/src/kit/aik-kit-config.c:1047
-00017588 t KitLipBuilder	/workspace/src/kit/aik-kit-config.c:848
-00017a40 t KitImageStreamBuilder	/workspace/src/kit/aik-kit-config.c:326
-00017c80 t GetFaIndex	/workspace/src/kit/aik-kit-config.c:1944
-00017cd2 t KitGetScoreFromFaTable	/workspace/src/kit/aik-kit-config.c:2000
-00017d86 t KitGetArrayNumberDouble	/workspace/src/kit/aik-kit-config.c:2023
-00017e0c t KitFreqsspBuilder	/workspace/src/kit/aik-kit-config.c:603
-00018232 t KitAudioAdapterBuilder	/workspace/src/kit/aik-kit-config.c:2592
-00018426 t KitKwsLpBuilder	/workspace/src/kit/aik-kit-config.c:2133
-00019220 t KitVadnnBuilder	/workspace/src/kit/aik-kit-config.c:1263
-00019868 t KitAsrBuilder	/workspace/src/kit/aik-kit-config.c:1769
-0001a274 T KitConfigInit	/workspace/src/kit/aik-kit-config.c:2808
-0001a3a4 T KitConfigSetCallback	/workspace/src/kit/aik-kit-config.c:2851
-0001a3e2 T KitConfigRelease	/workspace/src/kit/aik-kit-config.c:2874
-0001a478 t KitGetFilterByMode	/workspace/src/kit/aik-kit-event.c:51
-0001a4b0 T KitEventFilterRegister	/workspace/src/kit/aik-kit-event.c:69
-0001a520 T KitEventFilterProcess	/workspace/src/kit/aik-kit-event.c:91
-0001a5ca T KitEventCreate	/workspace/src/kit/aik-kit-event.c:119
-0001a60a T KitEventDestroy	/workspace/src/kit/aik-kit-event.c:137
-0001a626 t KitEventProcessFaceSmallError	/workspace/src/kit/aik-kit-event-filter-face.c:165
-0001a66c t KitEventProcessFaceAskewError	/workspace/src/kit/aik-kit-event-filter-face.c:144
-0001a6b2 t KitEventProcessFaceNumError	/workspace/src/kit/aik-kit-event-filter-face.c:123
-0001a6f8 t KitEventProcessFaceRegisterResult	/workspace/src/kit/aik-kit-event-filter-face.c:96
-0001a754 t KitEventProcessFaceRecognizeResult	/workspace/src/kit/aik-kit-event-filter-face.c:69
-0001a7b0 t KitEventProcessFaceDetectResult	/workspace/src/kit/aik-kit-event-filter-face.c:43
-0001a80c T KitEventFilterGetFace	/workspace/src/kit/aik-kit-event-filter-face.c:186
-0001a812 t KitEventProcessKwsTimeout	/workspace/src/kit/aik-kit-event-filter-kws.c:98
-0001a856 t KitEventProcessKwsStudy	/workspace/src/kit/aik-kit-event-filter-kws.c:117
-0001a8e0 t KitEventProcessKwsCommand	/workspace/src/kit/aik-kit-event-filter-kws.c:68
-0001a96a t KitEventProcessKwsWakeup	/workspace/src/kit/aik-kit-event-filter-kws.c:38
-0001a9f2 T KitEventFilterGetKws	/workspace/src/kit/aik-kit-event-filter-kws.c:146
-0001a9f8 T KitLinkSetByMode	/workspace/src/kit/aik-kit-link.c:249
-0001ae12 T KitProtocolCreateFaceDetectResult	/workspace/src/kit/aik-kit-protocol.c:74
-0001aee4 T KitProtocolCreateKwsResult	/workspace/src/kit/aik-kit-protocol.c:208
-0001afd8 T KitProtocolCreateFaceRecognizeResult	/workspace/src/kit/aik-kit-protocol.c:255
-0001b096 T KitProtocolCreateFaceRegisterResult	/workspace/src/kit/aik-kit-protocol.c:271
-0001b168 T KitProtocolCreateHeartbeatResult	/workspace/src/kit/aik-kit-protocol.c:291
-0001b234 t EalAudioStreamGetParam	/workspace/src/eal/aik-eal-audio-stream.c:585
-0001b290 t EalAudioStreamSetParam	/workspace/src/eal/aik-eal-audio-stream.c:556
-0001b2e2 t EalAudioStreamDestroy	/workspace/src/eal/aik-eal-audio-stream.c:523
-0001b358 t EalAudioStreamCreate	/workspace/src/eal/aik-eal-audio-stream.c:439
-0001b54c t EalAudioStreamEventProcess	/workspace/src/eal/aik-eal-audio-stream.c:376
-0001b6a0 t EalAudioStreamUpdate	/workspace/src/eal/aik-eal-audio-stream.c:348
-0001b714 t RecorderEntry	/workspace/src/eal/aik-eal-audio-stream.c:256
-0001be08 T EalAudioStreamModuleRegister	/workspace/src/eal/aik-eal-audio-stream.c:617
-0001be5a t EalAudioAdapterGetParam	/workspace/src/eal/aik-eal-audio-adapter.c:341
-0001be9a t EalAudioAdapterSetParam	/workspace/src/eal/aik-eal-audio-adapter.c:319
-0001bed8 t EalAudioAdapterDestroy	/workspace/src/eal/aik-eal-audio-adapter.c:295
-0001bf2c t EalAudioAdapterUpdate	/workspace/src/eal/aik-eal-audio-adapter.c:193
-0001c104 t EalAudioAdapterEventProcess	/workspace/src/eal/aik-eal-audio-adapter.c:230
-0001c17c t EalAudioAdapterCreate	/workspace/src/eal/aik-eal-audio-adapter.c:261
-0001c2c4 T EalAudioAdapterModuleRegister	/workspace/src/eal/aik-eal-audio-adapter.c:362
-0001c316 t KwslpSetAcousticModelByUser	/workspace/src/eal/aik-eal-kws7.c:718
-0001c378 t KwslpSetGrammarByUser	/workspace/src/eal/aik-eal-kws7.c:743
-0001c3da t KwslpGetAcousticModel	/workspace/src/eal/aik-eal-kws7.c:38
-0001c412 t KwslpGetGrammar	/workspace/src/eal/aik-eal-kws7.c:44
-0001c44c t EalKwslpGetParam	/workspace/src/eal/aik-eal-kws7.c:1675
-0001c66c t EalKwslpSetParam	/workspace/src/eal/aik-eal-kws7.c:1572
-0001c8b4 t KwslpDestroyNonTask	/workspace/src/eal/aik-eal-kws7.c:850
-0001ca66 t EalKwslpDestroy	/workspace/src/eal/aik-eal-kws7.c:1510
-0001ca74 t KwslpCreateNonTask	/workspace/src/eal/aik-eal-kws7.c:794
-0001cbe0 t EalKwslpCreate	/workspace/src/eal/aik-eal-kws7.c:1495
-0001cbee t EalKwslpEventProcess	/workspace/src/eal/aik-eal-kws7.c:1441
-0001ce5e t KwslpUpdateGrammar	/workspace/src/eal/aik-eal-kws7.c:1525
-0001cf34 t KwslpEnginePreprocess	/workspace/src/eal/aik-eal-kws7.c:893
-0001d4b0 t KwslpUpdateNonTask	/workspace/src/eal/aik-eal-kws7.c:975
-0001dec6 t EalKwslpUpdate	/workspace/src/eal/aik-eal-kws7.c:1423
-0001ded4 T EalKws7ModuleRegister	/workspace/src/eal/aik-eal-kws7.c:1752
-0001df26 t EalHeadGetParam	/workspace/src/eal/aik-eal-head.c:89
-0001dff0 t EalHeadSetParam	/workspace/src/eal/aik-eal-head.c:66
-0001e0ba t EalHeadDestroy	/workspace/src/eal/aik-eal-head.c:45
-0001e154 t EalHeadCreate	/workspace/src/eal/aik-eal-head.c:21
-0001e1ec T EalHeadModuleRegister	/workspace/src/eal/aik-eal-head.c:110
-0001e282 T UalOFAInitializeFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:22
-0001e290 T UalOFASetOptionInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:33
-0001e2a6 T UalOFAGetOptionInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:41
-0001e2bc T UalOFAGetOptionString	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:58
-0001e2d2 T UalOFAStart	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:66
-0001e30e T UalOFARecognize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:78
-0001e31c T UalOFAGetResult	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:84
-0001e32a T UalOFAStop	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:94
-0001e342 T UalOFARelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:103
-0001e350 T UalOFAReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:108
-0001e368 T UalOFAGetVersion	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:117
-0001e372 T UalOFAGetEngineType	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:122
-0001e376 T UalOFAGetActiveAmId	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:140
-0001e38c T UalOFAGetGrammarInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:163
-0001e39a T UalOFAGetResGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:168
-0001e3a8 T UalOFAMergeGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:174
-0001e3c0 T UalOFAGetGrammarSimilarity	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:182
-0001e3ce t GetCurrentLanguage	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:904
-0001e406 t CheckEngineAndAmVersion	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:838
-0001e41e t CheckEngineAndGrammarVersion	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:851
-0001e42c t DecoderForward	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:802
-0001e4b0 T KWSRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:202
-0001e554 T KWSCreateOnBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:46
-0001e9ae T KWSStop	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:400
-0001e9e6 T KWSReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:408
-0001ea60 T KWSPushDataOne	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:502
-0001ebca T KWSSetResultStatus	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:595
-0001ec00 T KWSRecognize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:439
-0001ed34 T KWSGetResult	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:603
-0001edc2 T KWSGetOptionInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:621
-0001ee0c T KWSSetOptionInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:640
-0001ef08 T KWSGetOptionString	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:700
-0001ef6e T KWSGetActiveAmId	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:717
-0001efa8 T KWSPoolSet	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:733
-0001efc0 T KWSStart	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:239
-0001f2ea T KWSGetGrammarInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:768
-0001f374 T KWSGetResGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:923
-0001f384 T KWSMergeGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:928
-0001f3fa T KWSGetGrammarSimilarity	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:955
-0001f40c t GetTokenLateNodeNumber	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1401
-0001f450 T PoolSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:208
-0001f456 T DecoderPoolSet	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:213
-0001f474 T CalculateTrimBeam	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:298
-0001f576 T UpdateBeam	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:412
-0001f58a T ResGrammarReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:550
-0001f5a2 T GetResult	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:473
-0001f762 T GetResGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:558
-0001f844 T GetResultTime	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:605
-0001f8a8 T TraceBack	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:438
-0001f8f6 T NormFrameScore	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:625
-0001f94a T UpdateScore	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:722
-0001fb08 T SetTokenFree	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:819
-0001fb2a T TrimTokens	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:352
-0001fbde T GetFreeToken	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:904
-0001fc20 T SetTokenStampZero	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:943
-0001fc3e T PurgeGarbage	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:950
-0001fc86 T MarkPathNode	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:967
-0001fc9a T MarkTokenPath	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:976
-0001fcc6 T NewLatNode	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:995
-0001fdec T GenOsymNode	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1079
-0001fe82 T GenIsymNodeForBestToken	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1117
-0001fefa T EndPreWakeupDetection	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:229
-0001ff50 T EndDetection	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:241
-00020008 T GenIsymNode	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1147
-00020084 T UpdateTokenSilenceType	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1190
-000200be T InsertToken	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1313
-00020166 T PropFstLayer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1214
-000202d6 T PropToken	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:841
-000203fa T PropFirstLayer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1379
-00020444 T SwapLayer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1393
-00020456 T DecoderInit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1449
-000204d2 T DecoderReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1499
-000206ee T DecoderInitVariableInPool	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1419
-00020774 T DecoderDestroy	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1574
-000207ba T DecoderRecognize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1618
-000208be T DecoderGetResult	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1710
-000209dc T DecoderGetUtteranceStartTime	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1756
-000209e2 T DecoderGetUtteranceEndTime	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1761
-000209e8 T DecoderGetResGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1766
-00020a94 T decoderSetValueInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1807
-00020acc t GetPartialFstSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1034
-00020af0 t GetFstSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1005
-00020b68 t GetDumpGrammarSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:988
-00020bca t MallocFsts	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:464
-00020c0c t DestroyFst	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:440
-00020c32 t FreeFsts	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:475
-00020c6a t GetFstOsymID	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:976
-00020c94 t MergeFst	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1046
-00020ff8 t ParseResGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:970
-00021012 t DumpFSTData	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1300
-00021116 t DumpFSTHeader	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1268
-00021204 t DumpFST	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1342
-00021328 t EditDistance	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1433
-00021422 t DumpGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1389
-000214f4 T ResetGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:268
-0002153c T GrammarCheckVersions	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:285
-00021598 T InitFstHeaderInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:308
-000216d8 t InitFstFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:363
-0002182a T SetActiveParaForGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:489
-00021860 t FindTargetFst	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:812
-000218b2 T GetFstArc	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:754
-000218de T DestroyGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:764
-0002190e T GetFstOsym	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:779
-0002192e T GetGrammarStatus	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:790
-0002193e T SetActiveFst	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:798
-00021990 T GetActiveFstDomain	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:826
-0002199e T GetGrammarLanguage	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:830
-000219dc T GetGrammarTreeInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:839
-00021a1a T SetNodeSilenceType	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:848
-00021afe t SetFstSilenceType	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:891
-00021b32 T SetSilenceType	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:903
-00021b60 T InitGrammarFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:500
-00021d18 T GrammarGetModelNumber	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:931
-00021d1c T GrammarGetInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:935
-00021d34 T GetGrammarMaxNodesCount	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:943
-00021d56 T MergeGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1182
-00021ed2 T GetGrammarSimilarity	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1475
-00021f42 t ApplyMelFilterBank	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:191
-00021fb4 t ApplyWindow	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:224
-00021ffa t InitMelFilterBank	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:238
-000220e0 t InitCeps	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:286
-00022142 t Accumulate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:726
-000221a4 t GetEnergy	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:748
-000221c4 t InitEnergy	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:715
-000221f8 t GlobalMvn	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:430
-000224ac t PushEnergy	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:737
-00022506 t ComputeCeps	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:338
-00022684 T InitMvnStat	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:307
-000227a6 T FepGetSampleRate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:583
-000227ba T FepUninit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:607
-000227f2 T FepGet	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:621
-00022974 T FepDim	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:682
-0002297e T FepReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:690
-000229ea T FepInit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:539
-00022a88 T FepSetSampleRate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:568
-00022ad2 T FepSetValueInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:594
-00022b14 T FepGetEnergy	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:707
-00022b38 T WaveEndInfoInit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:33
-00022bde T WaveEndInfoRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:61
-00022bfe T WaveEndInfoReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:91
-00022c22 T WaveEndInfoUpdateStartSpeechDetect	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:136
-00022c36 T WaveEndInfoSetValueInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:164
-00022ca0 T WaveEndInfoComputeIsSpeech	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:188
-00022daa T WaveEndInfoUpdateEnergy	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:102
-00022e2c T AcousticInit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:30
-00022e70 T AcousticSetActiveCm	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:50
-00022e92 T AcousticLoadModelsFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:98
-00022fa8 T AcousticReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:146
-00023022 T AcousticGetAcitveAmId	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:164
-00023068 T AcousticSet	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:173
-00023144 T AcousticGetOutputNum	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:201
-00023168 T AcousticGetMaxOutputNum	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:210
-00023172 T AcousticForwardFloat	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:219
-000231c2 T AcousticGetOneSenonesScore	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:301
-00023208 T AcousticRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:331
-00023256 T AcousticSetBunchFrame	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:347
-00023290 T AcousticSetSimulateForwardLoopnumber	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:360
-000232ca T AcousticCheckVersions	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:375
-00023326 T AcousticGetBunchFrame	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:398
-0002333e T AcousticGetSimulateForwardLoopnumber	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:406
-00023356 T AcousticGetLanguage	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:422
-00023372 T AcousticGetTreeInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:431
-0002338e T AcousticGetLeftPaddingFrame	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:439
-000233a6 T AcousticGetRightPaddingFrame	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:447
-000233be T AcousticGetDownSampleRate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:455
-000233d6 T FtdnnInitialize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:56
-00023420 T ReleaseLayersData	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:91
-00023490 T FtdnnRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:119
-00023518 T ClearLayersData	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:156
-000235ae T SimulateForward	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:423
-00023904 T AllocFtdnnMemory	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:553
-00023a00 T InitInputBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:600
-00023a64 T FtdnnReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:615
-00023bbe T FtdnnReadFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:667
-0002415c T FtdnnGetOutputNumber	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:895
-00024168 T FtdnnPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:904
-00024646 T FtdnnFeedDataFloat	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:1260
-00024746 T FtdnnGetOneOutData	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:1402
-000247b8 T ReleaseVariableMemorySizeLayerData	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:1440
-00024802 T FtdnnSetSimulateForwardLoopnumber	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:1464
-0002486e T FtdnnSetBunchFrame	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:1484
-000248d6 t saturation_int16_int8	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:172
-0002491c t NormalizeInt32Fast	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:31
-000249bc T NormalizeInt32	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:109
-000249d4 T ReluInt32	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:116
-000249ee T saturation_int32_int16	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:210
-00024a34 T VectorCastInt16ToInt8Self	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:235
-00024bc8 T VectorCastInt32ToInt16	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:268
-00024d46 T VectorCastInt32ToInt16Self	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:303
-00024ec6 T VectorCastInt32ToInt8	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:336
-00024f40 T VectorCastInt32ToInt8Self	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:355
-00024fb8 T VectorCastInt32ToFloatSelf	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:387
-00024fe6 T ReadFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:400
-00025004 T MinMultipleDistance	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:406
-00025010 T CheckVersionPrefix	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:410
-0002507e T LayerRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/layer.c:21
-000250b4 T LayerPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/layer.c:42
-000250de T LayerInputScale	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/layer.c:53
-000250fe T LayerInputBits	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/layer.c:69
-0002511e T SetActiveCm	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/confidence_measure.c:15
-000251f4 T CMRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/confidence_measure.c:65
-00025210 T CMLoadFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/confidence_measure.c:89
-0002537e T PoolMalloc	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_platform.c:65
-00025404 T SafeStrCpy	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_platform.c:103
-00025484 T SafeStrCat	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_platform.c:123
-0002550e T SafeMemCpy	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_platform.c:144
-0002557c t GetPrephoneNode	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:105
-000255b6 t GetCharInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:338
-0002576e t GetNodeInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:120
-00025836 t GetStateFeat	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:161
-000258d2 t CalCmFeature	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:399
-00025bd0 T GetStateFeatFromPath	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:197
-00025d00 T GetCmFrame	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:629
-00025d3e T CmReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:715
-00025d66 T GetCmScore	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:648
-00025ec8 T CmInit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:721
-00025ef4 T CmProcessRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:730
-00025f16 T VectorInit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:14
-00025f52 T VectorNew	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:25
-00025f90 T VectorMalloc	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:35
-00026090 T VectorSetSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:78
-000260d4 T VectorIncreaseSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:90
-00026150 T VectorPushBack	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:110
-00026238 T VectorClear	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:145
-000262c8 T VectorClearFast	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:168
-00026302 T VectorFree	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:177
-0002632e T VectorDecreaseSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:192
-00026378 T VectorErase	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:205
-000264a8 T VectorSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:259
-000264de T TransformFloat2Int16	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:271
-000265a2 T TransformFloat2Int8	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:291
-00026652 T ComponentRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:22
-000266e6 T QuantParamReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:58
-00026752 T LinearComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:72
-00026806 T AffineComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:102
-000268c4 T LdaComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:134
-000268d2 T NormalizeComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:139
-00026924 T FtdnnOutputComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:154
-00026976 T AffineReluNormComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:173
-000269b8 T TdnnOutputComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:187
-000269ec T TdnnSvdOutputComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:199
-00026a20 T ComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:211
-00026ab8 T MatMul_8bit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:245
-00026b3e T MatMul_16bit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:278
-00026bc4 T FtdnnOutputComponentPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:311
-00026d98 T AffineComponentPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:424
-00026ee6 T LinearComponentPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:484
-00027034 T AffineReluNormComponentPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:544
-000271b0 T ComponentPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:617
-00027238 T ComponentInputScale	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:654
-0002729c T ComponentInputBits	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:716
-00027300 T cblas_gemm_float	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:147
-0002735c T cblas_gemm_int8_fast	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:165
-000273b0 T cblas_gemm_int8_normal	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:185
-00027408 T cblas_gemm_int16_fast	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:204
-00027464 T cblas_gemm_int16_normal	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:223
-00027510 T cblas_gemm_int32_fast	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:244
-00027584 T cblas_gemm_int32_normal	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:263
-000275f8 T UmdIgemmS8S8S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:289
-00027650 T UmdIgemmS8U8S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:310
-00027710 T UmdIgemmS16S16S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:339
-00027768 T UmdIraxpyS32S16	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:362
-000277d0 T UmdIraxpyS32S8	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:375
-00027834 T UmdIrshiftS32S8	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:390
-00027878 T UmdIrshiftS32S16	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:401
-000278c0 T UmdIrssqrtU32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:481
-000278e8 T UmdIcvsqsumpyS16S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:500
-00027918 T UmdIcvsqsumpyS32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:510
-00027940 T UmdIcvsqasumshrS32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:521
-00027998 T UmdIrvsqasumS16S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:534
-000279b8 T UmdIrvdotS32S32S64	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:545
-000279e4 T UmdIrsvmulshrS32S16S16	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:557
-00027a0c T UmdIrsvaddS32S32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:568
-00027a2c T UmdIrvdivshlS32S32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:578
-00027a74 T UmdIrsvdivshlS32S32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:583
-00027ae0 T UmdIrvmlashrS16S16S16	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:594
-00027b24 T UmdIrvaddS32S32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:606
-00027b4c T UmdIrcvmulshrS32S16S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:618
-00027bb4 T UmdIcvmulshrpzS16S32S16	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:631
-00027c58 T UmdIcvconjmulshrpzS16S32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:643
-00027d08 T UmdIrvsdivS32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:655
-00027d2c T UmdIsmulshrS16S32S64	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:665
-00027d54 T UmdIsmulshrS32S32S64	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:669
-00027d7c T UmdIsmulshrS16S16S16	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:673
-00027d88 T normal_UmdFixedFft	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:772
-00027eac T UmdFixedFft	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:428
-00027ff4 T normal_UmdFloatFft
-000280cc T UmdFloatFft	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:678
-000281a0 T normal_UmdFloatIfft	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:845
-000282a8 T UmdFloatIfft	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:724
-00028390 t bitrv2	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:684
-000285b8 t cft1st	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:985
-000288f8 t cftmdl	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:1088
-00028dbc t cftbsub	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:937
-00028f10 t cftfsub	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:889
-0002905c t makewt.part.0	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:638
-0002914c T WebRtc_cdft	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:312
-000294a4 T WebRtc_rdft	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:329
-000297e0 T rfft_fix	/cygdrive/d/Andes/matrix_op/Debug/../src/fixed-fft.c:94
-00029bbc T OsalMalloc	/workspace/src/osal/src/system/freertos/osal-memory.c:89
-00029bd4 T OsalFree	/workspace/src/osal/src/system/freertos/osal-memory.c:120
-00029be2 T OsalSemInit	/workspace/src/osal/src/system/freertos/osal-sem.c:30
-00029c4a T OsalSemPost	/workspace/src/osal/src/system/freertos/osal-sem.c:63
-00029cb2 T OsalSemWait	/workspace/src/osal/src/system/freertos/osal-sem.c:90
-00029d1a T OsalSemDestroy	/workspace/src/osal/src/system/freertos/osal-sem.c:147
-00029d52 T OsalPrintf	/workspace/src/osal/src/system/freertos/osal-stdio.c:33
-00029d62 T OsalSprintf	/workspace/src/osal/src/system/freertos/osal-stdio.c:63
-00029d72 T OsalSnprintf	/workspace/src/osal/src/system/freertos/osal-stdio.c:78
-00029d82 T OsalOpen	/workspace/src/osal/src/system/freertos/osal-stdio.c:103
-00029d86 T OsalWrite	/workspace/src/osal/src/system/freertos/osal-stdio.c:189
-00029d8a T OsalClose	/workspace/src/osal/src/system/freertos/osal-stdio.c:268
-00029d8e T OsalSeek	/workspace/src/osal/src/system/freertos/osal-stdio.c:310
-00029d94 T OsalSync	/workspace/src/osal/src/system/freertos/osal-stdio.c:441
-00029d98 T OsalAssert	/workspace/src/osal/src/system/freertos/osal-assert.c:21
-00029dd6 T OsalMemset	/workspace/src/osal/src/system/freertos/osal-string.c:21
-00029df2 T OsalMemcpy	/workspace/src/osal/src/system/freertos/osal-string.c:36
-00029e0e T OsalMemmove	/workspace/src/osal/src/system/freertos/osal-string.c:51
-00029e2a T OsalStrcpy	/workspace/src/osal/src/system/freertos/osal-string.c:65
-00029e46 T OsalStrncpy	/workspace/src/osal/src/system/freertos/osal-string.c:80
-00029e62 T OsalStrstr	/workspace/src/osal/src/system/freertos/osal-string.c:95
-00029e7e T OsalStrchr	/workspace/src/osal/src/system/freertos/osal-string.c:110
-00029e94 T OsalStrlen	/workspace/src/osal/src/system/freertos/osal-string.c:138
-00029eca T OsalStrcmp	/workspace/src/osal/src/system/freertos/osal-string.c:152
-00029f02 T OsalStrncmp	/workspace/src/osal/src/system/freertos/osal-string.c:165
-00029f3e T OsalMemcmp	/workspace/src/osal/src/system/freertos/osal-string.c:178
-00029f7a T OsalStrcat	/workspace/src/osal/src/system/freertos/osal-string.c:191
-00029fb2 T OsalStrtok_r	/workspace/src/osal/src/system/freertos/osal-string.c:233
-00029fea T OsalThreadCreate	/workspace/src/osal/src/system/freertos/osal-thread.c:30
-0002a08e T OsalThreadSet	/workspace/src/osal/src/system/freertos/osal-thread.c:82
-0002a0bc T OsalThreadDetach	/workspace/src/osal/src/system/freertos/osal-thread.c:131
-0002a0c0 T OsalThreadExit	/workspace/src/osal/src/system/freertos/osal-thread.c:151
-0002a0d6 T OsalThreadDelayMs	/workspace/src/osal/src/system/freertos/osal-thread.c:170
-0002a0e4 t OsalKeyCompareInt8	/workspace/src/osal/src/utility/osal-map.c:23
-0002a0ec t OsalKeyCompareInt16	/workspace/src/osal/src/utility/osal-map.c:40
-0002a0f4 t OsalKeyCompareInt32	/workspace/src/osal/src/utility/osal-map.c:57
-0002a0fc t OsalKeyCompareInt64	/workspace/src/osal/src/utility/osal-map.c:74
-0002a108 t OsalMapSearchNode	/workspace/src/osal/src/utility/osal-map.c:295
-0002a1c8 t OsalKeyComparePointer	/workspace/src/osal/src/utility/osal-map.c:92
-0002a1e8 t OsalMapCreateNode	/workspace/src/osal/src/utility/osal-map.c:152
-0002a304 T OsalMapCreate	/workspace/src/osal/src/utility/osal-map.c:116
-0002a38c T OsalMapInsert	/workspace/src/osal/src/utility/osal-map.c:213
-0002a4f4 T OsalMapSearch	/workspace/src/osal/src/utility/osal-map.c:361
-0002a540 T OsalMapDelete	/workspace/src/osal/src/utility/osal-map.c:391
-0002a5c2 T OsalMapGetSize	/workspace/src/osal/src/utility/osal-map.c:466
-0002a5f8 T OsalMapGetFirstNode	/workspace/src/osal/src/utility/osal-map.c:484
-0002a62e T OsalMapGetNextNode	/workspace/src/osal/src/utility/osal-map.c:506
-0002a664 T OsalMapRelease	/workspace/src/osal/src/utility/osal-map.c:528
-0002a770 T OsalQueueCreate	/workspace/src/osal/src/utility/osal-queue.c:23
-0002a81e T OsalQueueDestroy	/workspace/src/osal/src/utility/osal-queue.c:65
-0002a838 T OsalQueueSize	/workspace/src/osal/src/utility/osal-queue.c:80
-0002a860 T OsalQueuePush	/workspace/src/osal/src/utility/osal-queue.c:119
-0002a89e T OsalQueuePop	/workspace/src/osal/src/utility/osal-queue.c:143
-0002a8d6 t OsalRingBufferReadAttrJudge	/workspace/src/osal/src/utility/osal-ring-buffer.c:203
-0002a8da t OsalRingBufferWriteAttrJudge	/workspace/src/osal/src/utility/osal-ring-buffer.c:213
-0002a8e0 t OsalRingBufferSyncAttrJudge	/workspace/src/osal/src/utility/osal-ring-buffer.c:223
-0002a8e6 t OsalRingBufferGetDataSizeInternal	/workspace/src/osal/src/utility/osal-ring-buffer.c:123
-0002a928 t OsalRingBufferWriteInternal	/workspace/src/osal/src/utility/osal-ring-buffer.c:237
-0002a9f0 t OsalRingBufferReadInternal	/workspace/src/osal/src/utility/osal-ring-buffer.c:324
-0002aab2 T OsalRingBufferCreate	/workspace/src/osal/src/utility/osal-ring-buffer.c:26
-0002ab6e T OsalRingBufferDestroy	/workspace/src/osal/src/utility/osal-ring-buffer.c:73
-0002abb4 T OsalRingBufferClear	/workspace/src/osal/src/utility/osal-ring-buffer.c:96
-0002ac08 T OsalRingBufferGetDataSize	/workspace/src/osal/src/utility/osal-ring-buffer.c:146
-0002ac5a T OsalRingBufferGetFreeSize	/workspace/src/osal/src/utility/osal-ring-buffer.c:174
-0002acb0 T OsalRingBufferWrite	/workspace/src/osal/src/utility/osal-ring-buffer.c:289
-0002ad0c T OsalRingBufferRead	/workspace/src/osal/src/utility/osal-ring-buffer.c:374
-0002ad68 T OsalWavOpen	/workspace/src/osal/src/utility/osal-wav.c:436
-0002af52 T OsalWavWrite	/workspace/src/osal/src/utility/osal-wav.c:518
-0002b044 T OsalWavClose	/workspace/src/osal/src/utility/osal-wav.c:573
-0002b086 T OsalLogInit	/workspace/src/osal/src/utility/osal-log.c:78
-0002b08a T OsalLogRelease	/workspace/src/osal/src/utility/osal-log.c:160
-0002b08c T OsalLogSetLevel	/workspace/src/osal/src/utility/osal-log.c:213
-0002b0b6 T OsalMutexInit	/workspace/src/osal/src/system/freertos/osal-mutex.c:23
-0002b118 T OsalMutexLock	/workspace/src/osal/src/system/freertos/osal-mutex.c:54
-0002b180 T OsalMutexUnlock	/workspace/src/osal/src/system/freertos/osal-mutex.c:80
-0002b1e8 T OsalMutexDestroy	/workspace/src/osal/src/system/freertos/osal-mutex.c:106
-0002b220 t __rb_rotate_left	/workspace/src/osal/src/utility/osal-rbtree.c:25
-0002b25e t __rb_rotate_right	/workspace/src/osal/src/utility/osal-rbtree.c:44
-0002b29c t __rb_erase_color	/workspace/src/osal/src/utility/osal-rbtree.c:122
-0002b3ea T rb_insert_color	/workspace/src/osal/src/utility/osal-rbtree.c:63
-0002b4b8 T rb_erase	/workspace/src/osal/src/utility/osal-rbtree.c:186
-0002b570 T rb_first	/workspace/src/osal/src/utility/osal-rbtree.c:315
-0002b582 T rb_next	/workspace/src/osal/src/utility/osal-rbtree.c:335
-0002b5b0 T nds32_dot_prod_f32
-0002b5f4 T nds32_dot_prod_q15
-0002b640 T nds32_dot_prod_q7
-0002b6b8 T nds32_clx_conj_f32
-0002b6dc T nds32_clx_conj_q31
-0002b704 T nds32_max_q31
-0002b73c T nds32_min_q31
-0002b774 T nds32_rfft_f32
-0002b8b0 T nds32_rifft_f32
-0002b9f8 T nds32_rfft_q31
-0002bb04 T nds32_shift_q31
-0002bb48 T nds32_dup_f32
-0002bb84 T nds32_dup_q31
-0002bbc0 T nds32_set_f32
-0002bbdc T nds32_cfft_f32
-0002bc00 T nds32_cifft_f32
-0002bc24 T nds32_cfft_q31
-0002bc48 T nds32_cfft_radix2_f32
-0002c080 T nds32_cifft_radix2_f32
-0002c4f4 T nds32_cfft_radix2_q31
-0002c914 T nds32_cfft_radix4_f32
-0002d0f8 T nds32_cifft_radix4_f32
-0002d928 T nds32_cfft_radix4_q31
-0002e27c T ADC_Enable
-0002e28e T ADC_Disable
-0002e2a0 T ADC_ClockDivSet
-0002e2ba T ADC_VrefSet
-0002e33e T ADC_ModeSet
-0002e360 T ADC_Calibration
-0002e3ac T ADC_SingleModeDataGet
-0002e3e8 T Chip_Version
-0002e3f2 T Chip_VMIDDetectDisable
-0002e404 T Chip_LDOOffDisable
-0002e46a T FlashPortGet
-0002e484 T Chip_VINVBatVTHSet
-0002e4bc T Chip_Init
-0002e518 T EnableMPU
-0002e57e T EnableIDCache
-0002e5c0 T DataCacheInvalidAll
-0002e5ca T DataCacheRangeInvalid
-0002e630 T Efuse_ReadDataDisable
-0002e646 T Efuse_ReadData
-0002e6aa T GPIO_RegA18OutdsSet8mA
-0002e6b6 T GPIO_RegOneBitGet
-0002e6ca T GPIO_RegSet
-0002e6d4 T GPIO_RegGet
-0002e6de T GPIO_INTEnable
-0002e744 T GPIO_INTFlagClear
-0002e75a T GPIO_INTFlagGet
-0002e770 T GPIO_PortAModeSet
-0002efde T GPIO_PortBModeSet
-0002f22c T OsalAudioOpen
-0002f24c T OsalAudioClose
-0002f260 T OsalAudioRead
-0002f2c8 T OsalAudioStart
-0002f2cc T Power_WakeupSourceSet
-0002f5d0 T Power_WakeupEnable
-0002f5f4 T Power_WakeupDisable
-0002f61a T Power_WakeupSourceClear
-0002f628 T Power_WakeupSourceGet
-0002f632 T Power_CurrentLimitcConfig
-0002f6dc T Power_PowerModeConfig
-0002f83c T SarADC_Init
-0002f874 T SysTickInit
-0002f89e T SysTimerIntFlagClear
-0002f8ac T ClockFreqGet
-0002f8f0 T Timer_Config
-0002fa8c T Timer_Start
-0002fb04 T Timer_Pause
-0002fb80 T Timer_InterrputSrcEnable
-0002fc08 T UART0_InitWpr
-0002fc18 T UART1_InitWpr
-0002fc28 T UART0_SendWpr
-0002fc64 T UART1_SendWpr
-0002fca0 T UART0_SendByteWpr
-0002fcd4 T UART1_SendByteWpr
-0002fd08 T UART0_IOCtlWpr
-0002fd18 T UART1_IOCtlWpr
-0002fd28 t UART_BaudClkGet
-0002fd5e T UART0_Init
-0002ff1e T UART1_Init
-000300de T UART1_Recv
-00030138 T UART0_RecvByte
-0003015e T UART1_RecvByte
-00030184 T UART0_Send
-000301f6 T UART1_Send
-00030268 T UART0_SendByte
-000302a8 T UART1_SendByte
-000302e8 T UART0_IOCtl
-00030808 T UART1_IOCtl
-00030d28 T uni_hal_mic_gain_set
-00030d3c T uni_hal_record_init
-00030df0 T uni_hal_play_init
-00030e20 T uni_hal_record_deinit
-00030e30 T uni_hal_record_dmarestart
-00030e40 T uni_hal_record_datalenget
-00030e50 T uni_hal_record_dataget
-00030e60 T uni_hal_play_spacelenget
-00030e70 T uni_hal_play
-00030e80 T uni_hal_play_vol_set
-00030ed8 T uni_hal_play_mute
-00030ee8 T uni_hal_record_cb
-00030efc T uni_hal_decoder_init
-00030f30 T uni_hal_decoder_deinit
-00030f40 T uni_hal_decoder_song_info
-00030f6c T uni_hal_decoder_frame_info
-00030f94 T uni_hal_decoder_can_continue
-00030fa8 T uni_hal_decoder_decode
-00030fcc T uni_hal_flash_easy_init
-00030fdc T uni_hal_flash_easy_get_env_blob
-00030fec T uni_hal_flash_easy_set_env_blob
-00030ffc T uni_hal_flash_read
-0003100c T uni_hal_flash_write
-0003101c T uni_hal_flash_erase
-000310dc t SystermSleepConfig
-000311c8 t SystermAfterWackup
-0003129c T uni_hal_enterdeepsleep
-0003137c T uni_hal_reset_system
-0003138c T uni_hal_get_boot_status
-000313cc T uni_hal_clear_boot_status
-000313dc T uni_hal_timer_init
-0003146c T uni_hal_timer_start
-0003147c T uni_hal_timer_pause
-0003148c T PlayTask
-0003153c T _hand_shake_task
-00031578 t gpio_test
-000315bc t mic_test
-0003160c t uni_hal_cmdshelp
-00031648 t AudioMicTask
-00031844 t uni_hal_docmdfunc
-000318b8 T uni_hal_uartcmdtask
-00031be8 T _is_factory_mode
-00031cc0 T uni_hal_uartcmdinit
-00031d54 t TGPIO_UartRxIoConfig
-00031d9c t TGPIO_UartTxIoConfig
-00031de8 T uni_hal_dma_SendData
-00031e4c T uni_hal_uart_send
-00031e7c T uni_hal_uart_recvbyte
-00031eb0 T uni_hal_uart_init
-00031f48 T uni_hal_watchdog_enable
-00031f58 T uni_hal_watchdog_disable
-00031f68 T uni_hal_watchdog_feed
-00031f78 T uni_realloc
-00031fc4 T uni_pthread_create
-00032004 T uni_sem_init
-0003203c T uni_pthread_mutex_init
-00032060 T uni_system_init
-0003220c T uni_system_start
-00032218 T WDG_Enable
-00032250 T WDG_Disable
-00032274 T WDG_Feed
-00032298 T AudioADC_DMARestart
-000322f8 T AudioADC_DigitalInit
-00032440 T AudioADC_DeInit
-00032484 T AudioADC_DataLenGet
-000324b0 T AudioADC_DataGet
-00032520 T AudioADC_LREnable
-00032616 T AudioADC_Enable
-00032634 T AudioADC_Disable
-0003267e T AudioADC_HighPassFilterSet
-000326b4 T AudioADC_Clear
-000326ca T AudioADC_SampleRateGet
-0003274e T AudioADC_SampleRateSet
-00032884 T AudioADC_FadeTimeSet
-000328e0 T AudioADC_FadeEnable
-00032916 T AudioADC_SoftMute
-000329a2 T AudioADC_VolSet
-00032a00 T AudioADC_AnaInit
-00032a4c T AudioADC_AnaDeInit
-00032f0a T AudioADC_PGASel
-000331ba T AudioADC_PGAGainSet
-000335ce T AudioADC_VcomConfig
-00033632 T AudioADC_PowerDown
-000336f8 T audio_decoder_initialize
-000337a4 T audio_decoder_decode
-000337c4 T audio_decoder_can_continue
-000337e4 T BACKUP_WriteEnable
-000337fa T BACKUP_WriteDisable
-00033808 T buffer_context_init
-00033938 T clear_buffer
-00033a64 T get_num_bits_left
-00033a7c T fill_buffer
-00033c58 T skip_bits
-00033c60 T get_uint8
-00033c74 T show_uint32_be
-00033c88 T get_bits1
-00033ca8 T get_bits25
-00033cd0 T show_bits25
-00033cf8 T get_bits32
-00033d7c T Clock_Config
-00033e86 T WaitOscillateWork
-00033ec0 T Clock_SarADCClkDivSet
-00033ed2 T Clock_Pll5ClkDivSet
-00033ee4 T Clock_SPIMClkDivSet
-00033ef6 T Clock_SDIO0ClkDivSet
-00033f08 T Clock_SDIO1ClkDivSet
-00033f1a T Clock_RcFreqGet
-00033f94 T Clock_PllLock
-0003410c T Clock_PllClose
-00034158 T Clock_SysClkSelect
-000341b6 T Clock_UARTClkSelect
-000341e0 T Clock_Module1Enable
-000341f0 T Clock_Module2Enable
-00034200 T Clock_HOSCDisable
-00034212 T Clock_LOSCDisable
-0003423a T Clock_AudioPllClockAutoSet
-000343d8 T Clock_AudioMclkSel
-0003448c T AudioDAC_Init
-000347e4 T AudioDAC_DataSpaceLenGet
-00034824 T AudioDAC_DataSet
-00034850 t AudioDAC0_ChannelEnable
-000348b8 t AudioDAC1_ChannelEnable
-000348fc T AudioDAC_Enable
-0003491a T AudioDAC_DitherDisable
-00034938 T AudioDAC_ScrambleDisable
-00034956 T AudioDAC_DoutModeSet
-00034968 T AudioDAC_EdgeSet
-000349ae T AudioDAC_DsmOutdisModeSet
-000349d8 T AudioDAC_ZeroNumSet
-000349ec T AudioDAC_SampleRateGet
-00034a70 T AudioDAC_SampleRateSet
-00034bb6 T AudioDAC_Reset
-00034bd8 T AudioDAC_DigitalMute
-00034c18 T AudioDAC_SoftMute
-00034c84 T AudioDAC_VolSet
-00034cd2 T AudioDAC_VmidChargeOp
-00034d08 t AudioDAC0_PowerOn
-00034e00 t AudioDAC1_PowerOn
-00034eb0 t AudioDAC0_PowerDown
-00034fbe t AudioDAC1_PowerDown
-00035076 T AudioDAC_ClkEnable
-000350a4 T AudioDAC_FuncReset
-000350d2 T AudioDAC_BIASPowerCtrl
-000350f4 T AudioDAC_SCFMute
-0003513a T AudioDAC_IBSelect
-00035184 T AudioDAC_AllPowerOn
-000352a0 T AudioDAC_AllPowerDown
-000353b4 T AudioDAC_AllChannelEnable
-00035440 T AudioDAC_PowerOn
-00035462 T AudioDAC_PowerDown
-0003548e T AudioDAC_ChannelEnable
-000354ac T DMA_ChannelAllocTableSet
-000354ba T DMA_ChannelEnable
-000354e6 T DMA_ChannelDisable
-00035514 T DMA_CircularConfig
-000356f8 T DMA_CircularDataLenGet
-0003576a T DMA_CircularSpaceLenGet
-0003584a T DMA_CircularFIFOClear
-00035870 T DMA_CircularWritePtrSet
-000358a4 T DMA_CircularDataPut
-00035a0e T DMA_CircularReadPtrSet
-00035a40 T DMA_CircularDataGet
-00035be6 T DMA_ChannelClose
-00035c50 T easyflash_init
-00035cbc t get_status
-00035cf4 t get_next_sector_addr
-00035d28 t sector_statistics_cb
-00035d4c t alloc_env_cb
-00035d80 t gc_check_cb
-00035d90 t find_env_cb
-00035dd4 t get_next_env_addr
-00035eb0 t write_status
-00035f60 t read_env
-0003609c t read_sector_meta_data
-00036268 t sector_iterator
-000362c8 t alloc_env
-00036350 t gc_collect
-000363b4 t new_env
-00036408 t check_and_recovery_gc_cb
-0003642c t env_iterator
-00036490 t find_env_no_cache
-000364bc t update_sec_status
-00036518 t create_env_blob
-00036660 t del_env
-00036704 t move_env
-00036828 t check_and_recovery_env_cb
-000368b4 t format_sector
-00036950 t do_gc
-000369fc t check_sec_hdr_cb
-00036a38 T ef_get_env_blob
-00036a9c T ef_set_env_blob
-00036b58 T ef_env_set_default
-00036c20 T ef_load_env
-00036ca0 T ef_env_init
-00036d28 T ef_port_init
-00036d4c T ef_port_read
-00036d64 T ef_port_erase
-00036da4 T ef_port_write
-00036dc4 T ef_port_env_lock
-00036de0 T ef_port_env_unlock
-00036dfc T ef_log_debug
-00036e00 T ef_log_info
-00036e04 T ef_calc_crc32
-00036e2c T mp3_decoder_initialize
-00037610 T mp3_decoder_decode
-00037ab4 T mp3_decoder_can_continue
-00037ac4 T mp3_decoder_seek
-00037bc8 T mp3_id3_v1_parse
-00037ce8 T mp3_id3_v2_parse
-00038350 T mv_mread_callback_set
-00038358 T mv_mread_callback_unset
-00038360 T mv_mread
-00038444 T mv_meom
-00038448 T mv_fread
-00038458 T mv_ftell
-00038468 T mv_fseek
-00038478 T mv_feof
-00038480 T mv_fsof
-000384b0 T Remap_AddrRemapSet
-00038538 T Remap_AddrRemapDisable
-00038566 T Remap_InitTcm
-00038596 T Remap_DisableTcm
-000385aa T Reset_FlagGet
-000385b4 T Reset_FlagClear
-000385c8 T Reset_McuSystem
-000385d2 T RTC_IntFlagClear
-000385f4 T RTC_IntFlagGet
-00038600 T create_error_mic	/unione_swift/src/ssp_product_check/ssp_product_check.c:41
-00038664 T release_error_mic	/unione_swift/src/ssp_product_check/ssp_product_check.c:60
-000386cc T SspProductCheckGetErrorMic	/unione_swift/src/ssp_product_check/ssp_product_check.c:107
-000386d2 T SspProductCheckInit	/unione_swift/src/ssp_product_check/ssp_product_check.c:113
-00038920 T judge_data_len	/unione_swift/src/ssp_product_check/ssp_product_check.c:253
-00038932 T SspProductCheckProcess	/unione_swift/src/ssp_product_check/ssp_product_check.c:267
-000389fa T SspProductCheckGetResult	/unione_swift/src/ssp_product_check/ssp_product_check.c:352
-00038a70 T SspProductCheckRelease	/unione_swift/src/ssp_product_check/ssp_product_check.c:377
-00038ad0 T SwUartTxInit
-00038b70 T SwUartDelay
-00038bac T SwUartSendByte
-00038c6c T SwUartSend
-00038c8c t __uni_bf_pin_mux
-00038cf0 T uni_sys_init
-00038e54 T UmdAecProductInit	/unione_swift/src/ssp_product_check/aec_check.c:11
-00038f06 T UmdAecProductRelease	/unione_swift/src/ssp_product_check/aec_check.c:37
-00038f3c T energy_check_aec_echo	/unione_swift/src/ssp_product_check/aec_check.c:48
-0003909e T UmdAecProductCheck	/unione_swift/src/ssp_product_check/aec_check.c:91
-00039100 T UmdAecProductGetResult	/unione_swift/src/ssp_product_check/aec_check.c:111
-000392a8 t channelExtrat	/unione_swift/src/ssp_product_check/bgnoise_check.c:38
-000392c2 T UmdBgnoiseProductCheckInit	/unione_swift/src/ssp_product_check/bgnoise_check.c:18
-00039324 T UmdBgnoiseProductCheck	/unione_swift/src/ssp_product_check/bgnoise_check.c:47
-00039372 T UmdBgnoiseProductCheckGetResult	/unione_swift/src/ssp_product_check/bgnoise_check.c:80
-000393d2 T UmdBgnoiseProductCheckRelease	/unione_swift/src/ssp_product_check/bgnoise_check.c:183
-000393fc T cov	/unione_swift/src/ssp_product_check/channel_consistency.c:9
-00039470 T corrcoef	/unione_swift/src/ssp_product_check/channel_consistency.c:28
-000394f2 T UmdChanelConsistencyInit	/unione_swift/src/ssp_product_check/channel_consistency.c:41
-00039552 T UmdChanelConsistencyRelease	/unione_swift/src/ssp_product_check/channel_consistency.c:60
-00039576 T check_2mic_channel_consistency	/unione_swift/src/ssp_product_check/channel_consistency.c:69
-000395ec T UmdChannelConsistencyGetResult	/unione_swift/src/ssp_product_check/channel_consistency.c:84
-0003962c T UmdChanelConsistencyCheck	/unione_swift/src/ssp_product_check/channel_consistency.c:104
-0003968a T UmdEnergyCheckInit	/unione_swift/src/ssp_product_check/energy_check.c:9
-000396ec T UmdEnergyCheckRelease	/unione_swift/src/ssp_product_check/energy_check.c:44
-0003970a T UmdEnergyGetResult	/unione_swift/src/ssp_product_check/energy_check.c:52
-000397ae T UmdEnergyCheck	/unione_swift/src/ssp_product_check/energy_check.c:93
-00039830 T mpx_skip_buffer_to
-00039838 T mpx_find_sync_word
-000398c8 T mpx_fill_buffer
-00039a0c T mpx_header_check
-00039a84 T mpx_header_parse
-00039bac T mp2_audio_data_parse
-0003af64 T mp3_scale_factors_parse
-0003bf50 T mp3_audio_data_parse
-0003c43c T mp3_decoder_windowing
-0003cb8c T mp3_decoder_imdct_windowing
-0003fadc T mpx_decoder_dctii
-00040970 T mpx_decoder_calc
-000428cc T mp3_huffman_decode
-00043074 t fft_process	/unione_swift/src/ssp_product_check/noise_reduction.c:146
-00043136 T noise_reduction_init	/unione_swift/src/ssp_product_check/noise_reduction.c:68
-0004328e T noise_reduction_doCalcVADSNR	/unione_swift/src/ssp_product_check/noise_reduction.c:184
-000433ec T noise_reduction_process	/unione_swift/src/ssp_product_check/noise_reduction.c:267
-00043666 T noise_reduction_reset	/unione_swift/src/ssp_product_check/noise_reduction.c:344
-000436c6 T noise_reduction_release	/unione_swift/src/ssp_product_check/noise_reduction.c:361
-0004372e T ProductCheckDataCahceInit	/unione_swift/src/ssp_product_check/product_check_data_cache.c:6
-00043770 T CahceProcessMoveData	/unione_swift/src/ssp_product_check/product_check_data_cache.c:45
-0004378e T ProductCheckDataCahceProcess	/unione_swift/src/ssp_product_check/product_check_data_cache.c:52
-000437f8 T ProductCheckDataCahceRelease	/unione_swift/src/ssp_product_check/product_check_data_cache.c:75
-00043810 T spectrum_check_init	/unione_swift/src/ssp_product_check/spectrum_check.c:28
-000438e0 T umd_spectrum_check_process	/unione_swift/src/ssp_product_check/spectrum_check.c:65
-0004394a T UmdSpectrumCheckProcess	/unione_swift/src/ssp_product_check/spectrum_check.c:92
-0004395a T UmdSpectrumCheckGetResult	/unione_swift/src/ssp_product_check/spectrum_check.c:99
-00043af4 T UmdSpecturmCheckRelease	/unione_swift/src/ssp_product_check/spectrum_check.c:254
-00043b22 T cbos_c_fft_v	/unione_swift/src/ssp_product_check/unisound-fft.c:63
-00043b96 t isNANANA	/unione_swift/src/ssp_product_check/mmse_estimation.c:124
-00043ba8 T MMSE_Estimation_init	/unione_swift/src/ssp_product_check/mmse_estimation.c:62
-00043d50 T MMSE_Estimation_process	/unione_swift/src/ssp_product_check/mmse_estimation.c:134
-000446a2 T MMSE_Estimation_getGain	/unione_swift/src/ssp_product_check/mmse_estimation.c:376
-000446a8 T MMSE_Estimation_reset	/unione_swift/src/ssp_product_check/mmse_estimation.c:383
-0004475e T MMSE_Estimation_release	/unione_swift/src/ssp_product_check/mmse_estimation.c:415
-000447d4 t swap	/unione_swift/src/ssp_product_check/noise_reduction_util.c:104
-000447de t partition	/unione_swift/src/ssp_product_check/noise_reduction_util.c:112
-00044856 T expint_approach	/unione_swift/src/ssp_product_check/noise_reduction_util.c:92
-00044986 T getTopK	/unione_swift/src/ssp_product_check/noise_reduction_util.c:144
-000449d6 T product_check_fft_init	/unione_swift/src/ssp_product_check/product_check_fft_process.c:13
-00044a0e T product_check_fft_process	/unione_swift/src/ssp_product_check/product_check_fft_process.c:37
-00044adc T New1	/unione_swift/src/ssp_product_check/product_check_commmon.c:14
-00044afc T New2	/unione_swift/src/ssp_product_check/product_check_commmon.c:20
-00044b62 T cos
-00044bee T sin
-00044c80 T sinf
-00044e78 T exp
-00044f70 T log
-0004507a T log10
-00045184 T pow
-00045478 T logf
-00045604 T log10f
-000456fe T __ieee754_exp
-00045a58 T __ieee754_log
-00045ec0 T __ieee754_log10
-00045fe4 T __ieee754_pow
-00046aa6 T __ieee754_rem_pio2
-00046ebc T __ieee754_sqrt
-0004702c T __ieee754_log10f
-0004711c T __mathlib_flt_infnan
-00047124 T __mathlib_flt_underflow
-00047134 T __mathlib_flt_invalid
-00047148 T __mathlib_flt_divzero
-00047160 T __kernel_cos
-0004736c T __kernel_rem_pio2
-00047ae0 T __kernel_sin
-00047c94 T ref__mathlib_rredf2
-00047de0 T fabs
-00047df0 T finite
-00047e06 T floor
-00047f38 T __fpclassifyd
-00047f8c T matherr
-00047f90 T nan
-00047f9e T rint
-000480e2 T scalbn
-000481cc T __fpclassifyf
-0004820e T __ieee754_logf
-000484f2 T copysign
-00048510 T __divdi3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:451
-00048550 T __moddi3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:634
-00048594 T __udivdi3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:818
-00048598 t fudiv_qrnnd	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:961
-000485f0 T __udivmoddi4	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:1152
-00048748 T __fixsfdi	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:3723
-000487c0 T __fixdfsi	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:3666
-00048814 T __floatdisf	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/floatdisf.c:35
-00048906 T __adddf3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/adddf3.c:35
-00048f7c T __divdf3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/divdf3.c:35
-000494e4 T __eqdf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/eqdf2.c:35
-000494e4 T __nedf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/eqdf2.c:36
-00049552 T __gedf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/gedf2.c:35
-00049552 T __gtdf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/gedf2.c:36
-000495fa T __ledf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/ledf2.c:35
-000495fa T __ltdf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/ledf2.c:36
-000496a4 T __muldf3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/muldf3.c:35
-00049b4c T __subdf3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/subdf3.c:35
-0004a1ee T __floatsidf	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/floatsidf.c:36
-0004a25a T __floatunsidf	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/floatunsidf.c:36
-0004a2b6 T __extendsfdf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/extendsfdf2.c:36
-0004a362 T __truncdfsf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/truncdfsf2.c:36
-0004a4ce T __lshrdi3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/libgcc2.c:403
-0004a4f6 T __ashldi3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/libgcc2.c:431
-0004a51c T __assert_func
-0004a558 T atof
-0004a560 T atoi
-0004a568 T calloc
-0004a57a T __errno
-0004a580 T _fclose_r
-0004a606 T __sflush_r
-0004a72c T _fflush_r
-0004a750 T fflush
-0004a76c T _cleanup_r
-0004a778 T __sinit
-0004a852 T __sfp_lock_acquire
-0004a854 T __sfp_lock_release
-0004a856 T fiprintf
-0004a86a T _fread_r
-0004a962 T fread
-0004a97c T fseek
-0004a992 T _fseeko_r
-0004ac0e T _fstat_r
-0004ac2e T ftell
-0004ac3c T _ftello_r
-0004acb4 T _fwalk
-0004acf0 T _fwalk_reent
-0004ad30 T __smakebuf_r
-0004ae10 T malloc
-0004ae1e T free
-0004ae2c T memcmp
-0004ae68 T memcpy
-0004aed0 T memmove
-0004af80 T memset
-0004aff4 T _calloc_r
-0004b010 T _free_r
-0004b084 T _malloc_r
-0004b12a T printf
-0004b134 T puts
-0004b184 T rand
-0004b1be t lflush
-0004b1d4 T __srefill_r
-0004b2c2 T _sbrk_r
-0004b2e0 T snprintf
-0004b2ea T sprintf
-0004b2f4 T sscanf
-0004b2fe T __sread
-0004b322 T __swrite
-0004b358 T __sseek
-0004b37e T __sclose
-0004b38c T strcat
-0004b3a4 T strchr
-0004b3b4 T strcmp
-0004b3d0 T strcpy
-0004b3e4 T strlen
-0004b3f0 T strncat
-0004b410 T strncmp
-0004b428 T strncpy
-0004b444 T strstr
-0004b478 T strtod
-0004b71c T strtof
-0004b728 T __strtok_r
-0004b77a T strtok_r
-0004b784 T strtol
-0004b78e T strtol_common
-0004b8c2 T __sprint_r
-0004b8e0 T _vfiprintf_r
-0004c1d6 t __sbprintf
-0004c240 t vprintf_help
-0004c274 T vprintf
-0004c2be t vsnprintf_help
-0004c2ec T vsnprintf
-0004c316 t vsprintf_help
-0004c322 T vsprintf
-0004c33c t vsscanf_help
-0004c340 T vsscanf
-0004c360 T _write_r
-0004c382 T __swsetup_r
-0004c430 T abort
-0004c43a T _close_r
-0004c458 T do_printf
-0004c91c T do_scanf
-0004cb8e T __sfvwrite_r
-0004ce26 T _isatty_r
-0004ce44 T _lseek_r
-0004ce68 T memchr
-0004ce80 T _realloc_r
-0004ceca T nds_isalpha
-0004ced8 T nds_isdigit
-0004cee2 T nds_isspace
-0004cef2 T nds_isupper
-0004cefc t sep_frac
-0004cf2e T _printf_float
-0004d61e T _read_r
-0004d640 T _scanf_float
-0004d6a0 T _scanf_chars
-0004d75c T _scanf_i
-0004d926 T __sccl
-0004d988 T strtoul
-0004d992 T abs
-0004d998 T _malloc_usable_size_r
-0004d9ac T _exit
-0004d9b4 T _close
-0004d9cc T _read
-0004d9e4 T _write
-0004d9fc T _lseek
-0004da14 T _fstat
-0004da2c T _isatty
-0004da40 T _sbrk
-0004da70 T __umoddi3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:1739
-0004da88 T __floatundidf	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/floatundidf.c:35
-0004dfc0 r __FUNCTION__.6313
-0004dfdc r __FUNCTION__.6335
-0004dfec r __FUNCTION__.6319
-0004e004 r __FUNCTION__.6342
-0004e01c r __FUNCTION__.6371
-0004e034 R expected_magic	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../src/app/src/main.c:64
-0004e080 r __FUNCTION__.5725
-0004e090 r __FUNCTION__.5711
-0004e15c r __FUNCTION__.5527
-0004e16c r __FUNCTION__.5522
-0004e188 r __FUNCTION__.5480
-0004e328 r __FUNCTION__.6095
-0004e344 r __FUNCTION__.6077
-0004e750 r __FUNCTION__.6369
-0004e764 r __FUNCTION__.6416
-0004e77c r __FUNCTION__.6443
-0004e79c r __FUNCTION__.6422
-0004e7b0 r __FUNCTION__.6428
-0004e7d4 r __FUNCTION__.6435
-0004e7e8 r __FUNCTION__.6447
-0004e800 r __FUNCTION__.6477
-0004e818 r __FUNCTION__.6461
-0004e834 r __FUNCTION__.6465
-0004e84c r __FUNCTION__.6469
-0004e868 r __FUNCTION__.6473
-0004e884 r __FUNCTION__.6488
-0004e89c r __FUNCTION__.6492
-0004e8b0 r __FUNCTION__.6361
-0004e8c0 r __FUNCTION__.6496
-0004e8d8 r __FUNCTION__.6500
-0004e8f0 r __FUNCTION__.6346
-0004e90c r __FUNCTION__.6538
-0004e91c r __FUNCTION__.6543
-0004e92c r __FUNCTION__.6548
-0004e93c r state_str.6350
-0004e944 r __FUNCTION__.6553
-0004e958 r __FUNCTION__.6336
-0004ebf4 r __FUNCTION__.6549
-0004ec04 r __FUNCTION__.6554
-0004ec1c r __FUNCTION__.6405
-0004ec34 r __FUNCTION__.6500
-0004ec50 r __FUNCTION__.6413
-0004ec6c r __FUNCTION__.6417
-0004ec84 r __FUNCTION__.6425
-0004ec9c r __FUNCTION__.6421
-0004ecb0 r __FUNCTION__.6484
-0004ecc8 r __FUNCTION__.6488
-0004ece0 r __FUNCTION__.6504
-0004ecfc r __FUNCTION__.6516
-0004ed18 r __FUNCTION__.6464
-0004ed30 r __FUNCTION__.6429
-0004ed4c r __FUNCTION__.6469
-0004ed60 r __FUNCTION__.6433
-0004ed78 r __FUNCTION__.6437
-0004ed90 r __FUNCTION__.6508
-0004edac r __FUNCTION__.6474
-0004edc0 r __FUNCTION__.6520
-0004eddc r __FUNCTION__.6528
-0004edf0 r __FUNCTION__.6387
-0004ee04 r __FUNCTION__.6445
-0004ee1c r __FUNCTION__.6441
-0004ee30 r __FUNCTION__.6492
-0004ee48 r __FUNCTION__.6496
-0004ee60 r __FUNCTION__.6351
-0004ee70 r __FUNCTION__.6393
-0004ee8c r __FUNCTION__.6512
-0004eea4 r __FUNCTION__.6337
-0004eec0 r __FUNCTION__.6524
-0004eed4 r __FUNCTION__.6380
-0004eee8 r __FUNCTION__.6534
-0004eef8 r __FUNCTION__.6539
-0004ef08 r __FUNCTION__.6544
-0004ef18 r state_str.6375
-0004ef28 r __FUNCTION__.6559
-0004f028 r __FUNCTION__.5546
-0004f044 r __FUNCTION__.5538
-0004f060 r __FUNCTION__.5549
-0004f078 r __FUNCTION__.5554
-0004f088 r __FUNCTION__.5559
-0004f098 r __FUNCTION__.5564
-0004f0a8 r __FUNCTION__.5576
-0004f0bc r __FUNCTION__.5571
-0004f474 r __FUNCTION__.6746
-0004f490 r __FUNCTION__.6735
-0004f4ac r __FUNCTION__.6665
-0004f4c4 r __FUNCTION__.6643
-0004f4dc r __FUNCTION__.6647
-0004f4f4 r __FUNCTION__.6587
-0004f508 r __FUNCTION__.6616
-0004f518 r __FUNCTION__.6635
-0004f534 r __FUNCTION__.6671
-0004f554 r __FUNCTION__.6661
-0004f570 r __FUNCTION__.6639
-0004f580 r __FUNCTION__.6656
-0004f598 r __FUNCTION__.6531
-0004f5b4 r __FUNCTION__.6564
-0004f5cc r __FUNCTION__.6597
-0004f5e0 r __FUNCTION__.6605
-0004f5f8 r __FUNCTION__.6698
-0004f618 r __FUNCTION__.6541
-0004f628 r __FUNCTION__.6679
-0004f638 r __FUNCTION__.6685
-0004f648 r __FUNCTION__.6690
-0004f658 r state_str.6545
-0004f66c r __FUNCTION__.6706
-0004f680 R g_study_cmd_list	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../src/app/src/sessions/uni_study_session.c:81
-0004f7fc r __FUNCTION__.5554
-0004f80c r __FUNCTION__.5543
-0004f81c r __FUNCTION__.5530
-0004f834 r __FUNCTION__.5539
-0004f848 r __FUNCTION__.5468
-0004f864 r __FUNCTION__.5416
-0004f87c r __FUNCTION__.5422
-0004f894 r __FUNCTION__.5457
-0004f8a4 r __FUNCTION__.5461
-0004f8bc r __FUNCTION__.5476
-0004f8d4 r __FUNCTION__.5492
-0004f8f0 r __FUNCTION__.5515
-0004f954 r __FUNCTION__.5393
-0004f970 r __FUNCTION__.5384
-0004fb78 r __FUNCTION__.5436
-0004fb80 r __FUNCTION__.5429
-0004fb88 r __FUNCTION__.5367
-0004fb94 r __FUNCTION__.5376
-0004fbac r __FUNCTION__.5384
-0004fbc0 r __FUNCTION__.5421
-0004fbd4 r __FUNCTION__.5411
-0004fbec r __FUNCTION__.5425
-0004fbf4 R pcm_bin	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/pcm_bin.h:1
-000926f4 R g_pcm_arry	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/uni_pcm_array.h:10
-00092ac8 r __FUNCTION__.5501
-00092ae0 r __FUNCTION__.5452
-00092af4 r __FUNCTION__.5420
-00092b0c r __FUNCTION__.5430
-00092b24 r __FUNCTION__.5413
-00092b38 r __FUNCTION__.5444
-00092bc4 r __FUNCTION__.5265
-000930fc r __FUNCTION__.5619
-0009310c R g_nlu_content_mapping	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/uni_nlu_content.h:30
-00093304 R g_nlu_content_str	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/uni_nlu_content.h:5
-000934bc r __FUNCTION__.5506
-000934c8 r __FUNCTION__.5500
-000934d8 r __FUNCTION__.5422
-000934ec r __FUNCTION__.5467
-00093500 r __FUNCTION__.5428
-00093518 r __FUNCTION__.5481
-00093528 r __FUNCTION__.5494
-00093534 r __FUNCTION__.5450
-00093740 r __FUNCTION__.5748
-0009376c r __FUNCTION__.5751
-00093794 r __FUNCTION__.5728
-000937a8 r __FUNCTION__.5770
-000937c0 r __FUNCTION__.5781
-000938f8 r __FUNCTION__.5814
-00093910 r __FUNCTION__.5806
-0009392c r __FUNCTION__.5798
-00093944 r __FUNCTION__.5794
-00093960 r __FUNCTION__.5773
-0009396c r __FUNCTION__.5760
-00093980 r __FUNCTION__.5751
-000939a4 r __FUNCTION__.5764
-00093be4 r __FUNCTION__.5828
-00093bf4 r __FUNCTION__.5823
-00093c04 r __FUNCTION__.5811
-00093c14 r __FUNCTION__.5802
-00093c28 r __FUNCTION__.5753
-00093c3c r __FUNCTION__.5762
-00093c50 r __FUNCTION__.5769
-00093c64 r __FUNCTION__.5786
-00093c78 r __FUNCTION__.5797
-00093c88 R g_mp3_ais_share_buf_size	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../src/sdk/vui/src/uni_vui_interface.c:41
-00093c8c R global_kws_lp_study_grammar	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/grammar_study.h:1
-000a685c R global_kws_lp_grammar	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/grammar.h:1
-000a7e20 R global_kws_lp_acoutstic_model	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/asrfix.h:1
-00176af8 R aik_config	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/aik-config.h:1
-00177094 r __FUNCTION__.5280
-001770a0 r __FUNCTION__.5270
-001770ac r __FUNCTION__.5265
-001770b8 r __FUNCTION__.5261
-001770e4 r __FUNCTION__.5278
-001770ec r __FUNCTION__.5272
-00177198 r __FUNCTION__.5542
-001771ac r __FUNCTION__.5521
-001771c4 r __FUNCTION__.5509
-00177370 r __FUNCTION__.5527
-00177390 R config_bin	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/config_bin.h:1
-0017767c r __FUNCTION__.5285
-0017768c r __FUNCTION__.5273
-001776a0 r __FUNCTION__.5325
-001776b4 r __FUNCTION__.5275
-001776cc r __FUNCTION__.5405
-001776dc r __FUNCTION__.5390
-001777a8 r __FUNCTION__.5353
-001777bc r __FUNCTION__.5333
-001778d0 r __FUNCTION__.5313
-001778e4 r __FUNCTION__.5279
-001778f8 r __FUNCTION__.5305
-00177908 r __FUNCTION__.5299
-00177914 r __FUNCTION__.5295
-00177920 r __FUNCTION__.5290
-00177948 r __FUNCTION__.5247
-001779dc r __FUNCTION__.5341
-00177afc r __FUNCTION__.5434
-00177b18 r __FUNCTION__.5397
-00177b28 r __FUNCTION__.5393
-00177b38 r __FUNCTION__.5389
-00177b44 r __FUNCTION__.5381
-00177b54 r __FUNCTION__.5401
-00177b64 r __FUNCTION__.5385
-00177b78 r __FUNCTION__.5412
-00177b8c r __FUNCTION__.5440
-00177ea8 R MPUConfigTable	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../startup/init-default.c:375
-00177ffc r __FUNCTION__.5671
-0017803c r __FUNCTION__.5591
-00178054 r __FUNCTION__.5584
-001780a8 r __FUNCTION__.5534
-00178224 r __FUNCTION__.5813
-0017823c r __FUNCTION__.5787
-00178250 r __FUNCTION__.5766
-00178264 r __FUNCTION__.5751
-0017827c r __FUNCTION__.5740
-00178290 r __FUNCTION__.5708
-001782a0 r g_gpio_mode_map	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/user_gpio.c:67
-001783d0 r __FUNCTION__.5712
-001783f0 r __FUNCTION__.5707
-0017840c r __FUNCTION__.5691
-00178464 r __FUNCTION__.5564
-00178474 r __FUNCTION__.5556
-001790c0 r .LC3
-001790c4 r __FUNCTION__.6453
-001790d8 r __FUNCTION__.6446
-001790f0 r __FUNCTION__.6459
-00179104 r __FUNCTION__.6493
-00179114 r __FUNCTION__.6440
-00179128 r __FUNCTION__.6436
-00179134 r __FUNCTION__.6425
-00179148 r __FUNCTION__.6432
-00179168 r __FUNCTION__.6295
-00179178 r __FUNCTION__.6270
-0017918c r __FUNCTION__.6258
-001791a0 r __FUNCTION__.6307
-001791b8 r __FUNCTION__.6283
-001791d0 r __FUNCTION__.6319
-001791e8 r __FUNCTION__.6327
-00179200 r __FUNCTION__.6355
-0017920c r __FUNCTION__.6346
-00179214 r __FUNCTION__.6342
-0017921c r __FUNCTION__.6378
-00179230 r __FUNCTION__.6265
-00179244 r __FUNCTION__.6410
-00179258 r __FUNCTION__.6505
-00179268 r __FUNCTION__.6486
-0017927c r __FUNCTION__.6480
-00179298 r __FUNCTION__.6474
-001792b4 r __FUNCTION__.6302
-001792c4 r __FUNCTION__.6253
-001792dc r __FUNCTION__.6244
-001792f4 r g_tts_mapping	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:37
-00179534 r __FUNCTION__.5877
-00179548 r __FUNCTION__.5806
-00179554 r __FUNCTION__.5820
-0017956c r __FUNCTION__.5872
-0017957c r __FUNCTION__.5867
-0017958c r __FUNCTION__.5843
-001795a0 r __FUNCTION__.5814
-001795b4 r __FUNCTION__.5810
-00179648 r __FUNCTION__.5635
-0017965c r __FUNCTION__.5620
-001796f8 r __PRETTY_FUNCTION__.3820
-00179708 r __PRETTY_FUNCTION__.3798
-00179afc r __PRETTY_FUNCTION__.4777
-00179b18 r __PRETTY_FUNCTION__.4771
-00179b2c r __PRETTY_FUNCTION__.4763
-00179b3c r __PRETTY_FUNCTION__.4747
-00179b4c r __PRETTY_FUNCTION__.4722
-00179b5c r __PRETTY_FUNCTION__.4716
-00179b6c r __PRETTY_FUNCTION__.4709
-00179b7c r __PRETTY_FUNCTION__.4601
-00179b90 r __PRETTY_FUNCTION__.4620
-00179ba8 r __PRETTY_FUNCTION__.4636
-00179bbc r __PRETTY_FUNCTION__.4649
-00179bcc r __PRETTY_FUNCTION__.4660
-00179be0 r __PRETTY_FUNCTION__.4669
-00179bf4 r __PRETTY_FUNCTION__.4680
-00179c08 r __PRETTY_FUNCTION__.4692
-00179c1c r __PRETTY_FUNCTION__.4700
-00179d84 r __PRETTY_FUNCTION__.4940
-00179d90 r __PRETTY_FUNCTION__.4917
-00179da4 r __PRETTY_FUNCTION__.4859
-00179dbc r __PRETTY_FUNCTION__.4870
-00179dd4 r __PRETTY_FUNCTION__.4893
-00179dec r __PRETTY_FUNCTION__.4883
-00179e04 r __PRETTY_FUNCTION__.4935
-00179e10 r __PRETTY_FUNCTION__.4927
-00179e28 r __PRETTY_FUNCTION__.4910
-00179e44 r __PRETTY_FUNCTION__.4902
-00179eb4 r __PRETTY_FUNCTION__.4229
-00179ec8 r __PRETTY_FUNCTION__.4239
-00179ee0 r __PRETTY_FUNCTION__.4247
-00179ef4 r __PRETTY_FUNCTION__.4252
-00179f08 r __PRETTY_FUNCTION__.4259
-00179f1c r __PRETTY_FUNCTION__.4266
-00179f30 r __PRETTY_FUNCTION__.4271
-0017b860 r __PRETTY_FUNCTION__.5267
-0017b874 r __PRETTY_FUNCTION__.5256
-0017b88c r __PRETTY_FUNCTION__.4945
-0017b8a4 r __PRETTY_FUNCTION__.5204
-0017b8bc r __PRETTY_FUNCTION__.4993
-0017b8cc r __PRETTY_FUNCTION__.4927
-0017b8e0 r __PRETTY_FUNCTION__.5116
-0017b8f8 r __PRETTY_FUNCTION__.5090
-0017b904 r __PRETTY_FUNCTION__.5108
-0017b91c r __PRETTY_FUNCTION__.5149
-0017b92c r __PRETTY_FUNCTION__.5166
-0017b93c r __PRETTY_FUNCTION__.4969
-0017b958 r __PRETTY_FUNCTION__.4957
-0017b970 r __PRETTY_FUNCTION__.5005
-0017b980 r __PRETTY_FUNCTION__.5017
-0017b998 r __PRETTY_FUNCTION__.5029
-0017b9b0 r __PRETTY_FUNCTION__.5077
-0017b9c0 r __PRETTY_FUNCTION__.5053
-0017b9d0 r __PRETTY_FUNCTION__.5065
-0017b9e4 r __PRETTY_FUNCTION__.4936
-0017b9fc r __PRETTY_FUNCTION__.5041
-0017ba0c r __PRETTY_FUNCTION__.5192
-0017ba20 r __PRETTY_FUNCTION__.5098
-0017ba38 r __PRETTY_FUNCTION__.5133
-0017ba48 r __PRETTY_FUNCTION__.4981
-0017ba5c r __PRETTY_FUNCTION__.5219
-0017ba74 r __PRETTY_FUNCTION__.4904
-0017ba88 r __PRETTY_FUNCTION__.4912
-0017ba98 r __PRETTY_FUNCTION__.5247
-0017baa8 r global_module_list	/workspace/src/kit/aik-kit-config.c:2668
-0017bb28 R fa_table	/workspace/src/kit/aik-kit-config.c:1941
-0017bb90 r __PRETTY_FUNCTION__.4329
-0017bba0 r __PRETTY_FUNCTION__.4320
-0017bbb8 r __PRETTY_FUNCTION__.4312
-0017bbd0 r global_filter_map	/workspace/src/kit/aik-kit-event.c:14
-0017bbfc r __PRETTY_FUNCTION__.4347
-0017bc1c r __PRETTY_FUNCTION__.4354
-0017bc40 r __PRETTY_FUNCTION__.4361
-0017bc64 r __PRETTY_FUNCTION__.4367
-0017bc80 r __PRETTY_FUNCTION__.4373
-0017bca0 r __PRETTY_FUNCTION__.4379
-0017bce0 r __PRETTY_FUNCTION__.4341
-0017bcfc r __PRETTY_FUNCTION__.4348
-0017bd18 r __PRETTY_FUNCTION__.4361
-0017bd30 r __PRETTY_FUNCTION__.4354
-0017be68 r __PRETTY_FUNCTION__.4563
-0017be78 r __PRETTY_FUNCTION__.4573
-0017be88 r __PRETTY_FUNCTION__.4589
-0017be9c r __PRETTY_FUNCTION__.4600
-0017beb0 r global_link_map	/workspace/src/kit/aik-kit-link.c:16
-0017c054 r __PRETTY_FUNCTION__.4002
-0017c078 r __PRETTY_FUNCTION__.3997
-0017c09c r __PRETTY_FUNCTION__.3982
-0017c0b8 r __PRETTY_FUNCTION__.3937
-0017c3ec r __PRETTY_FUNCTION__.4029
-0017c404 r __PRETTY_FUNCTION__.4040
-0017c420 r __PRETTY_FUNCTION__.3999
-0017c43c r __PRETTY_FUNCTION__.3980
-0017c44c r __PRETTY_FUNCTION__.4018
-0017c45c r __PRETTY_FUNCTION__.4056
-0017c474 r __PRETTY_FUNCTION__.4064
-0017c48c r __PRETTY_FUNCTION__.4072
-0017c4a4 r __PRETTY_FUNCTION__.4083
-0017c4bc r __PRETTY_FUNCTION__.4091
-0017c5fc r __PRETTY_FUNCTION__.4233
-0017c61c r __PRETTY_FUNCTION__.4239
-0017c630 r __PRETTY_FUNCTION__.4247
-0017c64c r __PRETTY_FUNCTION__.4265
-0017c660 r __PRETTY_FUNCTION__.4286
-0017c678 r __PRETTY_FUNCTION__.4295
-0017c694 r __PRETTY_FUNCTION__.4302
-0017c6ac r __PRETTY_FUNCTION__.4307
-0017c6c4 r __PRETTY_FUNCTION__.4314
-0017c6dc r __PRETTY_FUNCTION__.4321
-0017c6f4 r __PRETTY_FUNCTION__.4326
-0017d03c r __PRETTY_FUNCTION__.4904
-0017d04c r __PRETTY_FUNCTION__.4898
-0017d064 r __PRETTY_FUNCTION__.5005
-0017d07c r __PRETTY_FUNCTION__.4981
-0017d088 r __PRETTY_FUNCTION__.4959
-0017d09c r __PRETTY_FUNCTION__.4970
-0017d0a8 r __PRETTY_FUNCTION__.4949
-0017d0bc r __PRETTY_FUNCTION__.5000
-0017d0d4 r __PRETTY_FUNCTION__.5022
-0017d0e8 r __PRETTY_FUNCTION__.5143
-0017d0fc r __PRETTY_FUNCTION__.4919
-0017d110 r __PRETTY_FUNCTION__.4933
-0017d120 r __PRETTY_FUNCTION__.5074
-0017d138 r __PRETTY_FUNCTION__.5090
-0017d14c r __PRETTY_FUNCTION__.5108
-0017d158 r __PRETTY_FUNCTION__.5101
-0017d164 r __PRETTY_FUNCTION__.5097
-0017d170 r __PRETTY_FUNCTION__.5123
-0017d188 r __PRETTY_FUNCTION__.5053
-0017d19c r __PRETTY_FUNCTION__.4944
-0017d1b0 r __PRETTY_FUNCTION__.5060
-0017d1c4 r __PRETTY_FUNCTION__.5039
-0017d1dc r __PRETTY_FUNCTION__.5034
-0017d1f8 r __PRETTY_FUNCTION__.5154
-0017d20c r __PRETTY_FUNCTION__.5177
-0017d220 r __PRETTY_FUNCTION__.5192
-0017d280 r __PRETTY_FUNCTION__.4372
-0017d290 r __PRETTY_FUNCTION__.4377
-0017d2a0 r __PRETTY_FUNCTION__.4384
-0017d2b0 r __PRETTY_FUNCTION__.4391
-0017d2c0 r __PRETTY_FUNCTION__.4396
-0017d2fc r __PRETTY_FUNCTION__.3883
-0017d6ac r __PRETTY_FUNCTION__.5037
-0017d6bc r __PRETTY_FUNCTION__.4947
-0017d6d0 r __PRETTY_FUNCTION__.4916
-0017d6e4 r __PRETTY_FUNCTION__.5013
-0017d6f8 r __PRETTY_FUNCTION__.4909
-0017d70c r __PRETTY_FUNCTION__.4882
-0017d71c r __PRETTY_FUNCTION__.4871
-0017d72c r __PRETTY_FUNCTION__.4865
-0017d73c r __PRETTY_FUNCTION__.4861
-0017d750 r __PRETTY_FUNCTION__.4970
-0017d760 r __PRETTY_FUNCTION__.4838
-0017d770 r __PRETTY_FUNCTION__.4825
-0017d780 r __PRETTY_FUNCTION__.4808
-0017d78c r __PRETTY_FUNCTION__.4804
-0017d794 r __PRETTY_FUNCTION__.4790
-0017d7a0 r __PRETTY_FUNCTION__.4782
-0017d7ac r __PRETTY_FUNCTION__.4774
-0017d7c0 R grammar_versions	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/engine_version.c:13
-0017d7e0 R am_versions	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/engine_version.c:12
-0017d800 R g_grammar_version_number	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/engine_version.c:11
-0017d804 R g_am_version_number	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/engine_version.c:10
-0017d99c r __PRETTY_FUNCTION__.4902
-0017d9b4 r __PRETTY_FUNCTION__.4852
-0017d9c4 r __PRETTY_FUNCTION__.4814
-0017d9d0 r __PRETTY_FUNCTION__.4800
-0017d9e0 r __PRETTY_FUNCTION__.4744
-0017d9ec r __PRETTY_FUNCTION__.4683
-0017d9f8 r __PRETTY_FUNCTION__.4631
-0017da08 r __PRETTY_FUNCTION__.4604
-0017df6c r __PRETTY_FUNCTION__.4112
-0017df7c r __PRETTY_FUNCTION__.4127
-0017df88 r __PRETTY_FUNCTION__.4138
-0017df90 r __PRETTY_FUNCTION__.4149
-0017df9c r __PRETTY_FUNCTION__.4035
-0017dfb0 r __PRETTY_FUNCTION__.4062
-0017dfbc r __PRETTY_FUNCTION__.4094
-0017dfcc r __PRETTY_FUNCTION__.3957
-0017dfe0 r __PRETTY_FUNCTION__.3953
-0017dff4 r __PRETTY_FUNCTION__.3802
-0017e008 r __PRETTY_FUNCTION__.3844
-0017e020 r __PRETTY_FUNCTION__.3788
-0017e048 r __PRETTY_FUNCTION__.4431
-0017e050 r __PRETTY_FUNCTION__.4420
-0017e060 r high_frequency_engergy_threshold	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:40
-0017e0c0 r __PRETTY_FUNCTION__.3689
-0017e0d8 r __PRETTY_FUNCTION__.3639
-0017e1f8 r __PRETTY_FUNCTION__.4594
-0017e214 r __PRETTY_FUNCTION__.4536
-0017e220 r __PRETTY_FUNCTION__.4529
-0017e238 r __PRETTY_FUNCTION__.4519
-0017e248 r __PRETTY_FUNCTION__.4512
-0017e268 r __PRETTY_FUNCTION__.4483
-0017e508 r __PRETTY_FUNCTION__.4861
-0017e51c r __PRETTY_FUNCTION__.4855
-0017e540 r __PRETTY_FUNCTION__.4835
-0017e554 r __PRETTY_FUNCTION__.4795
-0017e568 r __PRETTY_FUNCTION__.4672
-0017e57c r __PRETTY_FUNCTION__.4655
-0017e588 r __PRETTY_FUNCTION__.4650
-0017e628 r __PRETTY_FUNCTION__.4156
-0017e63c R t_mv_8k_40	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:173
-0017e6dc R t_va_8k_40	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:164
-0017e77c R t_mu_8k_40	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:155
-0017e81c R t_mv_16k_40	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:145
-0017e8bc R t_va_16k_40	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:134
-0017e95c R t_mu_16k_40	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:123
-0017e9fc R mel_coeffs	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:112
-0017ea9c R povey_window_8k	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:71
-0017ee5c R povey_window_16k	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:22
-0017f378 r __PRETTY_FUNCTION__.3526
-0017f384 r __PRETTY_FUNCTION__.3517
-0017f390 r __PRETTY_FUNCTION__.3510
-0017f39c r __PRETTY_FUNCTION__.3503
-0017f3d0 r __PRETTY_FUNCTION__.4520
-0017f3e8 R default_cm_coefs	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:35
-0017f58c r __PRETTY_FUNCTION__.4251
-0017f5a0 r __PRETTY_FUNCTION__.4239
-0017f5b8 r __PRETTY_FUNCTION__.4229
-0017f5c4 r __PRETTY_FUNCTION__.4214
-0017f5d0 r __PRETTY_FUNCTION__.4207
-0017f5e4 r __PRETTY_FUNCTION__.4199
-0017f5f4 r __PRETTY_FUNCTION__.4190
-0017f600 r __PRETTY_FUNCTION__.4180
-0017f610 r __PRETTY_FUNCTION__.4173
-0017f624 r __PRETTY_FUNCTION__.4167
-0017f634 r __PRETTY_FUNCTION__.4152
-0017f644 r __PRETTY_FUNCTION__.4147
-0017f650 r __PRETTY_FUNCTION__.4142
-0017f7d4 r __PRETTY_FUNCTION__.4649
-0017f7f8 r __PRETTY_FUNCTION__.4628
-0017f814 r __PRETTY_FUNCTION__.4610
-0017f830 r __PRETTY_FUNCTION__.4577
-0017f850 r __PRETTY_FUNCTION__.4455
-0017f86c r __PRETTY_FUNCTION__.4445
-0017f978 r SinTab	/cygdrive/d/Andes/matrix_op/Debug/../src/fixed-fft.c:11
-0018014c r __PRETTY_FUNCTION__.4399
-0018015c r __PRETTY_FUNCTION__.4387
-00180168 r __PRETTY_FUNCTION__.4381
-00180174 r __PRETTY_FUNCTION__.4375
-00180194 r __PRETTY_FUNCTION__.4257
-001801a0 r __PRETTY_FUNCTION__.3590
-001801b0 r __PRETTY_FUNCTION__.3573
-001801bc r __PRETTY_FUNCTION__.3568
-001801c8 r __PRETTY_FUNCTION__.3562
-001801d4 r __PRETTY_FUNCTION__.3556
-001801e0 r __PRETTY_FUNCTION__.3551
-00180220 r __PRETTY_FUNCTION__.4332
-00180230 r __PRETTY_FUNCTION__.4325
-001802d8 r __PRETTY_FUNCTION__.3613
-001802e8 r __PRETTY_FUNCTION__.3601
-001802fc r __PRETTY_FUNCTION__.3593
-00180310 r __PRETTY_FUNCTION__.3587
-00180320 r __PRETTY_FUNCTION__.3570
-00180330 r __PRETTY_FUNCTION__.3540
-00180344 r __PRETTY_FUNCTION__.3561
-00180354 r __PRETTY_FUNCTION__.3498
-00180368 r __PRETTY_FUNCTION__.3517
-00180378 r __PRETTY_FUNCTION__.3488
-00180388 r fun_array	/workspace/src/osal/src/utility/osal-map.c:105
-001803c4 r __PRETTY_FUNCTION__.3345
-0018041c r __PRETTY_FUNCTION__.3448
-00180438 r __PRETTY_FUNCTION__.3456
-0018044c r __PRETTY_FUNCTION__.3429
-00180468 r __PRETTY_FUNCTION__.3437
-0018047c r __PRETTY_FUNCTION__.3408
-00180498 r __PRETTY_FUNCTION__.3395
-001804bc r __PRETTY_FUNCTION__.3401
-001804d8 r __PRETTY_FUNCTION__.3389
-001804ec r __PRETTY_FUNCTION__.3384
-00180504 r __PRETTY_FUNCTION__.3378
-00180850 r __PRETTY_FUNCTION__.3535
-00180860 r __PRETTY_FUNCTION__.3530
-00180870 r __PRETTY_FUNCTION__.3518
-00180898 r __FUNCTION__.3392
-001808f8 r __PRETTY_FUNCTION__.4208
-0018090c r __PRETTY_FUNCTION__.4203
-0018091c r __PRETTY_FUNCTION__.4197
-0018092c r __PRETTY_FUNCTION__.4191
-0018093c R nds32_cos_table_f32_1024
-00180d50 R nds32_cos_table_q31_1024
-00181164 R nds32_recip_table_f32
-00181450 r uni_hal_cmds
-00181490 r FF_audio_16bit
-001853fc r __FUNCTION__.2771
-00185408 r __FUNCTION__.2712
-0018541c r __FUNCTION__.2538
-0018542c r __FUNCTION__.2371
-0018543c r __FUNCTION__.2426
-00185448 r __FUNCTION__.2438
-00185460 r crc32_table
-00185460 r default_env_set
-00185900 r g_pin_group2
-00186900 r g_pin_group1
-00186948 r g_pinmux
-00186af8 r SF_TABLE
-00186bf8 r QC_TABLE
-00186cc4 r OFFSET_TABLE
-00186d20 r BITALLOC_TABLE
-00186d30 r SBQUANT_TABLE
-00186d58 r SBQUANT_OFFSETS_4
-00186d78 r SBQUANT_OFFSETS_3
-00186d84 r SBQUANT_OFFSETS_2
-00186d8c r SBQUANT_OFFSETS_1
-00186dac r SBQUANT_OFFSETS_0
-00186dc8 r NSFB
-00186e10 r SFLEN_TABLE
-00186e30 R SAMPLERATE_TABLE
-00186e44 r BITRATE_TABLE
-00186e8c r SCALE_FACTOR_LONG_1.2938
-00186eb0 r ca.2897
-00186ec0 r cs.2896
-00186ed0 r MP3_JOINT_STEREO_IS_TABLE_Q15.2740
-00186ee0 r MP3_JOINT_STEREO_IS_LSF_TABLE_Q15.2741
-00186f20 r ROOT_TABLE_Q14.2692
-00186f28 r PRETAB.2691
-00186f40 r T_POW_3_Q14.2686
-00186f48 r SUBBAND_SYNTHESIS_WINDOW_COEFS
-00187348 r REQUANT_POW43_EXPONENT_LUT
-00187448 r REQUANT_POW43_MANTISSA_LUT
-00187848 r mad_huff_pair_table_linbits
-00187868 r mad_huff_quad_table_linbits
-0018786c r mad_huff_pair_table_startbits
-0018788c r mad_huff_quad_table_startbits
-00187890 r mad_huff_pair_table
-00187910 r mad_huff_quad_table
-00187918 r hufftab24
-00187c1c r hufftab16
-00187f40 r hufftab15
-00188238 r hufftab13
-00188554 r hufftab12
-00188614 r hufftab11
-001886e4 r hufftab10
-001887b0 r hufftab9
-0018881c r hufftab8
-001888a0 r hufftab7
-00188920 r hufftab6
-00188958 r hufftab5
-0018898c r hufftab3
-001889ac r hufftab2
-001889cc r hufftab1
-001889dc r hufftab0
-001889e0 r hufftabB
-00188a00 r hufftabA
-00188a38 R sfbwidth_table
-00188aa4 r sfb_8000_mixed
-00188acc r sfb_8000_short
-00188af4 r sfb_8000_long
-00188b0c r sfb_16000_mixed
-00188b30 r sfb_22050_mixed
-00188b54 r sfb_24000_mixed
-00188b78 r sfb_16000_short
-00188ba0 r sfb_22050_short
-00188bc8 r sfb_24000_short
-00188bf0 r sfb_22050_long
-00188c08 r sfb_24000_long
-00188c20 r sfb_32000_mixed
-00188c48 r sfb_44100_mixed
-00188c70 r sfb_48000_mixed
-00188c98 r sfb_32000_short
-00188cc0 r sfb_44100_short
-00188ce8 r sfb_48000_short
-00188d10 r sfb_32000_long
-00188d28 r sfb_44100_long
-00188d40 r sfb_48000_long
-00188f08 R AnaWnd	/unione_swift/src/ssp_product_check/wintab.c:2
-00189824 r .LANCHOR0
-00189838 r ln2LO
-00189848 r ln2HI
-00189858 r halF
-00189928 r dp_l
-00189938 r dp_h
-00189948 r bp
-001899f8 r npio2_hw
-00189a78 r two_over_pi
-00189bd4 r .LANCHOR0
-00189c18 r PIo2
-00189c58 r init_jk
-00189cb0 R cst_libm_rredf
-00189cc8 r .LANCHOR1
-00189cdc r twooverpi.1600
-00189d08 r TWO52
-00189d88 r _ctype_b
-00189f30 r zeroes.4476
-00189f40 r blanks.4475
-00189fa0 A __data_lmastart
-0018a6d8 A EILM_SIZE
+00011870 t led_init	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1081
+00011a00 t soft_uart_hw_init	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1149
+00011a60 t enter_deep_sleep_with_wakeup	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1050
+00011bd0 t gpio_intr_handler	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:769
+00011c14 t bit_sampling_handler	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:728
+00011cdc T save_mute_to_flash	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:235
+00011d04 T restore_mute_from_flash	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:241
+00011d7c T save_volume_to_flash	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:253
+00011d9c T restore_audio_settings	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:257
+00011e44 T uart_send_safe	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:401
+00011eb8 t send_adc_response	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:292
+00011f3c t send_led_feedback	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:670
+00011f84 t led_blink_cb	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:579
+00012024 t send_volume_response	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:464
+000120a8 t tts_handler_task	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:797
+00012e88 t _study_event_cb	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1341
+00012fb0 t _goto_sleeping_cb	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1269
+00013018 t send_command_with_angle	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1166
+0001309c t _goto_awakened_cb	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1235
+00013154 t _custom_setting_cb	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1184
+00013304 T study_send_approval_request	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1301
+0001337c T study_send_approval_result	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1312
+000133f8 T study_send_result	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1329
+00013474 T hb_auto_gpio	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:1382
+00013718 T doa_trigger_start	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:67
+0001375c T doa_trigger_stop	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:75
+0001379c t _doa_uart_recv	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:111
+0001391c T doa_get_latest_angle	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:207
+00013938 T doa_is_data_valid	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:221
+00013954 T doa_reset_data	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:260
+000139c4 T doa_wait_for_angle	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:174
+00013a8c T doa_uart_init	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:281
+00013b78 T doa_uart_reinit_hw	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/doa_uart.c:314
+00013bf8 t _adc_reset_filter_buffer	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:129
+00013c14 T adc_init	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:41
+00013c5c T adc_deinit	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:87
+00013ca4 T adc_get	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:144
+00013cf8 T adc_process_sample	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:197
+00013dd4 T adc_is_initialized	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:263
+00013ddc T adc_reset_state	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:283
+00013dfc T adc_is_triggered	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:307
+00013e08 T adc_get_report_value	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/user_adc_gp2y.c:320
+00013e1c t _user_timer_handle	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/drivers/user_sw_timer.c:52
+00013f10 T user_sw_timer_remove	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/drivers/user_sw_timer.c:81
+00014038 T user_sw_timer_add	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/drivers/user_sw_timer.c:114
+00014134 T user_sw_timer_init	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/drivers/user_sw_timer.c:144
+00014190 T UalAikInit	/workspace/src/kit/aik-kit.c:36
+00014206 T UalAikStart	/workspace/src/kit/aik-kit.c:56
+00014214 T UalAikStop	/workspace/src/kit/aik-kit.c:68
+00014222 T UalAikSet	/workspace/src/kit/aik-kit.c:81
+00014230 T UalAikGet	/workspace/src/kit/aik-kit.c:93
+0001423e T UalAikRelease	/workspace/src/kit/aik-kit.c:103
+0001427e T UalAikAuthConfirmFail	/workspace/src/kit/aik-kit-auth.c:26
+00014282 t ModeIsInvalid	/workspace/src/kit/aik-kit-manager.c:83
+00014292 t KitManagerGetParam	/workspace/src/kit/aik-kit-manager.c:428
+00014304 t KitManagerSetParam	/workspace/src/kit/aik-kit-manager.c:392
+00014380 t KitManagerDestroy	/workspace/src/kit/aik-kit-manager.c:357
+000143ea t KitManagerCreate	/workspace/src/kit/aik-kit-manager.c:296
+00014556 t KitManagerUpdate	/workspace/src/kit/aik-kit-manager.c:54
+000145e2 t KitManagerEventProcess	/workspace/src/kit/aik-kit-manager.c:109
+000147a8 T KitManagerModuleRegister	/workspace/src/kit/aik-kit-manager.c:457
+000147fa T KitManagerInit	/workspace/src/kit/aik-kit-manager.c:481
+000148b6 T KitManagerStart	/workspace/src/kit/aik-kit-manager.c:510
+00014988 T KitManagerStop	/workspace/src/kit/aik-kit-manager.c:543
+00014a16 T KitManagerSet	/workspace/src/kit/aik-kit-manager.c:612
+00014b0a T KitManagerGet	/workspace/src/kit/aik-kit-manager.c:661
+00014bd6 t KitManagerMonitor	/workspace/src/kit/aik-kit-manager.c:181
+00014cfa t KitManagerEntry	/workspace/src/kit/aik-kit-manager.c:220
+00014ec2 T KitManagerRelease	/workspace/src/kit/aik-kit-manager.c:705
+00014f50 T KitManagerMonitorRegister	/workspace/src/kit/aik-kit-manager.c:726
+00014ff6 t EalObserverableNotify	/workspace/src/eal/aik-eal-handle.c:114
+0001507c t EalObserverableClear	/workspace/src/eal/aik-eal-handle.c:143
+000150d0 t EalObserverableDettach	/workspace/src/eal/aik-eal-handle.c:83
+00015132 t EalObserverableAttach	/workspace/src/eal/aik-eal-handle.c:45
+000151c4 t EalModuleRegister	/workspace/src/eal/aik-eal-handle.c:284
+0001523e T EalHandleGetByObserver	/workspace/src/eal/aik-eal-handle.c:167
+00015278 T EalHandleObserverableNotify	/workspace/src/eal/aik-eal-handle.c:212
+000152ae T EalObserverHandleSet	/workspace/src/eal/aik-eal-handle.c:309
+000152e8 T EalCreate	/workspace/src/eal/aik-eal-handle.c:334
+0001541a T EalDestroy	/workspace/src/eal/aik-eal-handle.c:379
+0001549a t EalUploaderGetParam	/workspace/src/eal/aik-eal-uploader.c:165
+000154da t EalUploaderSetParam	/workspace/src/eal/aik-eal-uploader.c:146
+00015518 t EalUploaderEventProcess	/workspace/src/eal/aik-eal-uploader.c:69
+00015556 t EalUploaderDestroy	/workspace/src/eal/aik-eal-uploader.c:124
+0001559c t EalUploaderCreate	/workspace/src/eal/aik-eal-uploader.c:89
+00015650 t EalUploaderUpdate	/workspace/src/eal/aik-eal-uploader.c:26
+000156f4 T EalUploaderModuleRegister	/workspace/src/eal/aik-eal-uploader.c:183
+00015746 t KitHandleUninit	/workspace/src/kit/aik-kit-config.c:120
+00015774 t KitAddModuleToMap	/workspace/src/kit/aik-kit-config.c:56
+000157c8 t KitHandleInit	/workspace/src/kit/aik-kit-config.c:79
+0001589a t KitGetTargetObjectItem	/workspace/src/kit/aik-kit-config.c:1963
+000159ba t KitConfigParseFromData	/workspace/src/kit/aik-kit-config.c:2692
+00015b1a t KitConfigParse	/workspace/src/kit/aik-kit-config.c:2790
+00015b28 t KitUploaderBuilder	/workspace/src/kit/aik-kit-config.c:2546
+00015c12 t KitTtsBuilder	/workspace/src/kit/aik-kit-config.c:1361
+000161d8 t KitFaceRecognizeBuilder	/workspace/src/kit/aik-kit-config.c:1172
+00016410 t KitDirectionalSspBuilder	/workspace/src/kit/aik-kit-config.c:455
+00016728 t KitSspBuilder	/workspace/src/kit/aik-kit-config.c:708
+00016a20 t KitAudioStreamBuilder	/workspace/src/kit/aik-kit-config.c:187
+00016c68 t KitOnlineTtsBuilder	/workspace/src/kit/aik-kit-config.c:1560
+00017250 t KitFaceDetectBuilder	/workspace/src/kit/aik-kit-config.c:1047
+00017518 t KitLipBuilder	/workspace/src/kit/aik-kit-config.c:848
+000179d0 t KitImageStreamBuilder	/workspace/src/kit/aik-kit-config.c:326
+00017c10 t GetFaIndex	/workspace/src/kit/aik-kit-config.c:1944
+00017c62 t KitGetScoreFromFaTable	/workspace/src/kit/aik-kit-config.c:2000
+00017d16 t KitGetArrayNumberDouble	/workspace/src/kit/aik-kit-config.c:2023
+00017d9c t KitFreqsspBuilder	/workspace/src/kit/aik-kit-config.c:603
+000181c2 t KitAudioAdapterBuilder	/workspace/src/kit/aik-kit-config.c:2592
+000183b6 t KitKwsLpBuilder	/workspace/src/kit/aik-kit-config.c:2133
+000191b0 t KitVadnnBuilder	/workspace/src/kit/aik-kit-config.c:1263
+000197f8 t KitAsrBuilder	/workspace/src/kit/aik-kit-config.c:1769
+0001a204 T KitConfigInit	/workspace/src/kit/aik-kit-config.c:2808
+0001a334 T KitConfigSetCallback	/workspace/src/kit/aik-kit-config.c:2851
+0001a372 T KitConfigRelease	/workspace/src/kit/aik-kit-config.c:2874
+0001a408 t KitGetFilterByMode	/workspace/src/kit/aik-kit-event.c:51
+0001a440 T KitEventFilterRegister	/workspace/src/kit/aik-kit-event.c:69
+0001a4b0 T KitEventFilterProcess	/workspace/src/kit/aik-kit-event.c:91
+0001a55a T KitEventCreate	/workspace/src/kit/aik-kit-event.c:119
+0001a59a T KitEventDestroy	/workspace/src/kit/aik-kit-event.c:137
+0001a5b6 t KitEventProcessFaceSmallError	/workspace/src/kit/aik-kit-event-filter-face.c:165
+0001a5fc t KitEventProcessFaceAskewError	/workspace/src/kit/aik-kit-event-filter-face.c:144
+0001a642 t KitEventProcessFaceNumError	/workspace/src/kit/aik-kit-event-filter-face.c:123
+0001a688 t KitEventProcessFaceRegisterResult	/workspace/src/kit/aik-kit-event-filter-face.c:96
+0001a6e4 t KitEventProcessFaceRecognizeResult	/workspace/src/kit/aik-kit-event-filter-face.c:69
+0001a740 t KitEventProcessFaceDetectResult	/workspace/src/kit/aik-kit-event-filter-face.c:43
+0001a79c T KitEventFilterGetFace	/workspace/src/kit/aik-kit-event-filter-face.c:186
+0001a7a2 t KitEventProcessKwsTimeout	/workspace/src/kit/aik-kit-event-filter-kws.c:98
+0001a7e6 t KitEventProcessKwsStudy	/workspace/src/kit/aik-kit-event-filter-kws.c:117
+0001a870 t KitEventProcessKwsCommand	/workspace/src/kit/aik-kit-event-filter-kws.c:68
+0001a8fa t KitEventProcessKwsWakeup	/workspace/src/kit/aik-kit-event-filter-kws.c:38
+0001a982 T KitEventFilterGetKws	/workspace/src/kit/aik-kit-event-filter-kws.c:146
+0001a988 T KitLinkSetByMode	/workspace/src/kit/aik-kit-link.c:249
+0001ada2 T KitProtocolCreateFaceDetectResult	/workspace/src/kit/aik-kit-protocol.c:74
+0001ae74 T KitProtocolCreateKwsResult	/workspace/src/kit/aik-kit-protocol.c:208
+0001af68 T KitProtocolCreateFaceRecognizeResult	/workspace/src/kit/aik-kit-protocol.c:255
+0001b026 T KitProtocolCreateFaceRegisterResult	/workspace/src/kit/aik-kit-protocol.c:271
+0001b0f8 T KitProtocolCreateHeartbeatResult	/workspace/src/kit/aik-kit-protocol.c:291
+0001b1c4 t EalAudioStreamGetParam	/workspace/src/eal/aik-eal-audio-stream.c:585
+0001b220 t EalAudioStreamSetParam	/workspace/src/eal/aik-eal-audio-stream.c:556
+0001b272 t EalAudioStreamDestroy	/workspace/src/eal/aik-eal-audio-stream.c:523
+0001b2e8 t EalAudioStreamCreate	/workspace/src/eal/aik-eal-audio-stream.c:439
+0001b4dc t EalAudioStreamEventProcess	/workspace/src/eal/aik-eal-audio-stream.c:376
+0001b630 t EalAudioStreamUpdate	/workspace/src/eal/aik-eal-audio-stream.c:348
+0001b6a4 t RecorderEntry	/workspace/src/eal/aik-eal-audio-stream.c:256
+0001bd98 T EalAudioStreamModuleRegister	/workspace/src/eal/aik-eal-audio-stream.c:617
+0001bdea t EalAudioAdapterGetParam	/workspace/src/eal/aik-eal-audio-adapter.c:341
+0001be2a t EalAudioAdapterSetParam	/workspace/src/eal/aik-eal-audio-adapter.c:319
+0001be68 t EalAudioAdapterDestroy	/workspace/src/eal/aik-eal-audio-adapter.c:295
+0001bebc t EalAudioAdapterUpdate	/workspace/src/eal/aik-eal-audio-adapter.c:193
+0001c094 t EalAudioAdapterEventProcess	/workspace/src/eal/aik-eal-audio-adapter.c:230
+0001c10c t EalAudioAdapterCreate	/workspace/src/eal/aik-eal-audio-adapter.c:261
+0001c254 T EalAudioAdapterModuleRegister	/workspace/src/eal/aik-eal-audio-adapter.c:362
+0001c2a6 t KwslpSetAcousticModelByUser	/workspace/src/eal/aik-eal-kws7.c:718
+0001c308 t KwslpSetGrammarByUser	/workspace/src/eal/aik-eal-kws7.c:743
+0001c36a t KwslpGetAcousticModel	/workspace/src/eal/aik-eal-kws7.c:38
+0001c3a2 t KwslpGetGrammar	/workspace/src/eal/aik-eal-kws7.c:44
+0001c3dc t EalKwslpGetParam	/workspace/src/eal/aik-eal-kws7.c:1675
+0001c5fc t EalKwslpSetParam	/workspace/src/eal/aik-eal-kws7.c:1572
+0001c844 t KwslpDestroyNonTask	/workspace/src/eal/aik-eal-kws7.c:850
+0001c9f6 t EalKwslpDestroy	/workspace/src/eal/aik-eal-kws7.c:1510
+0001ca04 t KwslpCreateNonTask	/workspace/src/eal/aik-eal-kws7.c:794
+0001cb70 t EalKwslpCreate	/workspace/src/eal/aik-eal-kws7.c:1495
+0001cb7e t EalKwslpEventProcess	/workspace/src/eal/aik-eal-kws7.c:1441
+0001cdee t KwslpUpdateGrammar	/workspace/src/eal/aik-eal-kws7.c:1525
+0001cec4 t KwslpEnginePreprocess	/workspace/src/eal/aik-eal-kws7.c:893
+0001d440 t KwslpUpdateNonTask	/workspace/src/eal/aik-eal-kws7.c:975
+0001de56 t EalKwslpUpdate	/workspace/src/eal/aik-eal-kws7.c:1423
+0001de64 T EalKws7ModuleRegister	/workspace/src/eal/aik-eal-kws7.c:1752
+0001deb6 t EalHeadGetParam	/workspace/src/eal/aik-eal-head.c:89
+0001df80 t EalHeadSetParam	/workspace/src/eal/aik-eal-head.c:66
+0001e04a t EalHeadDestroy	/workspace/src/eal/aik-eal-head.c:45
+0001e0e4 t EalHeadCreate	/workspace/src/eal/aik-eal-head.c:21
+0001e17c T EalHeadModuleRegister	/workspace/src/eal/aik-eal-head.c:110
+0001e212 T UalOFAInitializeFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:22
+0001e220 T UalOFASetOptionInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:33
+0001e236 T UalOFAGetOptionInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:41
+0001e24c T UalOFAGetOptionString	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:58
+0001e262 T UalOFAStart	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:66
+0001e29e T UalOFARecognize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:78
+0001e2ac T UalOFAGetResult	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:84
+0001e2ba T UalOFAStop	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:94
+0001e2d2 T UalOFARelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:103
+0001e2e0 T UalOFAReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:108
+0001e2f8 T UalOFAGetVersion	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:117
+0001e302 T UalOFAGetEngineType	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:122
+0001e306 T UalOFAGetActiveAmId	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:140
+0001e31c T UalOFAGetGrammarInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:163
+0001e32a T UalOFAGetResGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:168
+0001e338 T UalOFAMergeGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:174
+0001e350 T UalOFAGetGrammarSimilarity	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/ual_ofa.c:182
+0001e35e t GetCurrentLanguage	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:904
+0001e396 t CheckEngineAndAmVersion	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:838
+0001e3ae t CheckEngineAndGrammarVersion	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:851
+0001e3bc t DecoderForward	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:802
+0001e440 T KWSRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:202
+0001e4e4 T KWSCreateOnBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:46
+0001e93e T KWSStop	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:400
+0001e976 T KWSReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:408
+0001e9f0 T KWSPushDataOne	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:502
+0001eb5a T KWSSetResultStatus	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:595
+0001eb90 T KWSRecognize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:439
+0001ecc4 T KWSGetResult	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:603
+0001ed52 T KWSGetOptionInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:621
+0001ed9c T KWSSetOptionInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:640
+0001ee98 T KWSGetOptionString	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:700
+0001eefe T KWSGetActiveAmId	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:717
+0001ef38 T KWSPoolSet	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:733
+0001ef50 T KWSStart	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:239
+0001f27a T KWSGetGrammarInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:768
+0001f304 T KWSGetResGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:923
+0001f314 T KWSMergeGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:928
+0001f38a T KWSGetGrammarSimilarity	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/kws.c:955
+0001f39c t GetTokenLateNodeNumber	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1401
+0001f3e0 T PoolSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:208
+0001f3e6 T DecoderPoolSet	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:213
+0001f404 T CalculateTrimBeam	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:298
+0001f506 T UpdateBeam	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:412
+0001f51a T ResGrammarReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:550
+0001f532 T GetResult	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:473
+0001f6f2 T GetResGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:558
+0001f7d4 T GetResultTime	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:605
+0001f838 T TraceBack	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:438
+0001f886 T NormFrameScore	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:625
+0001f8da T UpdateScore	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:722
+0001fa98 T SetTokenFree	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:819
+0001faba T TrimTokens	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:352
+0001fb6e T GetFreeToken	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:904
+0001fbb0 T SetTokenStampZero	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:943
+0001fbce T PurgeGarbage	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:950
+0001fc16 T MarkPathNode	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:967
+0001fc2a T MarkTokenPath	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:976
+0001fc56 T NewLatNode	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:995
+0001fd7c T GenOsymNode	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1079
+0001fe12 T GenIsymNodeForBestToken	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1117
+0001fe8a T EndPreWakeupDetection	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:229
+0001fee0 T EndDetection	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:241
+0001ff98 T GenIsymNode	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1147
+00020014 T UpdateTokenSilenceType	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1190
+0002004e T InsertToken	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1313
+000200f6 T PropFstLayer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1214
+00020266 T PropToken	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:841
+0002038a T PropFirstLayer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1379
+000203d4 T SwapLayer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1393
+000203e6 T DecoderInit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1449
+00020462 T DecoderReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1499
+0002067e T DecoderInitVariableInPool	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1419
+00020704 T DecoderDestroy	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1574
+0002074a T DecoderRecognize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1618
+0002084e T DecoderGetResult	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1710
+0002096c T DecoderGetUtteranceStartTime	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1756
+00020972 T DecoderGetUtteranceEndTime	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1761
+00020978 T DecoderGetResGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1766
+00020a24 T decoderSetValueInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/decoder.c:1807
+00020a5c t GetPartialFstSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1034
+00020a80 t GetFstSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1005
+00020af8 t GetDumpGrammarSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:988
+00020b5a t MallocFsts	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:464
+00020b9c t DestroyFst	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:440
+00020bc2 t FreeFsts	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:475
+00020bfa t GetFstOsymID	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:976
+00020c24 t MergeFst	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1046
+00020f88 t ParseResGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:970
+00020fa2 t DumpFSTData	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1300
+000210a6 t DumpFSTHeader	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1268
+00021194 t DumpFST	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1342
+000212b8 t EditDistance	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1433
+000213b2 t DumpGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1389
+00021484 T ResetGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:268
+000214cc T GrammarCheckVersions	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:285
+00021528 T InitFstHeaderInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:308
+00021668 t InitFstFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:363
+000217ba T SetActiveParaForGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:489
+000217f0 t FindTargetFst	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:812
+00021842 T GetFstArc	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:754
+0002186e T DestroyGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:764
+0002189e T GetFstOsym	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:779
+000218be T GetGrammarStatus	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:790
+000218ce T SetActiveFst	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:798
+00021920 T GetActiveFstDomain	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:826
+0002192e T GetGrammarLanguage	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:830
+0002196c T GetGrammarTreeInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:839
+000219aa T SetNodeSilenceType	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:848
+00021a8e t SetFstSilenceType	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:891
+00021ac2 T SetSilenceType	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:903
+00021af0 T InitGrammarFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:500
+00021ca8 T GrammarGetModelNumber	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:931
+00021cac T GrammarGetInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:935
+00021cc4 T GetGrammarMaxNodesCount	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:943
+00021ce6 T MergeGrammar	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1182
+00021e62 T GetGrammarSimilarity	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/grammar.c:1475
+00021ed2 t ApplyMelFilterBank	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:191
+00021f44 t ApplyWindow	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:224
+00021f8a t InitMelFilterBank	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:238
+00022070 t InitCeps	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:286
+000220d2 t Accumulate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:726
+00022134 t GetEnergy	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:748
+00022154 t InitEnergy	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:715
+00022188 t GlobalMvn	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:430
+0002243c t PushEnergy	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:737
+00022496 t ComputeCeps	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:338
+00022614 T InitMvnStat	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:307
+00022736 T FepGetSampleRate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:583
+0002274a T FepUninit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:607
+00022782 T FepGet	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:621
+00022904 T FepDim	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:682
+0002290e T FepReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:690
+0002297a T FepInit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:539
+00022a18 T FepSetSampleRate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:568
+00022a62 T FepSetValueInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:594
+00022aa4 T FepGetEnergy	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:707
+00022ac8 T WaveEndInfoInit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:33
+00022b6e T WaveEndInfoRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:61
+00022b8e T WaveEndInfoReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:91
+00022bb2 T WaveEndInfoUpdateStartSpeechDetect	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:136
+00022bc6 T WaveEndInfoSetValueInt	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:164
+00022c30 T WaveEndInfoComputeIsSpeech	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:188
+00022d3a T WaveEndInfoUpdateEnergy	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/vad/wav_end_detect.c:102
+00022dbc T AcousticInit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:30
+00022e00 T AcousticSetActiveCm	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:50
+00022e22 T AcousticLoadModelsFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:98
+00022f38 T AcousticReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:146
+00022fb2 T AcousticGetAcitveAmId	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:164
+00022ff8 T AcousticSet	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:173
+000230d4 T AcousticGetOutputNum	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:201
+000230f8 T AcousticGetMaxOutputNum	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:210
+00023102 T AcousticForwardFloat	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:219
+00023152 T AcousticGetOneSenonesScore	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:301
+00023198 T AcousticRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:331
+000231e6 T AcousticSetBunchFrame	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:347
+00023220 T AcousticSetSimulateForwardLoopnumber	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:360
+0002325a T AcousticCheckVersions	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:375
+000232b6 T AcousticGetBunchFrame	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:398
+000232ce T AcousticGetSimulateForwardLoopnumber	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:406
+000232e6 T AcousticGetLanguage	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:422
+00023302 T AcousticGetTreeInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:431
+0002331e T AcousticGetLeftPaddingFrame	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:439
+00023336 T AcousticGetRightPaddingFrame	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:447
+0002334e T AcousticGetDownSampleRate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/acoustic_model_api.c:455
+00023366 T FtdnnInitialize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:56
+000233b0 T ReleaseLayersData	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:91
+00023420 T FtdnnRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:119
+000234a8 T ClearLayersData	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:156
+0002353e T SimulateForward	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:423
+00023894 T AllocFtdnnMemory	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:553
+00023990 T InitInputBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:600
+000239f4 T FtdnnReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:615
+00023b4e T FtdnnReadFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:667
+000240ec T FtdnnGetOutputNumber	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:895
+000240f8 T FtdnnPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:904
+000245d6 T FtdnnFeedDataFloat	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:1260
+000246d6 T FtdnnGetOneOutData	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:1402
+00024748 T ReleaseVariableMemorySizeLayerData	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:1440
+00024792 T FtdnnSetSimulateForwardLoopnumber	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:1464
+000247fe T FtdnnSetBunchFrame	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn.c:1484
+00024866 t saturation_int16_int8	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:172
+000248ac t NormalizeInt32Fast	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:31
+0002494c T NormalizeInt32	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:109
+00024964 T ReluInt32	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:116
+0002497e T saturation_int32_int16	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:210
+000249c4 T VectorCastInt16ToInt8Self	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:235
+00024b58 T VectorCastInt32ToInt16	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:268
+00024cd6 T VectorCastInt32ToInt16Self	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:303
+00024e56 T VectorCastInt32ToInt8	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:336
+00024ed0 T VectorCastInt32ToInt8Self	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:355
+00024f48 T VectorCastInt32ToFloatSelf	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:387
+00024f76 T ReadFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:400
+00024f94 T MinMultipleDistance	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:406
+00024fa0 T CheckVersionPrefix	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/ftdnn_utils.c:410
+0002500e T LayerRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/layer.c:21
+00025044 T LayerPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/layer.c:42
+0002506e T LayerInputScale	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/layer.c:53
+0002508e T LayerInputBits	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/layer.c:69
+000250ae T SetActiveCm	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/confidence_measure.c:15
+00025184 T CMRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/confidence_measure.c:65
+000251a0 T CMLoadFromBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/confidence_measure.c:89
+0002530e T PoolMalloc	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_platform.c:65
+00025394 T SafeStrCpy	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_platform.c:103
+00025414 T SafeStrCat	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_platform.c:123
+0002549e T SafeMemCpy	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_platform.c:144
+0002550c t GetPrephoneNode	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:105
+00025546 t GetCharInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:338
+000256fe t GetNodeInfo	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:120
+000257c6 t GetStateFeat	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:161
+00025862 t CalCmFeature	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:399
+00025b60 T GetStateFeatFromPath	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:197
+00025c90 T GetCmFrame	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:629
+00025cce T CmReset	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:715
+00025cf6 T GetCmScore	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:648
+00025e58 T CmInit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:721
+00025e84 T CmProcessRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:730
+00025ea6 T VectorInit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:14
+00025ee2 T VectorNew	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:25
+00025f20 T VectorMalloc	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:35
+00026020 T VectorSetSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:78
+00026064 T VectorIncreaseSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:90
+000260e0 T VectorPushBack	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:110
+000261c8 T VectorClear	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:145
+00026258 T VectorClearFast	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:168
+00026292 T VectorFree	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:177
+000262be T VectorDecreaseSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:192
+00026308 T VectorErase	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:205
+00026438 T VectorSize	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:259
+0002646e T TransformFloat2Int16	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:271
+00026532 T TransformFloat2Int8	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/aligned_vector.c:291
+000265e2 T ComponentRelease	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:22
+00026676 T QuantParamReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:58
+000266e2 T LinearComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:72
+00026796 T AffineComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:102
+00026854 T LdaComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:134
+00026862 T NormalizeComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:139
+000268b4 T FtdnnOutputComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:154
+00026906 T AffineReluNormComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:173
+00026948 T TdnnOutputComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:187
+0002697c T TdnnSvdOutputComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:199
+000269b0 T ComponentReadBuffer	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:211
+00026a48 T MatMul_8bit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:245
+00026ace T MatMul_16bit	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:278
+00026b54 T FtdnnOutputComponentPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:311
+00026d28 T AffineComponentPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:424
+00026e76 T LinearComponentPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:484
+00026fc4 T AffineReluNormComponentPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:544
+00027140 T ComponentPropagate	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:617
+000271c8 T ComponentInputScale	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:654
+0002722c T ComponentInputBits	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/ftdnn/component.c:716
+00027290 T cblas_gemm_float	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:147
+000272ec T cblas_gemm_int8_fast	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:165
+00027340 T cblas_gemm_int8_normal	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:185
+00027398 T cblas_gemm_int16_fast	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:204
+000273f4 T cblas_gemm_int16_normal	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:223
+000274a0 T cblas_gemm_int32_fast	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:244
+00027514 T cblas_gemm_int32_normal	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:263
+00027588 T UmdIgemmS8S8S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:289
+000275e0 T UmdIgemmS8U8S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:310
+000276a0 T UmdIgemmS16S16S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:339
+000276f8 T UmdIraxpyS32S16	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:362
+00027760 T UmdIraxpyS32S8	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:375
+000277c4 T UmdIrshiftS32S8	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:390
+00027808 T UmdIrshiftS32S16	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:401
+00027850 T UmdIrssqrtU32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:481
+00027878 T UmdIcvsqsumpyS16S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:500
+000278a8 T UmdIcvsqsumpyS32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:510
+000278d0 T UmdIcvsqasumshrS32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:521
+00027928 T UmdIrvsqasumS16S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:534
+00027948 T UmdIrvdotS32S32S64	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:545
+00027974 T UmdIrsvmulshrS32S16S16	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:557
+0002799c T UmdIrsvaddS32S32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:568
+000279bc T UmdIrvdivshlS32S32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:578
+00027a04 T UmdIrsvdivshlS32S32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:583
+00027a70 T UmdIrvmlashrS16S16S16	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:594
+00027ab4 T UmdIrvaddS32S32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:606
+00027adc T UmdIrcvmulshrS32S16S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:618
+00027b44 T UmdIcvmulshrpzS16S32S16	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:631
+00027be8 T UmdIcvconjmulshrpzS16S32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:643
+00027c98 T UmdIrvsdivS32S32	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:655
+00027cbc T UmdIsmulshrS16S32S64	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:665
+00027ce4 T UmdIsmulshrS32S32S64	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:669
+00027d0c T UmdIsmulshrS16S16S16	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:673
+00027d18 T normal_UmdFixedFft	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:772
+00027e3c T UmdFixedFft	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:428
+00027f84 T normal_UmdFloatFft
+0002805c T UmdFloatFft	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:678
+00028130 T normal_UmdFloatIfft	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:845
+00028238 T UmdFloatIfft	/cygdrive/d/Andes/matrix_op/Debug/../src/libumd_op.c:724
+00028320 t bitrv2	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:684
+00028548 t cft1st	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:985
+00028888 t cftmdl	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:1088
+00028d4c t cftbsub	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:937
+00028ea0 t cftfsub	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:889
+00028fec t makewt.part.0	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:638
+000290dc T WebRtc_cdft	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:312
+00029434 T WebRtc_rdft	/cygdrive/d/Andes/matrix_op/Debug/../src/fft4g.c:329
+00029770 T rfft_fix	/cygdrive/d/Andes/matrix_op/Debug/../src/fixed-fft.c:94
+00029b4c T OsalMalloc	/workspace/src/osal/src/system/freertos/osal-memory.c:89
+00029b64 T OsalFree	/workspace/src/osal/src/system/freertos/osal-memory.c:120
+00029b72 T OsalSemInit	/workspace/src/osal/src/system/freertos/osal-sem.c:30
+00029bda T OsalSemPost	/workspace/src/osal/src/system/freertos/osal-sem.c:63
+00029c42 T OsalSemWait	/workspace/src/osal/src/system/freertos/osal-sem.c:90
+00029caa T OsalSemDestroy	/workspace/src/osal/src/system/freertos/osal-sem.c:147
+00029ce2 T OsalPrintf	/workspace/src/osal/src/system/freertos/osal-stdio.c:33
+00029cf2 T OsalSprintf	/workspace/src/osal/src/system/freertos/osal-stdio.c:63
+00029d02 T OsalSnprintf	/workspace/src/osal/src/system/freertos/osal-stdio.c:78
+00029d12 T OsalOpen	/workspace/src/osal/src/system/freertos/osal-stdio.c:103
+00029d16 T OsalWrite	/workspace/src/osal/src/system/freertos/osal-stdio.c:189
+00029d1a T OsalClose	/workspace/src/osal/src/system/freertos/osal-stdio.c:268
+00029d1e T OsalSeek	/workspace/src/osal/src/system/freertos/osal-stdio.c:310
+00029d24 T OsalSync	/workspace/src/osal/src/system/freertos/osal-stdio.c:441
+00029d28 T OsalAssert	/workspace/src/osal/src/system/freertos/osal-assert.c:21
+00029d66 T OsalMemset	/workspace/src/osal/src/system/freertos/osal-string.c:21
+00029d82 T OsalMemcpy	/workspace/src/osal/src/system/freertos/osal-string.c:36
+00029d9e T OsalMemmove	/workspace/src/osal/src/system/freertos/osal-string.c:51
+00029dba T OsalStrcpy	/workspace/src/osal/src/system/freertos/osal-string.c:65
+00029dd6 T OsalStrncpy	/workspace/src/osal/src/system/freertos/osal-string.c:80
+00029df2 T OsalStrstr	/workspace/src/osal/src/system/freertos/osal-string.c:95
+00029e0e T OsalStrchr	/workspace/src/osal/src/system/freertos/osal-string.c:110
+00029e24 T OsalStrlen	/workspace/src/osal/src/system/freertos/osal-string.c:138
+00029e5a T OsalStrcmp	/workspace/src/osal/src/system/freertos/osal-string.c:152
+00029e92 T OsalStrncmp	/workspace/src/osal/src/system/freertos/osal-string.c:165
+00029ece T OsalMemcmp	/workspace/src/osal/src/system/freertos/osal-string.c:178
+00029f0a T OsalStrcat	/workspace/src/osal/src/system/freertos/osal-string.c:191
+00029f42 T OsalStrtok_r	/workspace/src/osal/src/system/freertos/osal-string.c:233
+00029f7a T OsalThreadCreate	/workspace/src/osal/src/system/freertos/osal-thread.c:30
+0002a01e T OsalThreadSet	/workspace/src/osal/src/system/freertos/osal-thread.c:82
+0002a04c T OsalThreadDetach	/workspace/src/osal/src/system/freertos/osal-thread.c:131
+0002a050 T OsalThreadExit	/workspace/src/osal/src/system/freertos/osal-thread.c:151
+0002a066 T OsalThreadDelayMs	/workspace/src/osal/src/system/freertos/osal-thread.c:170
+0002a074 t OsalKeyCompareInt8	/workspace/src/osal/src/utility/osal-map.c:23
+0002a07c t OsalKeyCompareInt16	/workspace/src/osal/src/utility/osal-map.c:40
+0002a084 t OsalKeyCompareInt32	/workspace/src/osal/src/utility/osal-map.c:57
+0002a08c t OsalKeyCompareInt64	/workspace/src/osal/src/utility/osal-map.c:74
+0002a098 t OsalMapSearchNode	/workspace/src/osal/src/utility/osal-map.c:295
+0002a158 t OsalKeyComparePointer	/workspace/src/osal/src/utility/osal-map.c:92
+0002a178 t OsalMapCreateNode	/workspace/src/osal/src/utility/osal-map.c:152
+0002a294 T OsalMapCreate	/workspace/src/osal/src/utility/osal-map.c:116
+0002a31c T OsalMapInsert	/workspace/src/osal/src/utility/osal-map.c:213
+0002a484 T OsalMapSearch	/workspace/src/osal/src/utility/osal-map.c:361
+0002a4d0 T OsalMapDelete	/workspace/src/osal/src/utility/osal-map.c:391
+0002a552 T OsalMapGetSize	/workspace/src/osal/src/utility/osal-map.c:466
+0002a588 T OsalMapGetFirstNode	/workspace/src/osal/src/utility/osal-map.c:484
+0002a5be T OsalMapGetNextNode	/workspace/src/osal/src/utility/osal-map.c:506
+0002a5f4 T OsalMapRelease	/workspace/src/osal/src/utility/osal-map.c:528
+0002a700 T OsalQueueCreate	/workspace/src/osal/src/utility/osal-queue.c:23
+0002a7ae T OsalQueueDestroy	/workspace/src/osal/src/utility/osal-queue.c:65
+0002a7c8 T OsalQueueSize	/workspace/src/osal/src/utility/osal-queue.c:80
+0002a7f0 T OsalQueuePush	/workspace/src/osal/src/utility/osal-queue.c:119
+0002a82e T OsalQueuePop	/workspace/src/osal/src/utility/osal-queue.c:143
+0002a866 t OsalRingBufferReadAttrJudge	/workspace/src/osal/src/utility/osal-ring-buffer.c:203
+0002a86a t OsalRingBufferWriteAttrJudge	/workspace/src/osal/src/utility/osal-ring-buffer.c:213
+0002a870 t OsalRingBufferSyncAttrJudge	/workspace/src/osal/src/utility/osal-ring-buffer.c:223
+0002a876 t OsalRingBufferGetDataSizeInternal	/workspace/src/osal/src/utility/osal-ring-buffer.c:123
+0002a8b8 t OsalRingBufferWriteInternal	/workspace/src/osal/src/utility/osal-ring-buffer.c:237
+0002a980 t OsalRingBufferReadInternal	/workspace/src/osal/src/utility/osal-ring-buffer.c:324
+0002aa42 T OsalRingBufferCreate	/workspace/src/osal/src/utility/osal-ring-buffer.c:26
+0002aafe T OsalRingBufferDestroy	/workspace/src/osal/src/utility/osal-ring-buffer.c:73
+0002ab44 T OsalRingBufferClear	/workspace/src/osal/src/utility/osal-ring-buffer.c:96
+0002ab98 T OsalRingBufferGetDataSize	/workspace/src/osal/src/utility/osal-ring-buffer.c:146
+0002abea T OsalRingBufferGetFreeSize	/workspace/src/osal/src/utility/osal-ring-buffer.c:174
+0002ac40 T OsalRingBufferWrite	/workspace/src/osal/src/utility/osal-ring-buffer.c:289
+0002ac9c T OsalRingBufferRead	/workspace/src/osal/src/utility/osal-ring-buffer.c:374
+0002acf8 T OsalWavOpen	/workspace/src/osal/src/utility/osal-wav.c:436
+0002aee2 T OsalWavWrite	/workspace/src/osal/src/utility/osal-wav.c:518
+0002afd4 T OsalWavClose	/workspace/src/osal/src/utility/osal-wav.c:573
+0002b016 T OsalLogInit	/workspace/src/osal/src/utility/osal-log.c:78
+0002b01a T OsalLogRelease	/workspace/src/osal/src/utility/osal-log.c:160
+0002b01c T OsalLogSetLevel	/workspace/src/osal/src/utility/osal-log.c:213
+0002b046 T OsalMutexInit	/workspace/src/osal/src/system/freertos/osal-mutex.c:23
+0002b0a8 T OsalMutexLock	/workspace/src/osal/src/system/freertos/osal-mutex.c:54
+0002b110 T OsalMutexUnlock	/workspace/src/osal/src/system/freertos/osal-mutex.c:80
+0002b178 T OsalMutexDestroy	/workspace/src/osal/src/system/freertos/osal-mutex.c:106
+0002b1b0 t __rb_rotate_left	/workspace/src/osal/src/utility/osal-rbtree.c:25
+0002b1ee t __rb_rotate_right	/workspace/src/osal/src/utility/osal-rbtree.c:44
+0002b22c t __rb_erase_color	/workspace/src/osal/src/utility/osal-rbtree.c:122
+0002b37a T rb_insert_color	/workspace/src/osal/src/utility/osal-rbtree.c:63
+0002b448 T rb_erase	/workspace/src/osal/src/utility/osal-rbtree.c:186
+0002b500 T rb_first	/workspace/src/osal/src/utility/osal-rbtree.c:315
+0002b512 T rb_next	/workspace/src/osal/src/utility/osal-rbtree.c:335
+0002b540 T nds32_dot_prod_f32
+0002b584 T nds32_dot_prod_q15
+0002b5d0 T nds32_dot_prod_q7
+0002b648 T nds32_clx_conj_f32
+0002b66c T nds32_clx_conj_q31
+0002b694 T nds32_max_q31
+0002b6cc T nds32_min_q31
+0002b704 T nds32_rfft_f32
+0002b840 T nds32_rifft_f32
+0002b988 T nds32_rfft_q31
+0002ba94 T nds32_shift_q31
+0002bad8 T nds32_dup_f32
+0002bb14 T nds32_dup_q31
+0002bb50 T nds32_set_f32
+0002bb6c T nds32_cfft_f32
+0002bb90 T nds32_cifft_f32
+0002bbb4 T nds32_cfft_q31
+0002bbd8 T nds32_cfft_radix2_f32
+0002c010 T nds32_cifft_radix2_f32
+0002c484 T nds32_cfft_radix2_q31
+0002c8a4 T nds32_cfft_radix4_f32
+0002d088 T nds32_cifft_radix4_f32
+0002d8b8 T nds32_cfft_radix4_q31
+0002e20c T ADC_Enable
+0002e21e T ADC_Disable
+0002e230 T ADC_ClockDivSet
+0002e24a T ADC_VrefSet
+0002e2ce T ADC_ModeSet
+0002e2f0 T ADC_Calibration
+0002e33c T ADC_SingleModeDataGet
+0002e378 T Chip_Version
+0002e382 T Chip_VMIDDetectDisable
+0002e394 T Chip_LDOOffDisable
+0002e3fa T FlashPortGet
+0002e414 T Chip_VINVBatVTHSet
+0002e44c T Chip_Init
+0002e4a8 T EnableMPU
+0002e50e T EnableIDCache
+0002e550 T DataCacheInvalidAll
+0002e55a T DataCacheRangeInvalid
+0002e5c0 T Efuse_ReadDataDisable
+0002e5d6 T Efuse_ReadData
+0002e63a T GPIO_RegA18OutdsSet8mA
+0002e646 T GPIO_RegOneBitGet
+0002e65a T GPIO_RegSet
+0002e664 T GPIO_RegGet
+0002e66e T GPIO_INTEnable
+0002e6d4 T GPIO_INTFlagClear
+0002e6ea T GPIO_INTFlagGet
+0002e700 T GPIO_PortAModeSet
+0002ef6e T GPIO_PortBModeSet
+0002f1bc T OsalAudioOpen
+0002f1dc T OsalAudioClose
+0002f1f0 T OsalAudioRead
+0002f258 T OsalAudioStart
+0002f25c T Power_WakeupSourceSet
+0002f560 T Power_WakeupEnable
+0002f584 T Power_WakeupDisable
+0002f5aa T Power_WakeupSourceClear
+0002f5b8 T Power_WakeupSourceGet
+0002f5c2 T Power_CurrentLimitcConfig
+0002f66c T Power_PowerModeConfig
+0002f7cc T SarADC_Init
+0002f804 T SysTickInit
+0002f82e T SysTimerIntFlagClear
+0002f83c T ClockFreqGet
+0002f880 T Timer_Config
+0002fa1c T Timer_Start
+0002fa94 T Timer_Pause
+0002fb10 T Timer_InterrputSrcEnable
+0002fb98 T UART0_InitWpr
+0002fba8 T UART1_InitWpr
+0002fbb8 T UART0_SendWpr
+0002fbf4 T UART1_SendWpr
+0002fc30 T UART0_SendByteWpr
+0002fc64 T UART1_SendByteWpr
+0002fc98 T UART0_IOCtlWpr
+0002fca8 T UART1_IOCtlWpr
+0002fcb8 t UART_BaudClkGet
+0002fcee T UART0_Init
+0002feae T UART1_Init
+0003006e T UART1_Recv
+000300c8 T UART0_RecvByte
+000300ee T UART1_RecvByte
+00030114 T UART0_Send
+00030186 T UART1_Send
+000301f8 T UART0_SendByte
+00030238 T UART1_SendByte
+00030278 T UART0_IOCtl
+00030798 T UART1_IOCtl
+00030cb8 T uni_hal_mic_gain_set
+00030ccc T uni_hal_record_init
+00030d80 T uni_hal_play_init
+00030db0 T uni_hal_record_deinit
+00030dc0 T uni_hal_record_dmarestart
+00030dd0 T uni_hal_record_datalenget
+00030de0 T uni_hal_record_dataget
+00030df0 T uni_hal_play_spacelenget
+00030e00 T uni_hal_play
+00030e10 T uni_hal_play_vol_set
+00030e68 T uni_hal_play_mute
+00030e78 T uni_hal_record_cb
+00030e8c T uni_hal_decoder_init
+00030ec0 T uni_hal_decoder_deinit
+00030ed0 T uni_hal_decoder_song_info
+00030efc T uni_hal_decoder_frame_info
+00030f24 T uni_hal_decoder_can_continue
+00030f38 T uni_hal_decoder_decode
+00030f5c T uni_hal_flash_easy_init
+00030f6c T uni_hal_flash_easy_get_env_blob
+00030f7c T uni_hal_flash_easy_set_env_blob
+00030f8c T uni_hal_flash_read
+00030f9c T uni_hal_flash_write
+00030fac T uni_hal_flash_erase
+0003106c t SystermSleepConfig
+00031158 t SystermAfterWackup
+0003122c T uni_hal_enterdeepsleep
+0003130c T uni_hal_reset_system
+0003131c T uni_hal_get_boot_status
+0003135c T uni_hal_clear_boot_status
+0003136c T uni_hal_timer_init
+000313fc T uni_hal_timer_start
+0003140c T uni_hal_timer_pause
+0003141c T PlayTask
+000314cc T _hand_shake_task
+00031508 t gpio_test
+0003154c t mic_test
+0003159c t uni_hal_cmdshelp
+000315d8 t AudioMicTask
+000317d4 t uni_hal_docmdfunc
+00031848 T uni_hal_uartcmdtask
+00031b78 T _is_factory_mode
+00031c50 T uni_hal_uartcmdinit
+00031ce4 t TGPIO_UartRxIoConfig
+00031d2c t TGPIO_UartTxIoConfig
+00031d78 T uni_hal_dma_SendData
+00031ddc T uni_hal_uart_send
+00031e0c T uni_hal_uart_recvbyte
+00031e40 T uni_hal_uart_init
+00031ed8 T uni_hal_watchdog_enable
+00031ee8 T uni_hal_watchdog_disable
+00031ef8 T uni_hal_watchdog_feed
+00031f08 T uni_realloc
+00031f54 T uni_pthread_create
+00031f94 T uni_sem_init
+00031fcc T uni_pthread_mutex_init
+00031ff0 T uni_system_init
+0003219c T uni_system_start
+000321a8 T WDG_Enable
+000321e0 T WDG_Disable
+00032204 T WDG_Feed
+00032228 T AudioADC_DMARestart
+00032288 T AudioADC_DigitalInit
+000323d0 T AudioADC_DeInit
+00032414 T AudioADC_DataLenGet
+00032440 T AudioADC_DataGet
+000324b0 T AudioADC_LREnable
+000325a6 T AudioADC_Enable
+000325c4 T AudioADC_Disable
+0003260e T AudioADC_HighPassFilterSet
+00032644 T AudioADC_Clear
+0003265a T AudioADC_SampleRateGet
+000326de T AudioADC_SampleRateSet
+00032814 T AudioADC_FadeTimeSet
+00032870 T AudioADC_FadeEnable
+000328a6 T AudioADC_SoftMute
+00032932 T AudioADC_VolSet
+00032990 T AudioADC_AnaInit
+000329dc T AudioADC_AnaDeInit
+00032e9a T AudioADC_PGASel
+0003314a T AudioADC_PGAGainSet
+0003355e T AudioADC_VcomConfig
+000335c2 T AudioADC_PowerDown
+00033688 T audio_decoder_initialize
+00033734 T audio_decoder_decode
+00033754 T audio_decoder_can_continue
+00033774 T BACKUP_WriteEnable
+0003378a T BACKUP_WriteDisable
+00033798 T buffer_context_init
+000338c8 T clear_buffer
+000339f4 T get_num_bits_left
+00033a0c T fill_buffer
+00033be8 T skip_bits
+00033bf0 T get_uint8
+00033c04 T show_uint32_be
+00033c18 T get_bits1
+00033c38 T get_bits25
+00033c60 T show_bits25
+00033c88 T get_bits32
+00033d0c T Clock_Config
+00033e16 T WaitOscillateWork
+00033e50 T Clock_SarADCClkDivSet
+00033e62 T Clock_Pll5ClkDivSet
+00033e74 T Clock_SPIMClkDivSet
+00033e86 T Clock_SDIO0ClkDivSet
+00033e98 T Clock_SDIO1ClkDivSet
+00033eaa T Clock_RcFreqGet
+00033f24 T Clock_PllLock
+0003409c T Clock_PllClose
+000340e8 T Clock_SysClkSelect
+00034146 T Clock_UARTClkSelect
+00034170 T Clock_Module1Enable
+00034180 T Clock_Module2Enable
+00034190 T Clock_HOSCDisable
+000341a2 T Clock_LOSCDisable
+000341ca T Clock_AudioPllClockAutoSet
+00034368 T Clock_AudioMclkSel
+0003441c T AudioDAC_Init
+00034774 T AudioDAC_DataSpaceLenGet
+000347b4 T AudioDAC_DataSet
+000347e0 t AudioDAC0_ChannelEnable
+00034848 t AudioDAC1_ChannelEnable
+0003488c T AudioDAC_Enable
+000348aa T AudioDAC_DitherDisable
+000348c8 T AudioDAC_ScrambleDisable
+000348e6 T AudioDAC_DoutModeSet
+000348f8 T AudioDAC_EdgeSet
+0003493e T AudioDAC_DsmOutdisModeSet
+00034968 T AudioDAC_ZeroNumSet
+0003497c T AudioDAC_SampleRateGet
+00034a00 T AudioDAC_SampleRateSet
+00034b46 T AudioDAC_Reset
+00034b68 T AudioDAC_DigitalMute
+00034ba8 T AudioDAC_SoftMute
+00034c14 T AudioDAC_VolSet
+00034c62 T AudioDAC_VmidChargeOp
+00034c98 t AudioDAC0_PowerOn
+00034d90 t AudioDAC1_PowerOn
+00034e40 t AudioDAC0_PowerDown
+00034f4e t AudioDAC1_PowerDown
+00035006 T AudioDAC_ClkEnable
+00035034 T AudioDAC_FuncReset
+00035062 T AudioDAC_BIASPowerCtrl
+00035084 T AudioDAC_SCFMute
+000350ca T AudioDAC_IBSelect
+00035114 T AudioDAC_AllPowerOn
+00035230 T AudioDAC_AllPowerDown
+00035344 T AudioDAC_AllChannelEnable
+000353d0 T AudioDAC_PowerOn
+000353f2 T AudioDAC_PowerDown
+0003541e T AudioDAC_ChannelEnable
+0003543c T DMA_ChannelAllocTableSet
+0003544a T DMA_ChannelEnable
+00035476 T DMA_ChannelDisable
+000354a4 T DMA_CircularConfig
+00035688 T DMA_CircularDataLenGet
+000356fa T DMA_CircularSpaceLenGet
+000357da T DMA_CircularFIFOClear
+00035800 T DMA_CircularWritePtrSet
+00035834 T DMA_CircularDataPut
+0003599e T DMA_CircularReadPtrSet
+000359d0 T DMA_CircularDataGet
+00035b76 T DMA_ChannelClose
+00035be0 T easyflash_init
+00035c4c t get_status
+00035c84 t get_next_sector_addr
+00035cb8 t sector_statistics_cb
+00035cdc t alloc_env_cb
+00035d10 t gc_check_cb
+00035d20 t find_env_cb
+00035d64 t get_next_env_addr
+00035e40 t write_status
+00035ef0 t read_env
+0003602c t read_sector_meta_data
+000361f8 t sector_iterator
+00036258 t alloc_env
+000362e0 t gc_collect
+00036344 t new_env
+00036398 t check_and_recovery_gc_cb
+000363bc t env_iterator
+00036420 t find_env_no_cache
+0003644c t update_sec_status
+000364a8 t create_env_blob
+000365f0 t del_env
+00036694 t move_env
+000367b8 t check_and_recovery_env_cb
+00036844 t format_sector
+000368e0 t do_gc
+0003698c t check_sec_hdr_cb
+000369c8 T ef_get_env_blob
+00036a2c T ef_set_env_blob
+00036ae8 T ef_env_set_default
+00036bb0 T ef_load_env
+00036c30 T ef_env_init
+00036cb8 T ef_port_init
+00036cdc T ef_port_read
+00036cf4 T ef_port_erase
+00036d34 T ef_port_write
+00036d54 T ef_port_env_lock
+00036d70 T ef_port_env_unlock
+00036d8c T ef_log_debug
+00036d90 T ef_log_info
+00036d94 T ef_calc_crc32
+00036dbc T mp3_decoder_initialize
+000375a0 T mp3_decoder_decode
+00037a44 T mp3_decoder_can_continue
+00037a54 T mp3_decoder_seek
+00037b58 T mp3_id3_v1_parse
+00037c78 T mp3_id3_v2_parse
+000382e0 T mv_mread_callback_set
+000382e8 T mv_mread_callback_unset
+000382f0 T mv_mread
+000383d4 T mv_meom
+000383d8 T mv_fread
+000383e8 T mv_ftell
+000383f8 T mv_fseek
+00038408 T mv_feof
+00038410 T mv_fsof
+00038440 T Remap_AddrRemapSet
+000384c8 T Remap_AddrRemapDisable
+000384f6 T Remap_InitTcm
+00038526 T Remap_DisableTcm
+0003853a T Reset_FlagGet
+00038544 T Reset_FlagClear
+00038558 T Reset_McuSystem
+00038562 T RTC_IntFlagClear
+00038584 T RTC_IntFlagGet
+00038590 T create_error_mic	/unione_swift/src/ssp_product_check/ssp_product_check.c:41
+000385f4 T release_error_mic	/unione_swift/src/ssp_product_check/ssp_product_check.c:60
+0003865c T SspProductCheckGetErrorMic	/unione_swift/src/ssp_product_check/ssp_product_check.c:107
+00038662 T SspProductCheckInit	/unione_swift/src/ssp_product_check/ssp_product_check.c:113
+000388b0 T judge_data_len	/unione_swift/src/ssp_product_check/ssp_product_check.c:253
+000388c2 T SspProductCheckProcess	/unione_swift/src/ssp_product_check/ssp_product_check.c:267
+0003898a T SspProductCheckGetResult	/unione_swift/src/ssp_product_check/ssp_product_check.c:352
+00038a00 T SspProductCheckRelease	/unione_swift/src/ssp_product_check/ssp_product_check.c:377
+00038a60 T SwUartTxInit
+00038b00 T SwUartDelay
+00038b3c T SwUartSendByte
+00038bfc T SwUartSend
+00038c1c t __uni_bf_pin_mux
+00038c80 T uni_sys_init
+00038de4 T UmdAecProductInit	/unione_swift/src/ssp_product_check/aec_check.c:11
+00038e96 T UmdAecProductRelease	/unione_swift/src/ssp_product_check/aec_check.c:37
+00038ecc T energy_check_aec_echo	/unione_swift/src/ssp_product_check/aec_check.c:48
+0003902e T UmdAecProductCheck	/unione_swift/src/ssp_product_check/aec_check.c:91
+00039090 T UmdAecProductGetResult	/unione_swift/src/ssp_product_check/aec_check.c:111
+00039238 t channelExtrat	/unione_swift/src/ssp_product_check/bgnoise_check.c:38
+00039252 T UmdBgnoiseProductCheckInit	/unione_swift/src/ssp_product_check/bgnoise_check.c:18
+000392b4 T UmdBgnoiseProductCheck	/unione_swift/src/ssp_product_check/bgnoise_check.c:47
+00039302 T UmdBgnoiseProductCheckGetResult	/unione_swift/src/ssp_product_check/bgnoise_check.c:80
+00039362 T UmdBgnoiseProductCheckRelease	/unione_swift/src/ssp_product_check/bgnoise_check.c:183
+0003938c T cov	/unione_swift/src/ssp_product_check/channel_consistency.c:9
+00039400 T corrcoef	/unione_swift/src/ssp_product_check/channel_consistency.c:28
+00039482 T UmdChanelConsistencyInit	/unione_swift/src/ssp_product_check/channel_consistency.c:41
+000394e2 T UmdChanelConsistencyRelease	/unione_swift/src/ssp_product_check/channel_consistency.c:60
+00039506 T check_2mic_channel_consistency	/unione_swift/src/ssp_product_check/channel_consistency.c:69
+0003957c T UmdChannelConsistencyGetResult	/unione_swift/src/ssp_product_check/channel_consistency.c:84
+000395bc T UmdChanelConsistencyCheck	/unione_swift/src/ssp_product_check/channel_consistency.c:104
+0003961a T UmdEnergyCheckInit	/unione_swift/src/ssp_product_check/energy_check.c:9
+0003967c T UmdEnergyCheckRelease	/unione_swift/src/ssp_product_check/energy_check.c:44
+0003969a T UmdEnergyGetResult	/unione_swift/src/ssp_product_check/energy_check.c:52
+0003973e T UmdEnergyCheck	/unione_swift/src/ssp_product_check/energy_check.c:93
+000397c0 T mpx_skip_buffer_to
+000397c8 T mpx_find_sync_word
+00039858 T mpx_fill_buffer
+0003999c T mpx_header_check
+00039a14 T mpx_header_parse
+00039b3c T mp2_audio_data_parse
+0003aef4 T mp3_scale_factors_parse
+0003bee0 T mp3_audio_data_parse
+0003c3cc T mp3_decoder_windowing
+0003cb1c T mp3_decoder_imdct_windowing
+0003fa6c T mpx_decoder_dctii
+00040900 T mpx_decoder_calc
+0004285c T mp3_huffman_decode
+00043004 t fft_process	/unione_swift/src/ssp_product_check/noise_reduction.c:146
+000430c6 T noise_reduction_init	/unione_swift/src/ssp_product_check/noise_reduction.c:68
+0004321e T noise_reduction_doCalcVADSNR	/unione_swift/src/ssp_product_check/noise_reduction.c:184
+0004337c T noise_reduction_process	/unione_swift/src/ssp_product_check/noise_reduction.c:267
+000435f6 T noise_reduction_reset	/unione_swift/src/ssp_product_check/noise_reduction.c:344
+00043656 T noise_reduction_release	/unione_swift/src/ssp_product_check/noise_reduction.c:361
+000436be T ProductCheckDataCahceInit	/unione_swift/src/ssp_product_check/product_check_data_cache.c:6
+00043700 T CahceProcessMoveData	/unione_swift/src/ssp_product_check/product_check_data_cache.c:45
+0004371e T ProductCheckDataCahceProcess	/unione_swift/src/ssp_product_check/product_check_data_cache.c:52
+00043788 T ProductCheckDataCahceRelease	/unione_swift/src/ssp_product_check/product_check_data_cache.c:75
+000437a0 T spectrum_check_init	/unione_swift/src/ssp_product_check/spectrum_check.c:28
+00043870 T umd_spectrum_check_process	/unione_swift/src/ssp_product_check/spectrum_check.c:65
+000438da T UmdSpectrumCheckProcess	/unione_swift/src/ssp_product_check/spectrum_check.c:92
+000438ea T UmdSpectrumCheckGetResult	/unione_swift/src/ssp_product_check/spectrum_check.c:99
+00043a84 T UmdSpecturmCheckRelease	/unione_swift/src/ssp_product_check/spectrum_check.c:254
+00043ab2 T cbos_c_fft_v	/unione_swift/src/ssp_product_check/unisound-fft.c:63
+00043b26 t isNANANA	/unione_swift/src/ssp_product_check/mmse_estimation.c:124
+00043b38 T MMSE_Estimation_init	/unione_swift/src/ssp_product_check/mmse_estimation.c:62
+00043ce0 T MMSE_Estimation_process	/unione_swift/src/ssp_product_check/mmse_estimation.c:134
+00044632 T MMSE_Estimation_getGain	/unione_swift/src/ssp_product_check/mmse_estimation.c:376
+00044638 T MMSE_Estimation_reset	/unione_swift/src/ssp_product_check/mmse_estimation.c:383
+000446ee T MMSE_Estimation_release	/unione_swift/src/ssp_product_check/mmse_estimation.c:415
+00044764 t swap	/unione_swift/src/ssp_product_check/noise_reduction_util.c:104
+0004476e t partition	/unione_swift/src/ssp_product_check/noise_reduction_util.c:112
+000447e6 T expint_approach	/unione_swift/src/ssp_product_check/noise_reduction_util.c:92
+00044916 T getTopK	/unione_swift/src/ssp_product_check/noise_reduction_util.c:144
+00044966 T product_check_fft_init	/unione_swift/src/ssp_product_check/product_check_fft_process.c:13
+0004499e T product_check_fft_process	/unione_swift/src/ssp_product_check/product_check_fft_process.c:37
+00044a6c T New1	/unione_swift/src/ssp_product_check/product_check_commmon.c:14
+00044a8c T New2	/unione_swift/src/ssp_product_check/product_check_commmon.c:20
+00044af2 T cos
+00044b7e T sin
+00044c10 T sinf
+00044e08 T exp
+00044f00 T log
+0004500a T log10
+00045114 T pow
+00045408 T logf
+00045594 T log10f
+0004568e T __ieee754_exp
+000459e8 T __ieee754_log
+00045e50 T __ieee754_log10
+00045f74 T __ieee754_pow
+00046a36 T __ieee754_rem_pio2
+00046e4c T __ieee754_sqrt
+00046fbc T __ieee754_log10f
+000470ac T __mathlib_flt_infnan
+000470b4 T __mathlib_flt_underflow
+000470c4 T __mathlib_flt_invalid
+000470d8 T __mathlib_flt_divzero
+000470f0 T __kernel_cos
+000472fc T __kernel_rem_pio2
+00047a70 T __kernel_sin
+00047c24 T ref__mathlib_rredf2
+00047d70 T fabs
+00047d80 T finite
+00047d96 T floor
+00047ec8 T __fpclassifyd
+00047f1c T matherr
+00047f20 T nan
+00047f2e T rint
+00048072 T scalbn
+0004815c T __fpclassifyf
+0004819e T __ieee754_logf
+00048482 T copysign
+000484a0 T __divdi3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:451
+000484e0 T __moddi3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:634
+00048524 T __udivdi3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:818
+00048528 t fudiv_qrnnd	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:961
+00048580 T __udivmoddi4	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:1152
+000486d8 T __fixsfdi	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:3723
+00048750 T __fixdfsi	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:3666
+000487a4 T __floatdisf	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/floatdisf.c:35
+00048896 T __adddf3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/adddf3.c:35
+00048f0c T __divdf3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/divdf3.c:35
+00049474 T __eqdf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/eqdf2.c:35
+00049474 T __nedf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/eqdf2.c:36
+000494e2 T __gedf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/gedf2.c:35
+000494e2 T __gtdf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/gedf2.c:36
+0004958a T __ledf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/ledf2.c:35
+0004958a T __ltdf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/ledf2.c:36
+00049634 T __muldf3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/muldf3.c:35
+00049adc T __subdf3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/subdf3.c:35
+0004a17e T __floatsidf	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/floatsidf.c:36
+0004a1ea T __floatunsidf	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/floatunsidf.c:36
+0004a246 T __extendsfdf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/extendsfdf2.c:36
+0004a2f2 T __truncdfsf2	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/truncdfsf2.c:36
+0004a45e T __lshrdi3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/libgcc2.c:403
+0004a486 T __ashldi3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/libgcc2.c:431
+0004a4ac T __assert_func
+0004a4e8 T atof
+0004a4f0 T atoi
+0004a4f8 T calloc
+0004a50a T __errno
+0004a510 T _fclose_r
+0004a596 T __sflush_r
+0004a6bc T _fflush_r
+0004a6e0 T fflush
+0004a6fc T _cleanup_r
+0004a708 T __sinit
+0004a7e2 T __sfp_lock_acquire
+0004a7e4 T __sfp_lock_release
+0004a7e6 T fiprintf
+0004a7fa T _fread_r
+0004a8f2 T fread
+0004a90c T fseek
+0004a922 T _fseeko_r
+0004ab9e T _fstat_r
+0004abbe T ftell
+0004abcc T _ftello_r
+0004ac44 T _fwalk
+0004ac80 T _fwalk_reent
+0004acc0 T __smakebuf_r
+0004ada0 T malloc
+0004adae T free
+0004adbc T memcmp
+0004adf8 T memcpy
+0004ae60 T memmove
+0004af10 T memset
+0004af84 T _calloc_r
+0004afa0 T _free_r
+0004b014 T _malloc_r
+0004b0ba T printf
+0004b0c4 T puts
+0004b114 T rand
+0004b14e t lflush
+0004b164 T __srefill_r
+0004b252 T _sbrk_r
+0004b270 T snprintf
+0004b27a T sprintf
+0004b284 T sscanf
+0004b28e T __sread
+0004b2b2 T __swrite
+0004b2e8 T __sseek
+0004b30e T __sclose
+0004b31c T strcat
+0004b334 T strchr
+0004b344 T strcmp
+0004b360 T strcpy
+0004b374 T strlen
+0004b380 T strncat
+0004b3a0 T strncmp
+0004b3b8 T strncpy
+0004b3d4 T strstr
+0004b408 T strtod
+0004b6ac T strtof
+0004b6b8 T __strtok_r
+0004b70a T strtok_r
+0004b714 T strtol
+0004b71e T strtol_common
+0004b852 T __sprint_r
+0004b870 T _vfiprintf_r
+0004c166 t __sbprintf
+0004c1d0 t vprintf_help
+0004c204 T vprintf
+0004c24e t vsnprintf_help
+0004c27c T vsnprintf
+0004c2a6 t vsprintf_help
+0004c2b2 T vsprintf
+0004c2cc t vsscanf_help
+0004c2d0 T vsscanf
+0004c2f0 T _write_r
+0004c312 T __swsetup_r
+0004c3c0 T abort
+0004c3ca T _close_r
+0004c3e8 T do_printf
+0004c8ac T do_scanf
+0004cb1e T __sfvwrite_r
+0004cdb6 T _isatty_r
+0004cdd4 T _lseek_r
+0004cdf8 T memchr
+0004ce10 T _realloc_r
+0004ce5a T nds_isalpha
+0004ce68 T nds_isdigit
+0004ce72 T nds_isspace
+0004ce82 T nds_isupper
+0004ce8c t sep_frac
+0004cebe T _printf_float
+0004d5ae T _read_r
+0004d5d0 T _scanf_float
+0004d630 T _scanf_chars
+0004d6ec T _scanf_i
+0004d8b6 T __sccl
+0004d918 T strtoul
+0004d922 T abs
+0004d928 T _malloc_usable_size_r
+0004d93c T _exit
+0004d944 T _close
+0004d95c T _read
+0004d974 T _write
+0004d98c T _lseek
+0004d9a4 T _fstat
+0004d9bc T _isatty
+0004d9d0 T _sbrk
+0004da00 T __umoddi3	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/config/nds32/lib1asmsrc-mculib.S:1739
+0004da18 T __floatundidf	/NOBACKUP/sqa14/sqa/build-bspv422/build-system-3/source-packages/gcc-4.9.4-bsp-v4_2_0-branch/libgcc/soft-fp/floatundidf.c:35
+0004df50 r __FUNCTION__.6313
+0004df6c r __FUNCTION__.6335
+0004df7c r __FUNCTION__.6319
+0004df94 r __FUNCTION__.6342
+0004dfac r __FUNCTION__.6371
+0004dfc4 R expected_magic	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../src/app/src/main.c:64
+0004e010 r __FUNCTION__.5725
+0004e020 r __FUNCTION__.5711
+0004e0ec r __FUNCTION__.5527
+0004e0fc r __FUNCTION__.5522
+0004e118 r __FUNCTION__.5480
+0004e2b8 r __FUNCTION__.6095
+0004e2d4 r __FUNCTION__.6077
+0004e6e0 r __FUNCTION__.6369
+0004e6f4 r __FUNCTION__.6416
+0004e70c r __FUNCTION__.6443
+0004e72c r __FUNCTION__.6422
+0004e740 r __FUNCTION__.6428
+0004e764 r __FUNCTION__.6435
+0004e778 r __FUNCTION__.6447
+0004e790 r __FUNCTION__.6477
+0004e7a8 r __FUNCTION__.6461
+0004e7c4 r __FUNCTION__.6465
+0004e7dc r __FUNCTION__.6469
+0004e7f8 r __FUNCTION__.6473
+0004e814 r __FUNCTION__.6488
+0004e82c r __FUNCTION__.6492
+0004e840 r __FUNCTION__.6361
+0004e850 r __FUNCTION__.6496
+0004e868 r __FUNCTION__.6500
+0004e880 r __FUNCTION__.6346
+0004e89c r __FUNCTION__.6538
+0004e8ac r __FUNCTION__.6543
+0004e8bc r __FUNCTION__.6548
+0004e8cc r state_str.6350
+0004e8d4 r __FUNCTION__.6553
+0004e8e8 r __FUNCTION__.6336
+0004eb84 r __FUNCTION__.6549
+0004eb94 r __FUNCTION__.6554
+0004ebac r __FUNCTION__.6405
+0004ebc4 r __FUNCTION__.6500
+0004ebe0 r __FUNCTION__.6413
+0004ebfc r __FUNCTION__.6417
+0004ec14 r __FUNCTION__.6425
+0004ec2c r __FUNCTION__.6421
+0004ec40 r __FUNCTION__.6484
+0004ec58 r __FUNCTION__.6488
+0004ec70 r __FUNCTION__.6504
+0004ec8c r __FUNCTION__.6516
+0004eca8 r __FUNCTION__.6464
+0004ecc0 r __FUNCTION__.6429
+0004ecdc r __FUNCTION__.6469
+0004ecf0 r __FUNCTION__.6433
+0004ed08 r __FUNCTION__.6437
+0004ed20 r __FUNCTION__.6508
+0004ed3c r __FUNCTION__.6474
+0004ed50 r __FUNCTION__.6520
+0004ed6c r __FUNCTION__.6528
+0004ed80 r __FUNCTION__.6387
+0004ed94 r __FUNCTION__.6445
+0004edac r __FUNCTION__.6441
+0004edc0 r __FUNCTION__.6492
+0004edd8 r __FUNCTION__.6496
+0004edf0 r __FUNCTION__.6351
+0004ee00 r __FUNCTION__.6393
+0004ee1c r __FUNCTION__.6512
+0004ee34 r __FUNCTION__.6337
+0004ee50 r __FUNCTION__.6524
+0004ee64 r __FUNCTION__.6380
+0004ee78 r __FUNCTION__.6534
+0004ee88 r __FUNCTION__.6539
+0004ee98 r __FUNCTION__.6544
+0004eea8 r state_str.6375
+0004eeb8 r __FUNCTION__.6559
+0004efb8 r __FUNCTION__.5546
+0004efd4 r __FUNCTION__.5538
+0004eff0 r __FUNCTION__.5549
+0004f008 r __FUNCTION__.5554
+0004f018 r __FUNCTION__.5559
+0004f028 r __FUNCTION__.5564
+0004f038 r __FUNCTION__.5576
+0004f04c r __FUNCTION__.5571
+0004f404 r __FUNCTION__.6746
+0004f420 r __FUNCTION__.6735
+0004f43c r __FUNCTION__.6665
+0004f454 r __FUNCTION__.6643
+0004f46c r __FUNCTION__.6647
+0004f484 r __FUNCTION__.6587
+0004f498 r __FUNCTION__.6616
+0004f4a8 r __FUNCTION__.6635
+0004f4c4 r __FUNCTION__.6671
+0004f4e4 r __FUNCTION__.6661
+0004f500 r __FUNCTION__.6639
+0004f510 r __FUNCTION__.6656
+0004f528 r __FUNCTION__.6531
+0004f544 r __FUNCTION__.6564
+0004f55c r __FUNCTION__.6597
+0004f570 r __FUNCTION__.6605
+0004f588 r __FUNCTION__.6698
+0004f5a8 r __FUNCTION__.6541
+0004f5b8 r __FUNCTION__.6679
+0004f5c8 r __FUNCTION__.6685
+0004f5d8 r __FUNCTION__.6690
+0004f5e8 r state_str.6545
+0004f5fc r __FUNCTION__.6706
+0004f610 R g_study_cmd_list	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../src/app/src/sessions/uni_study_session.c:81
+0004f78c r __FUNCTION__.5554
+0004f79c r __FUNCTION__.5543
+0004f7ac r __FUNCTION__.5530
+0004f7c4 r __FUNCTION__.5539
+0004f7d8 r __FUNCTION__.5468
+0004f7f4 r __FUNCTION__.5416
+0004f80c r __FUNCTION__.5422
+0004f824 r __FUNCTION__.5457
+0004f834 r __FUNCTION__.5461
+0004f84c r __FUNCTION__.5476
+0004f864 r __FUNCTION__.5492
+0004f880 r __FUNCTION__.5515
+0004f8e4 r __FUNCTION__.5393
+0004f900 r __FUNCTION__.5384
+0004fb08 r __FUNCTION__.5436
+0004fb10 r __FUNCTION__.5429
+0004fb18 r __FUNCTION__.5367
+0004fb24 r __FUNCTION__.5376
+0004fb3c r __FUNCTION__.5384
+0004fb50 r __FUNCTION__.5421
+0004fb64 r __FUNCTION__.5411
+0004fb7c r __FUNCTION__.5425
+0004fb84 R pcm_bin	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/pcm_bin.h:1
+00092684 R g_pcm_arry	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/uni_pcm_array.h:10
+00092a58 r __FUNCTION__.5501
+00092a70 r __FUNCTION__.5452
+00092a84 r __FUNCTION__.5420
+00092a9c r __FUNCTION__.5430
+00092ab4 r __FUNCTION__.5413
+00092ac8 r __FUNCTION__.5444
+00092b54 r __FUNCTION__.5265
+0009308c r __FUNCTION__.5619
+0009309c R g_nlu_content_mapping	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/uni_nlu_content.h:30
+00093294 R g_nlu_content_str	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/uni_nlu_content.h:5
+0009344c r __FUNCTION__.5506
+00093458 r __FUNCTION__.5500
+00093468 r __FUNCTION__.5422
+0009347c r __FUNCTION__.5467
+00093490 r __FUNCTION__.5428
+000934a8 r __FUNCTION__.5481
+000934b8 r __FUNCTION__.5494
+000934c4 r __FUNCTION__.5450
+000936d0 r __FUNCTION__.5748
+000936fc r __FUNCTION__.5751
+00093724 r __FUNCTION__.5728
+00093738 r __FUNCTION__.5770
+00093750 r __FUNCTION__.5781
+00093888 r __FUNCTION__.5814
+000938a0 r __FUNCTION__.5806
+000938bc r __FUNCTION__.5798
+000938d4 r __FUNCTION__.5794
+000938f0 r __FUNCTION__.5773
+000938fc r __FUNCTION__.5760
+00093910 r __FUNCTION__.5751
+00093934 r __FUNCTION__.5764
+00093b74 r __FUNCTION__.5828
+00093b84 r __FUNCTION__.5823
+00093b94 r __FUNCTION__.5811
+00093ba4 r __FUNCTION__.5802
+00093bb8 r __FUNCTION__.5753
+00093bcc r __FUNCTION__.5762
+00093be0 r __FUNCTION__.5769
+00093bf4 r __FUNCTION__.5786
+00093c08 r __FUNCTION__.5797
+00093c18 R g_mp3_ais_share_buf_size	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../src/sdk/vui/src/uni_vui_interface.c:41
+00093c1c R global_kws_lp_study_grammar	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/grammar_study.h:1
+000a67ec R global_kws_lp_grammar	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/grammar.h:1
+000a7db0 R global_kws_lp_acoutstic_model	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/asrfix.h:1
+00176a88 R aik_config	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/aik-config.h:1
+00177024 r __FUNCTION__.5280
+00177030 r __FUNCTION__.5270
+0017703c r __FUNCTION__.5265
+00177048 r __FUNCTION__.5261
+00177074 r __FUNCTION__.5278
+0017707c r __FUNCTION__.5272
+00177128 r __FUNCTION__.5542
+0017713c r __FUNCTION__.5521
+00177154 r __FUNCTION__.5509
+00177300 r __FUNCTION__.5527
+00177320 R config_bin	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../include/config_bin.h:1
+0017760c r __FUNCTION__.5285
+0017761c r __FUNCTION__.5273
+00177630 r __FUNCTION__.5325
+00177644 r __FUNCTION__.5275
+0017765c r __FUNCTION__.5405
+0017766c r __FUNCTION__.5390
+00177738 r __FUNCTION__.5353
+0017774c r __FUNCTION__.5333
+00177860 r __FUNCTION__.5313
+00177874 r __FUNCTION__.5279
+00177888 r __FUNCTION__.5305
+00177898 r __FUNCTION__.5299
+001778a4 r __FUNCTION__.5295
+001778b0 r __FUNCTION__.5290
+001778d8 r __FUNCTION__.5247
+0017796c r __FUNCTION__.5341
+00177a8c r __FUNCTION__.5434
+00177aa8 r __FUNCTION__.5397
+00177ab8 r __FUNCTION__.5393
+00177ac8 r __FUNCTION__.5389
+00177ad4 r __FUNCTION__.5381
+00177ae4 r __FUNCTION__.5401
+00177af4 r __FUNCTION__.5385
+00177b08 r __FUNCTION__.5412
+00177b1c r __FUNCTION__.5440
+00177e38 R MPUConfigTable	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../startup/init-default.c:375
+00177f8c r __FUNCTION__.5671
+00177fcc r __FUNCTION__.5591
+00177fe4 r __FUNCTION__.5584
+00178038 r __FUNCTION__.5534
+001781b4 r __FUNCTION__.5813
+001781cc r __FUNCTION__.5787
+001781e0 r __FUNCTION__.5766
+001781f4 r __FUNCTION__.5751
+0017820c r __FUNCTION__.5740
+00178220 r __FUNCTION__.5708
+00178230 r g_gpio_mode_map	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/user_gpio.c:67
+00178360 r __FUNCTION__.5712
+00178380 r __FUNCTION__.5707
+0017839c r __FUNCTION__.5691
+001783f4 r __FUNCTION__.5564
+00178404 r __FUNCTION__.5556
+0017900c r .LC3
+00179010 r __FUNCTION__.6448
+00179024 r __FUNCTION__.6441
+0017903c r __FUNCTION__.6454
+00179050 r __FUNCTION__.6488
+00179060 r __FUNCTION__.6435
+00179074 r __FUNCTION__.6431
+00179080 r __FUNCTION__.6424
+00179094 r __FUNCTION__.6295
+001790a4 r __FUNCTION__.6270
+001790b8 r __FUNCTION__.6258
+001790cc r __FUNCTION__.6307
+001790e4 r __FUNCTION__.6283
+001790fc r __FUNCTION__.6319
+00179114 r __FUNCTION__.6327
+0017912c r __FUNCTION__.6355
+00179138 r __FUNCTION__.6346
+00179140 r __FUNCTION__.6342
+00179148 r __FUNCTION__.6378
+0017915c r __FUNCTION__.6265
+00179170 r __FUNCTION__.6410
+00179184 r __FUNCTION__.6500
+00179194 r __FUNCTION__.6481
+001791a8 r __FUNCTION__.6475
+001791c4 r __FUNCTION__.6469
+001791e0 r __FUNCTION__.6302
+001791f0 r __FUNCTION__.6253
+00179208 r __FUNCTION__.6244
+00179220 r g_tts_mapping	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../user/src/examples/hb_auto_gpio.c:37
+00179460 r __FUNCTION__.5877
+00179474 r __FUNCTION__.5806
+00179480 r __FUNCTION__.5820
+00179498 r __FUNCTION__.5872
+001794a8 r __FUNCTION__.5867
+001794b8 r __FUNCTION__.5843
+001794cc r __FUNCTION__.5814
+001794e0 r __FUNCTION__.5810
+00179574 r __FUNCTION__.5635
+00179588 r __FUNCTION__.5620
+00179624 r __PRETTY_FUNCTION__.3820
+00179634 r __PRETTY_FUNCTION__.3798
+00179a28 r __PRETTY_FUNCTION__.4777
+00179a44 r __PRETTY_FUNCTION__.4771
+00179a58 r __PRETTY_FUNCTION__.4763
+00179a68 r __PRETTY_FUNCTION__.4747
+00179a78 r __PRETTY_FUNCTION__.4722
+00179a88 r __PRETTY_FUNCTION__.4716
+00179a98 r __PRETTY_FUNCTION__.4709
+00179aa8 r __PRETTY_FUNCTION__.4601
+00179abc r __PRETTY_FUNCTION__.4620
+00179ad4 r __PRETTY_FUNCTION__.4636
+00179ae8 r __PRETTY_FUNCTION__.4649
+00179af8 r __PRETTY_FUNCTION__.4660
+00179b0c r __PRETTY_FUNCTION__.4669
+00179b20 r __PRETTY_FUNCTION__.4680
+00179b34 r __PRETTY_FUNCTION__.4692
+00179b48 r __PRETTY_FUNCTION__.4700
+00179cb0 r __PRETTY_FUNCTION__.4940
+00179cbc r __PRETTY_FUNCTION__.4917
+00179cd0 r __PRETTY_FUNCTION__.4859
+00179ce8 r __PRETTY_FUNCTION__.4870
+00179d00 r __PRETTY_FUNCTION__.4893
+00179d18 r __PRETTY_FUNCTION__.4883
+00179d30 r __PRETTY_FUNCTION__.4935
+00179d3c r __PRETTY_FUNCTION__.4927
+00179d54 r __PRETTY_FUNCTION__.4910
+00179d70 r __PRETTY_FUNCTION__.4902
+00179de0 r __PRETTY_FUNCTION__.4229
+00179df4 r __PRETTY_FUNCTION__.4239
+00179e0c r __PRETTY_FUNCTION__.4247
+00179e20 r __PRETTY_FUNCTION__.4252
+00179e34 r __PRETTY_FUNCTION__.4259
+00179e48 r __PRETTY_FUNCTION__.4266
+00179e5c r __PRETTY_FUNCTION__.4271
+0017b78c r __PRETTY_FUNCTION__.5267
+0017b7a0 r __PRETTY_FUNCTION__.5256
+0017b7b8 r __PRETTY_FUNCTION__.4945
+0017b7d0 r __PRETTY_FUNCTION__.5204
+0017b7e8 r __PRETTY_FUNCTION__.4993
+0017b7f8 r __PRETTY_FUNCTION__.4927
+0017b80c r __PRETTY_FUNCTION__.5116
+0017b824 r __PRETTY_FUNCTION__.5090
+0017b830 r __PRETTY_FUNCTION__.5108
+0017b848 r __PRETTY_FUNCTION__.5149
+0017b858 r __PRETTY_FUNCTION__.5166
+0017b868 r __PRETTY_FUNCTION__.4969
+0017b884 r __PRETTY_FUNCTION__.4957
+0017b89c r __PRETTY_FUNCTION__.5005
+0017b8ac r __PRETTY_FUNCTION__.5017
+0017b8c4 r __PRETTY_FUNCTION__.5029
+0017b8dc r __PRETTY_FUNCTION__.5077
+0017b8ec r __PRETTY_FUNCTION__.5053
+0017b8fc r __PRETTY_FUNCTION__.5065
+0017b910 r __PRETTY_FUNCTION__.4936
+0017b928 r __PRETTY_FUNCTION__.5041
+0017b938 r __PRETTY_FUNCTION__.5192
+0017b94c r __PRETTY_FUNCTION__.5098
+0017b964 r __PRETTY_FUNCTION__.5133
+0017b974 r __PRETTY_FUNCTION__.4981
+0017b988 r __PRETTY_FUNCTION__.5219
+0017b9a0 r __PRETTY_FUNCTION__.4904
+0017b9b4 r __PRETTY_FUNCTION__.4912
+0017b9c4 r __PRETTY_FUNCTION__.5247
+0017b9d4 r global_module_list	/workspace/src/kit/aik-kit-config.c:2668
+0017ba54 R fa_table	/workspace/src/kit/aik-kit-config.c:1941
+0017babc r __PRETTY_FUNCTION__.4329
+0017bacc r __PRETTY_FUNCTION__.4320
+0017bae4 r __PRETTY_FUNCTION__.4312
+0017bafc r global_filter_map	/workspace/src/kit/aik-kit-event.c:14
+0017bb28 r __PRETTY_FUNCTION__.4347
+0017bb48 r __PRETTY_FUNCTION__.4354
+0017bb6c r __PRETTY_FUNCTION__.4361
+0017bb90 r __PRETTY_FUNCTION__.4367
+0017bbac r __PRETTY_FUNCTION__.4373
+0017bbcc r __PRETTY_FUNCTION__.4379
+0017bc0c r __PRETTY_FUNCTION__.4341
+0017bc28 r __PRETTY_FUNCTION__.4348
+0017bc44 r __PRETTY_FUNCTION__.4361
+0017bc5c r __PRETTY_FUNCTION__.4354
+0017bd94 r __PRETTY_FUNCTION__.4563
+0017bda4 r __PRETTY_FUNCTION__.4573
+0017bdb4 r __PRETTY_FUNCTION__.4589
+0017bdc8 r __PRETTY_FUNCTION__.4600
+0017bddc r global_link_map	/workspace/src/kit/aik-kit-link.c:16
+0017bf80 r __PRETTY_FUNCTION__.4002
+0017bfa4 r __PRETTY_FUNCTION__.3997
+0017bfc8 r __PRETTY_FUNCTION__.3982
+0017bfe4 r __PRETTY_FUNCTION__.3937
+0017c318 r __PRETTY_FUNCTION__.4029
+0017c330 r __PRETTY_FUNCTION__.4040
+0017c34c r __PRETTY_FUNCTION__.3999
+0017c368 r __PRETTY_FUNCTION__.3980
+0017c378 r __PRETTY_FUNCTION__.4018
+0017c388 r __PRETTY_FUNCTION__.4056
+0017c3a0 r __PRETTY_FUNCTION__.4064
+0017c3b8 r __PRETTY_FUNCTION__.4072
+0017c3d0 r __PRETTY_FUNCTION__.4083
+0017c3e8 r __PRETTY_FUNCTION__.4091
+0017c528 r __PRETTY_FUNCTION__.4233
+0017c548 r __PRETTY_FUNCTION__.4239
+0017c55c r __PRETTY_FUNCTION__.4247
+0017c578 r __PRETTY_FUNCTION__.4265
+0017c58c r __PRETTY_FUNCTION__.4286
+0017c5a4 r __PRETTY_FUNCTION__.4295
+0017c5c0 r __PRETTY_FUNCTION__.4302
+0017c5d8 r __PRETTY_FUNCTION__.4307
+0017c5f0 r __PRETTY_FUNCTION__.4314
+0017c608 r __PRETTY_FUNCTION__.4321
+0017c620 r __PRETTY_FUNCTION__.4326
+0017cf68 r __PRETTY_FUNCTION__.4904
+0017cf78 r __PRETTY_FUNCTION__.4898
+0017cf90 r __PRETTY_FUNCTION__.5005
+0017cfa8 r __PRETTY_FUNCTION__.4981
+0017cfb4 r __PRETTY_FUNCTION__.4959
+0017cfc8 r __PRETTY_FUNCTION__.4970
+0017cfd4 r __PRETTY_FUNCTION__.4949
+0017cfe8 r __PRETTY_FUNCTION__.5000
+0017d000 r __PRETTY_FUNCTION__.5022
+0017d014 r __PRETTY_FUNCTION__.5143
+0017d028 r __PRETTY_FUNCTION__.4919
+0017d03c r __PRETTY_FUNCTION__.4933
+0017d04c r __PRETTY_FUNCTION__.5074
+0017d064 r __PRETTY_FUNCTION__.5090
+0017d078 r __PRETTY_FUNCTION__.5108
+0017d084 r __PRETTY_FUNCTION__.5101
+0017d090 r __PRETTY_FUNCTION__.5097
+0017d09c r __PRETTY_FUNCTION__.5123
+0017d0b4 r __PRETTY_FUNCTION__.5053
+0017d0c8 r __PRETTY_FUNCTION__.4944
+0017d0dc r __PRETTY_FUNCTION__.5060
+0017d0f0 r __PRETTY_FUNCTION__.5039
+0017d108 r __PRETTY_FUNCTION__.5034
+0017d124 r __PRETTY_FUNCTION__.5154
+0017d138 r __PRETTY_FUNCTION__.5177
+0017d14c r __PRETTY_FUNCTION__.5192
+0017d1ac r __PRETTY_FUNCTION__.4372
+0017d1bc r __PRETTY_FUNCTION__.4377
+0017d1cc r __PRETTY_FUNCTION__.4384
+0017d1dc r __PRETTY_FUNCTION__.4391
+0017d1ec r __PRETTY_FUNCTION__.4396
+0017d228 r __PRETTY_FUNCTION__.3883
+0017d5d8 r __PRETTY_FUNCTION__.5037
+0017d5e8 r __PRETTY_FUNCTION__.4947
+0017d5fc r __PRETTY_FUNCTION__.4916
+0017d610 r __PRETTY_FUNCTION__.5013
+0017d624 r __PRETTY_FUNCTION__.4909
+0017d638 r __PRETTY_FUNCTION__.4882
+0017d648 r __PRETTY_FUNCTION__.4871
+0017d658 r __PRETTY_FUNCTION__.4865
+0017d668 r __PRETTY_FUNCTION__.4861
+0017d67c r __PRETTY_FUNCTION__.4970
+0017d68c r __PRETTY_FUNCTION__.4838
+0017d69c r __PRETTY_FUNCTION__.4825
+0017d6ac r __PRETTY_FUNCTION__.4808
+0017d6b8 r __PRETTY_FUNCTION__.4804
+0017d6c0 r __PRETTY_FUNCTION__.4790
+0017d6cc r __PRETTY_FUNCTION__.4782
+0017d6d8 r __PRETTY_FUNCTION__.4774
+0017d6ec R grammar_versions	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/engine_version.c:13
+0017d70c R am_versions	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/engine_version.c:12
+0017d72c R g_grammar_version_number	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/engine_version.c:11
+0017d730 R g_am_version_number	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/base/engine_version.c:10
+0017d8c8 r __PRETTY_FUNCTION__.4902
+0017d8e0 r __PRETTY_FUNCTION__.4852
+0017d8f0 r __PRETTY_FUNCTION__.4814
+0017d8fc r __PRETTY_FUNCTION__.4800
+0017d90c r __PRETTY_FUNCTION__.4744
+0017d918 r __PRETTY_FUNCTION__.4683
+0017d924 r __PRETTY_FUNCTION__.4631
+0017d934 r __PRETTY_FUNCTION__.4604
+0017de9c r __PRETTY_FUNCTION__.4112
+0017deac r __PRETTY_FUNCTION__.4127
+0017deb8 r __PRETTY_FUNCTION__.4138
+0017dec0 r __PRETTY_FUNCTION__.4149
+0017decc r __PRETTY_FUNCTION__.4035
+0017dee0 r __PRETTY_FUNCTION__.4062
+0017deec r __PRETTY_FUNCTION__.4094
+0017defc r __PRETTY_FUNCTION__.3957
+0017df10 r __PRETTY_FUNCTION__.3953
+0017df24 r __PRETTY_FUNCTION__.3802
+0017df38 r __PRETTY_FUNCTION__.3844
+0017df50 r __PRETTY_FUNCTION__.3788
+0017df78 r __PRETTY_FUNCTION__.4431
+0017df80 r __PRETTY_FUNCTION__.4420
+0017df90 r high_frequency_engergy_threshold	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/fep/fep-float.c:40
+0017dff0 r __PRETTY_FUNCTION__.3689
+0017e008 r __PRETTY_FUNCTION__.3639
+0017e128 r __PRETTY_FUNCTION__.4594
+0017e144 r __PRETTY_FUNCTION__.4536
+0017e150 r __PRETTY_FUNCTION__.4529
+0017e168 r __PRETTY_FUNCTION__.4519
+0017e178 r __PRETTY_FUNCTION__.4512
+0017e198 r __PRETTY_FUNCTION__.4483
+0017e438 r __PRETTY_FUNCTION__.4861
+0017e44c r __PRETTY_FUNCTION__.4855
+0017e470 r __PRETTY_FUNCTION__.4835
+0017e484 r __PRETTY_FUNCTION__.4795
+0017e498 r __PRETTY_FUNCTION__.4672
+0017e4ac r __PRETTY_FUNCTION__.4655
+0017e4b8 r __PRETTY_FUNCTION__.4650
+0017e558 r __PRETTY_FUNCTION__.4156
+0017e56c R t_mv_8k_40	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:173
+0017e60c R t_va_8k_40	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:164
+0017e6ac R t_mu_8k_40	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:155
+0017e74c R t_mv_16k_40	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:145
+0017e7ec R t_va_16k_40	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:134
+0017e88c R t_mu_16k_40	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:123
+0017e92c R mel_coeffs	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:112
+0017e9cc R povey_window_8k	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:71
+0017ed8c R povey_window_16k	/data/jenkins-ci/workspace/kwslp/kwslp/src/plat/sys_dsp_float.c:22
+0017f2a8 r __PRETTY_FUNCTION__.3526
+0017f2b4 r __PRETTY_FUNCTION__.3517
+0017f2c0 r __PRETTY_FUNCTION__.3510
+0017f2cc r __PRETTY_FUNCTION__.3503
+0017f300 r __PRETTY_FUNCTION__.4520
+0017f318 R default_cm_coefs	/data/jenkins-ci/workspace/kwslp/kwslp/src/kwslp/decoder/cm_process.c:35
+0017f4bc r __PRETTY_FUNCTION__.4251
+0017f4d0 r __PRETTY_FUNCTION__.4239
+0017f4e8 r __PRETTY_FUNCTION__.4229
+0017f4f4 r __PRETTY_FUNCTION__.4214
+0017f500 r __PRETTY_FUNCTION__.4207
+0017f514 r __PRETTY_FUNCTION__.4199
+0017f524 r __PRETTY_FUNCTION__.4190
+0017f530 r __PRETTY_FUNCTION__.4180
+0017f540 r __PRETTY_FUNCTION__.4173
+0017f554 r __PRETTY_FUNCTION__.4167
+0017f564 r __PRETTY_FUNCTION__.4152
+0017f574 r __PRETTY_FUNCTION__.4147
+0017f580 r __PRETTY_FUNCTION__.4142
+0017f704 r __PRETTY_FUNCTION__.4649
+0017f728 r __PRETTY_FUNCTION__.4628
+0017f744 r __PRETTY_FUNCTION__.4610
+0017f760 r __PRETTY_FUNCTION__.4577
+0017f780 r __PRETTY_FUNCTION__.4455
+0017f79c r __PRETTY_FUNCTION__.4445
+0017f8a8 r SinTab	/cygdrive/d/Andes/matrix_op/Debug/../src/fixed-fft.c:11
+0018007c r __PRETTY_FUNCTION__.4399
+0018008c r __PRETTY_FUNCTION__.4387
+00180098 r __PRETTY_FUNCTION__.4381
+001800a4 r __PRETTY_FUNCTION__.4375
+001800c4 r __PRETTY_FUNCTION__.4257
+001800d0 r __PRETTY_FUNCTION__.3590
+001800e0 r __PRETTY_FUNCTION__.3573
+001800ec r __PRETTY_FUNCTION__.3568
+001800f8 r __PRETTY_FUNCTION__.3562
+00180104 r __PRETTY_FUNCTION__.3556
+00180110 r __PRETTY_FUNCTION__.3551
+00180150 r __PRETTY_FUNCTION__.4332
+00180160 r __PRETTY_FUNCTION__.4325
+00180208 r __PRETTY_FUNCTION__.3613
+00180218 r __PRETTY_FUNCTION__.3601
+0018022c r __PRETTY_FUNCTION__.3593
+00180240 r __PRETTY_FUNCTION__.3587
+00180250 r __PRETTY_FUNCTION__.3570
+00180260 r __PRETTY_FUNCTION__.3540
+00180274 r __PRETTY_FUNCTION__.3561
+00180284 r __PRETTY_FUNCTION__.3498
+00180298 r __PRETTY_FUNCTION__.3517
+001802a8 r __PRETTY_FUNCTION__.3488
+001802b8 r fun_array	/workspace/src/osal/src/utility/osal-map.c:105
+001802f4 r __PRETTY_FUNCTION__.3345
+0018034c r __PRETTY_FUNCTION__.3448
+00180368 r __PRETTY_FUNCTION__.3456
+0018037c r __PRETTY_FUNCTION__.3429
+00180398 r __PRETTY_FUNCTION__.3437
+001803ac r __PRETTY_FUNCTION__.3408
+001803c8 r __PRETTY_FUNCTION__.3395
+001803ec r __PRETTY_FUNCTION__.3401
+00180408 r __PRETTY_FUNCTION__.3389
+0018041c r __PRETTY_FUNCTION__.3384
+00180434 r __PRETTY_FUNCTION__.3378
+00180780 r __PRETTY_FUNCTION__.3535
+00180790 r __PRETTY_FUNCTION__.3530
+001807a0 r __PRETTY_FUNCTION__.3518
+001807c8 r __FUNCTION__.3392
+00180828 r __PRETTY_FUNCTION__.4208
+0018083c r __PRETTY_FUNCTION__.4203
+0018084c r __PRETTY_FUNCTION__.4197
+0018085c r __PRETTY_FUNCTION__.4191
+0018086c R nds32_cos_table_f32_1024
+00180c80 R nds32_cos_table_q31_1024
+00181094 R nds32_recip_table_f32
+00181380 r uni_hal_cmds
+001813c0 r FF_audio_16bit
+0018532c r __FUNCTION__.2771
+00185338 r __FUNCTION__.2712
+0018534c r __FUNCTION__.2538
+0018535c r __FUNCTION__.2371
+0018536c r __FUNCTION__.2426
+00185378 r __FUNCTION__.2438
+00185390 r crc32_table
+00185390 r default_env_set
+00185830 r g_pin_group2
+00186830 r g_pin_group1
+00186878 r g_pinmux
+00186a28 r SF_TABLE
+00186b28 r QC_TABLE
+00186bf4 r OFFSET_TABLE
+00186c50 r BITALLOC_TABLE
+00186c60 r SBQUANT_TABLE
+00186c88 r SBQUANT_OFFSETS_4
+00186ca8 r SBQUANT_OFFSETS_3
+00186cb4 r SBQUANT_OFFSETS_2
+00186cbc r SBQUANT_OFFSETS_1
+00186cdc r SBQUANT_OFFSETS_0
+00186cf8 r NSFB
+00186d40 r SFLEN_TABLE
+00186d60 R SAMPLERATE_TABLE
+00186d74 r BITRATE_TABLE
+00186dbc r SCALE_FACTOR_LONG_1.2938
+00186de0 r ca.2897
+00186df0 r cs.2896
+00186e00 r MP3_JOINT_STEREO_IS_TABLE_Q15.2740
+00186e10 r MP3_JOINT_STEREO_IS_LSF_TABLE_Q15.2741
+00186e50 r ROOT_TABLE_Q14.2692
+00186e58 r PRETAB.2691
+00186e70 r T_POW_3_Q14.2686
+00186e78 r SUBBAND_SYNTHESIS_WINDOW_COEFS
+00187278 r REQUANT_POW43_EXPONENT_LUT
+00187378 r REQUANT_POW43_MANTISSA_LUT
+00187778 r mad_huff_pair_table_linbits
+00187798 r mad_huff_quad_table_linbits
+0018779c r mad_huff_pair_table_startbits
+001877bc r mad_huff_quad_table_startbits
+001877c0 r mad_huff_pair_table
+00187840 r mad_huff_quad_table
+00187848 r hufftab24
+00187b4c r hufftab16
+00187e70 r hufftab15
+00188168 r hufftab13
+00188484 r hufftab12
+00188544 r hufftab11
+00188614 r hufftab10
+001886e0 r hufftab9
+0018874c r hufftab8
+001887d0 r hufftab7
+00188850 r hufftab6
+00188888 r hufftab5
+001888bc r hufftab3
+001888dc r hufftab2
+001888fc r hufftab1
+0018890c r hufftab0
+00188910 r hufftabB
+00188930 r hufftabA
+00188968 R sfbwidth_table
+001889d4 r sfb_8000_mixed
+001889fc r sfb_8000_short
+00188a24 r sfb_8000_long
+00188a3c r sfb_16000_mixed
+00188a60 r sfb_22050_mixed
+00188a84 r sfb_24000_mixed
+00188aa8 r sfb_16000_short
+00188ad0 r sfb_22050_short
+00188af8 r sfb_24000_short
+00188b20 r sfb_22050_long
+00188b38 r sfb_24000_long
+00188b50 r sfb_32000_mixed
+00188b78 r sfb_44100_mixed
+00188ba0 r sfb_48000_mixed
+00188bc8 r sfb_32000_short
+00188bf0 r sfb_44100_short
+00188c18 r sfb_48000_short
+00188c40 r sfb_32000_long
+00188c58 r sfb_44100_long
+00188c70 r sfb_48000_long
+00188e38 R AnaWnd	/unione_swift/src/ssp_product_check/wintab.c:2
+00189754 r .LANCHOR0
+00189768 r ln2LO
+00189778 r ln2HI
+00189788 r halF
+00189858 r dp_l
+00189868 r dp_h
+00189878 r bp
+00189928 r npio2_hw
+001899a8 r two_over_pi
+00189b04 r .LANCHOR0
+00189b48 r PIo2
+00189b88 r init_jk
+00189be0 R cst_libm_rredf
+00189bf8 r .LANCHOR1
+00189c0c r twooverpi.1600
+00189c38 r TWO52
+00189cb8 r _ctype_b
+00189e60 r zeroes.4476
+00189e70 r blanks.4475
+00189ec0 A __data_lmastart
+0018a5f8 A EILM_SIZE
 20003800 D __data_start
 20003800 A _stack
 20003800 d xNextTaskUnblockTime	/home/TELECOM-7.6/TELE-6.8/uni_hb_m_solution/unione_lite_app_hb_m/build/../middleware/rtos/freertos/src/tasks.c:226

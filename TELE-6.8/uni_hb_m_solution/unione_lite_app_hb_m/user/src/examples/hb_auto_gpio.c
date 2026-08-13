@@ -25,7 +25,7 @@
 
 #define TAG "auto_gpio"
 #define DBG(...) ((void)0)
-
+//#define DBG(...) printf(__VA_ARGS__)
 
 
 // ============ TTS 命令映射表 ============
@@ -45,8 +45,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0x57                 // CRC低字节
-#define CRC_VALUE_HIGH      0xBA                // CRC高字节
+#define CRC_VALUE_LOW       0x62                 // CRC低字节
+#define CRC_VALUE_HIGH      0xB4                // CRC高字节
 
 // ============ 复位控制相关 ============
 #define REBOOT_CMD_CODE     0xF1   // 上位机请求系统复位
@@ -977,14 +977,6 @@ static void deep_sleep_restore(void) {
     uni_msleep(100);
 
     uni_hal_watchdog_feed();
-    GPIO_PortBModeSet(GPIOB8, 0);
-    user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
-    user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
-
-    // GPIO_PortBModeSet(GPIOA26, 0);
-    // user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
-    // user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP);
-
     DBG("Woke up, reinitializing hardware...");
  //   GIE_ENABLE();
  //   user_gpio_init();
@@ -1027,21 +1019,24 @@ static void deep_sleep_restore(void) {
     uni_msleep(50);
     uni_hal_watchdog_feed();
 
-    // 尝试恢复 ASR（最多3次）
-    int retry = 3;
-    while (retry--) {
+ // 恢复 ASR（仅尝试一次）
     if (E_OK == RecogLaunch(NULL)) {
-        LOGT(TAG, "RecogLaunch success");
-        break;
-    }
-    LOGW(TAG, "RecogLaunch failed, retry %d", retry);
-    uni_msleep(100);
-    RecogStop();   // 清理残留状态
+    DBG("RecogLaunch success");
+    } else {
+    LOGE(TAG, "RecogLaunch failed, rebooting system");
     uni_msleep(50);
-    uni_hal_watchdog_feed();  // 重试前喂狗
+    uni_hal_reset_system();  // 硬件复位，彻底重置所有状态
     }
+
     uni_msleep(20); 
     user_gpio_set_value(GPIO_NUM_A28, 0);
+    GPIO_PortBModeSet(GPIOB8, 0);
+    user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
+    // GPIO_PortBModeSet(GPIOA26, 0);
+    // user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
+    // user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP);
+
     uni_msleep(50); 
 
     uni_hal_watchdog_enable(WDG_STEP_4S);
@@ -1053,7 +1048,7 @@ static void deep_sleep_restore(void) {
 
 // ============ 进入深度睡眠（由上位机指令触发）============
 static void enter_deep_sleep_with_wakeup(void) {
-    LOGT(TAG, "Entering deep sleep, wakeup by GPIO B1 falling edge...");
+    DBG("Entering deep sleep, wakeup by GPIO B1 falling edge...");
     // 进入深度睡眠，唤醒后继续执行本函数后的代码
     user_timer_pause(TIMER_SAMPLING);
     user_timer_pause(TIMER_TIMEOUT);
