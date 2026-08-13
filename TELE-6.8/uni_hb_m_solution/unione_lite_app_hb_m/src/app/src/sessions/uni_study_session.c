@@ -717,7 +717,7 @@ static Result _idle__vui_app_study(void *event_info) {
       return E_HOLD;
     }
   } else if (uni_strcmp(content->cmd, "startStuWakeup") == 0) {
-
+    g_content_approved = false;
      // 1. 发送联网审核请求（不等待）
     study_send_approval_request(0x01);
     uni_msleep(200);

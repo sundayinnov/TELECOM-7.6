@@ -45,8 +45,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0xD8                 // CRC低字节
-#define CRC_VALUE_HIGH      0x09                // CRC高字节
+#define CRC_VALUE_LOW       0x57                 // CRC低字节
+#define CRC_VALUE_HIGH      0xBA                // CRC高字节
 
 // ============ 复位控制相关 ============
 #define REBOOT_CMD_CODE     0xF1   // 上位机请求系统复位
@@ -945,7 +945,7 @@ if (g_host_sleeping) {
                 b8_state = 0;
                 high_start_time = 0;
                 // ★ 进入休眠前，确保 ASR 状态机已休眠
-                user_asr_goto_sleep();
+             //   user_asr_goto_sleep();
                 uni_msleep(50);
                 enter_deep_sleep_with_wakeup();
             }
@@ -1004,7 +1004,7 @@ static void deep_sleep_restore(void) {
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B1, 1);
     g_b1_power_state = 0;
-    user_gpio_set_value(GPIO_NUM_A28, 0);
+    
     // ============ ADC 恢复 ============
     // 唤醒后 ADC 默认关闭，等待上位机重新使能
     g_adc_enabled = false;
@@ -1040,6 +1040,9 @@ static void deep_sleep_restore(void) {
     uni_msleep(50);
     uni_hal_watchdog_feed();  // 重试前喂狗
     }
+    uni_msleep(20); 
+    user_gpio_set_value(GPIO_NUM_A28, 0);
+    uni_msleep(50); 
 
     uni_hal_watchdog_enable(WDG_STEP_4S);
     user_gpio_interrupt_enable();
