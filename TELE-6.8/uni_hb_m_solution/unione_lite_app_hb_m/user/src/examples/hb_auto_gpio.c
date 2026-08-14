@@ -45,7 +45,7 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0xB3                 // CRC低字节
+#define CRC_VALUE_LOW       0xDD                 // CRC低字节
 #define CRC_VALUE_HIGH      0x26                // CRC高字节
 
 // ============ 复位控制相关 ============
@@ -802,9 +802,8 @@ static void tts_handler_task(void *args)
  //   int i;
  
    // B8 检测状态变量（static 保证唤醒后值重置，但我们在每次进入检测分支时初始化）
-    static int b8_state = 0;          // 0: 等待高电平, 1: 计时中
-    static uint32_t high_start_time = 0;
-//    static bool last_sleeping_flag = false; // 用于检测 g_host_sleeping 变化
+    static int sleep_timer_active = 0;    // 0: 未计时, 1: 计时中
+    static uint32_t sleep_timer_start = 0;
     
     while (1) {
         // 喂狗（每200ms喂一次）
@@ -930,44 +929,63 @@ static void tts_handler_task(void *args)
             g_rx_len = 0;
         }
 
-     // ----- 超时自动休眠逻辑（基于 g_valid_wakeup）-----
+// ----- 超时自动休眠逻辑（基于 g_valid_wakeup）-----
 if (g_host_sleeping) {
     if (!g_valid_wakeup) {
-        // 未收到有效唤醒确认：开始计时
-        if (b8_state == 0) {
-            high_start_time = uni_get_clock_time_ms();
-            b8_state = 1;
-            LOGT(TAG, "No valid wakeup, start 20s timer");
+        // ★ 检测 A26 电平（唤醒引脚）——注意：此处应读取 GPIO_NUM_A26，您可根据需要修改
+        int a26_level = user_gpio_get_value(GPIO_NUM_B8);  // 请确认引脚号正确
+
+        if (a26_level == 0) {
+            // A26 为低电平：重置计时器（无论是否正在计时）
+            if (sleep_timer_active != 0) {
+                sleep_timer_active = 0;
+                sleep_timer_start = 0;
+                LOGT(TAG, "A26 low, reset idle timer");
+            }
+        } else if (a26_level == 1) {
+            // A26 为高电平：允许超时计时
+            if (sleep_timer_active == 0) {
+                // 首次进入，开始计时
+                sleep_timer_start = uni_get_clock_time_ms();
+                sleep_timer_active = 1;
+                LOGT(TAG, "A26 high, start 20s timer");
+            } else {
+                // 正在计时，检查是否超时
+                now = uni_get_clock_time_ms();
+                if (now - sleep_timer_start >= 20000) {
+                    LOGT(TAG, "20s idle (no wakeup), go to deep sleep");
+                    sleep_timer_active = 0;
+                    sleep_timer_start = 0;
+                    uni_msleep(50);
+                    enter_deep_sleep_with_wakeup();
+                }
+            }
         } else {
-            now = uni_get_clock_time_ms();
-            if (now - high_start_time >= 20000) { // 20秒
-                LOGT(TAG, "20s idle (no wakeup), go to deep sleep");
-                b8_state = 0;
-                high_start_time = 0;
-                // ★ 进入休眠前，确保 ASR 状态机已休眠
-             //   user_asr_goto_sleep();
-                uni_msleep(50);
-                enter_deep_sleep_with_wakeup();
+            // 读取错误（-1），保守处理：重置计时器
+            if (sleep_timer_active != 0) {
+                sleep_timer_active = 0;
+                sleep_timer_start = 0;
+                LOGW(TAG, "A26 read error, reset timer");
             }
         }
     } else {
-        // 已被有效唤醒，重置计时器
-        if (b8_state != 0) {
-            b8_state = 0;
-            high_start_time = 0;
+        // 已收到有效唤醒确认，重置计时器
+        if (sleep_timer_active != 0) {
+            sleep_timer_active = 0;
+            sleep_timer_start = 0;
             LOGT(TAG, "Valid wakeup detected, reset idle timer");
         }
     }
 } else {
     // g_host_sleeping == false，系统处于唤醒运行态，无需超时检测
-    if (b8_state != 0) {
-        b8_state = 0;
-        high_start_time = 0;
+    if (sleep_timer_active != 0) {
+        sleep_timer_active = 0;
+        sleep_timer_start = 0;
     }
 }
 
-        // ----- 5. 短暂延时，降低 CPU 占用 -----
-        uni_msleep(50); 
+// ----- 5. 短暂延时，降低 CPU 占用 -----
+    uni_msleep(50);
     }
 }
 
@@ -986,8 +1004,7 @@ static void deep_sleep_restore(void) {
     // 恢复 GPIO 输出状态（根据实际需求设置）
     user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A26, 0);
-    // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_OUT);
-    // user_gpio_set_value(GPIO_NUM_B8, 0);
+  
     user_gpio_set_mode(GPIO_NUM_A28, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A28, 0);
     GPIO_PortBModeSet(GPIOB0, 0);
@@ -1075,21 +1092,25 @@ static void enter_deep_sleep_with_wakeup(void) {
 // ★ 检查 A26 电平并确保高电平
 user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
 user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
+// user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
+// user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP);
 uni_msleep(5);
 
 int retry = 5;
 int level = 0;
 while (retry--) {
     level = user_gpio_get_value(GPIO_NUM_B8);
+//    level = user_gpio_get_value(GPIO_NUM_A26);
     if (level == 1) break;
     uni_msleep(10);
 }
 
 if (level == 0) {
-    DBG("B8 low, reboot to recover.\n");
+    DBG("a26 low, reboot to recover.\n");
     uni_hal_watchdog_disable();
     uni_msleep(50);
-    uni_hal_reset_system();  // 复位
+    return;
+    //uni_hal_reset_system();  // 复位
 }
     // ★ 清除可能挂起的中断标志（A26 唤醒源，A25 软件 UART）
     DBG("[J] Clear pending interrupt");
@@ -1099,6 +1120,15 @@ if (level == 0) {
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX27);
     GPIO_INTFlagClear(GPIO_B_SEP_INTC, GPIO_INDEX8);
 
+    user_gpio_clear_interrupt(GPIO_NUM_A25);
+    user_gpio_clear_interrupt(GPIO_NUM_A26);
+    user_gpio_clear_interrupt(GPIO_NUM_A27);
+    user_gpio_clear_interrupt(GPIO_NUM_B8);
+
+    user_gpio_set_value(GPIO_NUM_B0, 0);
+    user_gpio_set_value(GPIO_NUM_B1, 0);
+    user_gpio_set_value(GPIO_NUM_B2, 0);
+    user_gpio_set_value(GPIO_NUM_B3, 0);
     uni_msleep(10);
     DBG("[F] set A28 high");
     user_gpio_set_value(GPIO_NUM_A28, 1);
@@ -1443,8 +1473,8 @@ int hb_auto_gpio(void)
     
     user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
     user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);  
-    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
-    user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP); 
+    // user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
+    // user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP); 
 
     g_b1_power_state = 0;
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
