@@ -45,8 +45,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0xF6                 // CRC低字节
-#define CRC_VALUE_HIGH      0x45                // CRC高字节
+#define CRC_VALUE_LOW       0xB3                 // CRC低字节
+#define CRC_VALUE_HIGH      0x26                // CRC高字节
 
 // ============ 复位控制相关 ============
 #define REBOOT_CMD_CODE     0xF1   // 上位机请求系统复位
@@ -1010,12 +1010,12 @@ static void deep_sleep_restore(void) {
 
     // 重新初始化软件 UART 硬件（GPIO 中断 + 状态）
     soft_uart_hw_init();
-
+    DBG("soft_uart_hw_init success");
     // 重新初始化 LED 定时器
     led_init();
-    
+    DBG("led_init success");
     doa_uart_reinit_hw();   // 替换原来的 doa_uart_init()
-
+    DBG("doa_uart_reinit_hw success");
     uni_msleep(50);
     uni_hal_watchdog_feed();
 
@@ -1023,24 +1023,32 @@ static void deep_sleep_restore(void) {
     if (E_OK == RecogLaunch(NULL)) {
     DBG("RecogLaunch success");
     } else {
-    LOGE(TAG, "RecogLaunch failed, rebooting system");
+    DBG("RecogLaunch failed, rebooting system");
     uni_msleep(50);
     uni_hal_reset_system();  // 硬件复位，彻底重置所有状态
     }
 
     uni_msleep(20); 
     user_gpio_set_value(GPIO_NUM_A28, 0);
+    
     GPIO_PortBModeSet(GPIOB8, 0);
+    DBG("[1] B8 PortBModeSet done");
     user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
+    DBG("[2] B8 mode set");
     user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
+    DBG("[3] B8 pull-up set");
     // GPIO_PortBModeSet(GPIOA26, 0);
+    // DBG("[1] A26 PortBModeSet done");
     // user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
+    // DBG("[2] A26 mode set");
     // user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP);
-
+    // DBG("[3] A26 pull-up set");
     uni_msleep(50); 
-
+    DBG("[4] After 50ms delay");
     uni_hal_watchdog_enable(WDG_STEP_4S);
+    DBG("[5] watchdog enabled");
     user_gpio_interrupt_enable();
+    DBG("[6] GPIO interrupt enabled");
 
  // ！！！重要：上位机仍在休眠，g_host_sleeping 保持 true，不发送任何数据
     DBG( "Deep sleep wakeup complete, g_host_sleeping=%d", g_host_sleeping);
@@ -1050,26 +1058,56 @@ static void deep_sleep_restore(void) {
 static void enter_deep_sleep_with_wakeup(void) {
     DBG("Entering deep sleep, wakeup by GPIO B1 falling edge...");
     // 进入深度睡眠，唤醒后继续执行本函数后的代码
+     DBG("[A] pause TIMER_SAMPLING");
     user_timer_pause(TIMER_SAMPLING);
+    DBG("[B] pause TIMER_TIMEOUT");
     user_timer_pause(TIMER_TIMEOUT);
+    DBG("[C] pause eTIMER2");
     user_timer_pause(eTIMER2);
 
     g_rx_len = 0;
     g_rx_flag = false;
+    DBG("[D] clear RX buffer");
     // g_adc_enabled = false;
     // uni_msleep(50);
+    DBG("[E] disable GPIO interrupt");
     user_gpio_interrupt_disable();
+// ★ 检查 A26 电平并确保高电平
+user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
+user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
+uni_msleep(5);
 
-    // user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);   // 改为普通输入
-    // GPIO_RegSet(GPIO_B_SEP_INTC, 0xFFFFFFFF);
-    // GPIO_RegSet(GPIO_A_SEP_INTC, 0xFFFFFFFF);
+int retry = 5;
+int level = 0;
+while (retry--) {
+    level = user_gpio_get_value(GPIO_NUM_B8);
+    if (level == 1) break;
     uni_msleep(10);
-    user_gpio_set_value(GPIO_NUM_A28, 1);
- 
-    RecogStop();        // 停止识别，释放 DMA/I2S
+}
 
+if (level == 0) {
+    DBG("B8 low, reboot to recover.\n");
+    uni_hal_watchdog_disable();
+    uni_msleep(50);
+    uni_hal_reset_system();  // 复位
+}
+    // ★ 清除可能挂起的中断标志（A26 唤醒源，A25 软件 UART）
+    DBG("[J] Clear pending interrupt");
+    GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX26);
+    // 若使用了 A25 作为软件 UART 接收中断，也一并清除
+    GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX25);
+    GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX27);
+    GPIO_INTFlagClear(GPIO_B_SEP_INTC, GPIO_INDEX8);
+
+    uni_msleep(10);
+    DBG("[F] set A28 high");
+    user_gpio_set_value(GPIO_NUM_A28, 1);
+    DBG("[G] RecogStop");
+    RecogStop();        // 停止识别，释放 DMA/I2S
+    DBG("[H] disable watchdog");
     uni_hal_watchdog_disable();
     uni_msleep(100);
+    DBG("[I] enter deep sleep");
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
  //   uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA26,  WAKEUP_GPIONEGE);
     // ---------- 唤醒后从这里继续 ----------
@@ -1405,8 +1443,8 @@ int hb_auto_gpio(void)
     
     user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
     user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);  
-    // user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
-    // user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP); 
+    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP); 
 
     g_b1_power_state = 0;
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
