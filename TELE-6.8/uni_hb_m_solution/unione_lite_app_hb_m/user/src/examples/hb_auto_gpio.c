@@ -933,14 +933,14 @@ static void tts_handler_task(void *args)
 if (g_host_sleeping) {
     if (!g_valid_wakeup) {
         // ★ 检测 A26 电平（唤醒引脚）——注意：此处应读取 GPIO_NUM_A26，您可根据需要修改
-        int a26_level = user_gpio_get_value(GPIO_NUM_B8);  // 请确认引脚号正确
+        int a26_level = user_gpio_get_value(GPIO_NUM_A26);  // 请确认引脚号正确
 
         if (a26_level == 0) {
             // A26 为低电平：重置计时器（无论是否正在计时）
             if (sleep_timer_active != 0) {
                 sleep_timer_active = 0;
                 sleep_timer_start = 0;
-                LOGT(TAG, "A26 low, reset idle timer");
+                DBG( "A26 low, reset idle timer");
             }
         } else if (a26_level == 1) {
             // A26 为高电平：允许超时计时
@@ -948,12 +948,12 @@ if (g_host_sleeping) {
                 // 首次进入，开始计时
                 sleep_timer_start = uni_get_clock_time_ms();
                 sleep_timer_active = 1;
-                LOGT(TAG, "A26 high, start 20s timer");
+                DBG( "A26 high, start 20s timer");
             } else {
                 // 正在计时，检查是否超时
                 now = uni_get_clock_time_ms();
                 if (now - sleep_timer_start >= 20000) {
-                    LOGT(TAG, "20s idle (no wakeup), go to deep sleep");
+                    DBG("20s idle (no wakeup), go to deep sleep");
                     sleep_timer_active = 0;
                     sleep_timer_start = 0;
                     uni_msleep(50);
@@ -965,7 +965,7 @@ if (g_host_sleeping) {
             if (sleep_timer_active != 0) {
                 sleep_timer_active = 0;
                 sleep_timer_start = 0;
-                LOGW(TAG, "A26 read error, reset timer");
+                DBG("A26 read error, reset timer");
             }
         }
     } else {
@@ -973,7 +973,7 @@ if (g_host_sleeping) {
         if (sleep_timer_active != 0) {
             sleep_timer_active = 0;
             sleep_timer_start = 0;
-            LOGT(TAG, "Valid wakeup detected, reset idle timer");
+            DBG("Valid wakeup detected, reset idle timer");
         }
     }
 } else {
@@ -1011,7 +1011,7 @@ static void deep_sleep_restore(void) {
     user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B0, 0);
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B1, 1);
+    user_gpio_set_value(GPIO_NUM_B1, 0);
     g_b1_power_state = 0;
     
     // ============ ADC 恢复 ============
@@ -1048,18 +1048,18 @@ static void deep_sleep_restore(void) {
     uni_msleep(20); 
     user_gpio_set_value(GPIO_NUM_A28, 0);
     
-    GPIO_PortBModeSet(GPIOB8, 0);
-    DBG("[1] B8 PortBModeSet done");
-    user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
-    DBG("[2] B8 mode set");
-    user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
-    DBG("[3] B8 pull-up set");
-    // GPIO_PortBModeSet(GPIOA26, 0);
-    // DBG("[1] A26 PortBModeSet done");
-    // user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
-    // DBG("[2] A26 mode set");
-    // user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP);
-    // DBG("[3] A26 pull-up set");
+    // GPIO_PortBModeSet(GPIOB8, 0);
+    // DBG("[1] B8 PortBModeSet done");
+    // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
+    // DBG("[2] B8 mode set");
+    // user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
+    // DBG("[3] B8 pull-up set");
+    GPIO_PortBModeSet(GPIOA26, 0);
+    DBG("[1] A26 PortBModeSet done");
+    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
+    DBG("[2] A26 mode set");
+    user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP);
+    DBG("[3] A26 pull-up set");
     uni_msleep(50); 
     DBG("[4] After 50ms delay");
     uni_hal_watchdog_enable(WDG_STEP_4S);
@@ -1090,25 +1090,28 @@ static void enter_deep_sleep_with_wakeup(void) {
     DBG("[E] disable GPIO interrupt");
     user_gpio_interrupt_disable();
 // ★ 检查 A26 电平并确保高电平
-user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
-user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
-// user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
-// user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP);
+// user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
+// user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
+user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
+user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP);
 uni_msleep(5);
 
 int retry = 5;
 int level = 0;
 while (retry--) {
-    level = user_gpio_get_value(GPIO_NUM_B8);
-//    level = user_gpio_get_value(GPIO_NUM_A26);
+//    level = user_gpio_get_value(GPIO_NUM_B8);
+    level = user_gpio_get_value(GPIO_NUM_A26);
     if (level == 1) break;
     uni_msleep(10);
 }
 
 if (level == 0) {
     DBG("a26 low, reboot to recover.\n");
-    uni_hal_watchdog_disable();
-    uni_msleep(50);
+    user_gpio_interrupt_enable();
+    // ★ 恢复定时器
+    user_timer_resume(TIMER_SAMPLING);
+    user_timer_resume(TIMER_TIMEOUT);
+    user_timer_resume(eTIMER2);
     return;
     //uni_hal_reset_system();  // 复位
 }
@@ -1120,26 +1123,59 @@ if (level == 0) {
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX27);
     GPIO_INTFlagClear(GPIO_B_SEP_INTC, GPIO_INDEX8);
 
+    user_gpio_set_mode(GPIO_NUM_A25, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(GPIO_NUM_A25, GPIO_PULL_UP);
     user_gpio_clear_interrupt(GPIO_NUM_A25);
+
+    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP); // 或 PULL_DOWN
     user_gpio_clear_interrupt(GPIO_NUM_A26);
+
+    user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP); // 或 PULL_DOWN
     user_gpio_clear_interrupt(GPIO_NUM_A27);
+
+    user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
     user_gpio_clear_interrupt(GPIO_NUM_B8);
 
+    user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B0, 0);
-    user_gpio_set_value(GPIO_NUM_B1, 0);
+    user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
+    user_gpio_set_value(GPIO_NUM_B1, 0);//新电路为0，老电路为1
+    user_gpio_set_mode(GPIO_NUM_B2, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B2, 0);
+    user_gpio_set_mode(GPIO_NUM_B3, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B3, 0);
     uni_msleep(10);
     DBG("[F] set A28 high");
     user_gpio_set_value(GPIO_NUM_A28, 1);
+
     DBG("[G] RecogStop");
     RecogStop();        // 停止识别，释放 DMA/I2S
+
+    
+    int again = 10;
+    while (retry--) {
+    uint32_t a = GPIO_INTFlagGet(GPIO_A_SEP_INTC);
+    uint32_t b = GPIO_INTFlagGet(GPIO_B_SEP_INTC);
+    if (a == 0 && b == 0) break;
+    if (a) GPIO_INTFlagClear(GPIO_A_SEP_INTC, a);
+    if (b) GPIO_INTFlagClear(GPIO_B_SEP_INTC, b);
+    uni_msleep(1);
+    }
+    if (again == 0) {
+    LOGW(TAG, "GPIO pending clear timeout, force proceed");
+    }
+    
     DBG("[H] disable watchdog");
+    uni_hal_watchdog_feed();
+    uni_msleep(1);  // 
     uni_hal_watchdog_disable();
-    uni_msleep(100);
+    uni_msleep(2);
     DBG("[I] enter deep sleep");
-    uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
- //   uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA26,  WAKEUP_GPIONEGE);
+ //   uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
+    uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA26,  WAKEUP_GPIONEGE);
     // ---------- 唤醒后从这里继续 ----------
     deep_sleep_restore();
 }
@@ -1320,7 +1356,7 @@ static void _goto_awakened_cb(USER_EVENT_TYPE event, user_event_context_t *conte
         }
         if(g_b1_power_state == 0)
         {
-            user_gpio_set_value(GPIO_NUM_B1, 0);//新电路1，老电路0
+            user_gpio_set_value(GPIO_NUM_B1, 1);//新电路1，老电路0
             g_b1_power_state = 1;
             int16_t angle = setting_session_get_last_doa_angle();  
             send_command_with_angle(0x46, angle);
@@ -1353,7 +1389,7 @@ static void _goto_sleeping_cb (USER_EVENT_TYPE event, user_event_context_t *cont
  //   user_player_reply_list_random(sleeping->reply_files);
     (void)sleeping;
     }
-    user_gpio_set_value(GPIO_NUM_B1, 1);
+    user_gpio_set_value(GPIO_NUM_B1, 0);
     g_b1_power_state = 0;
     
     uint8_t report_buf[9] = {
@@ -1460,8 +1496,8 @@ int hb_auto_gpio(void)
    // 初始化LED
     led_init();
     // 配置其他GPIO
-    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_A26, 0);
+    // user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
+    // user_gpio_set_value(GPIO_NUM_A26, 0);
     // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_OUT);
     // user_gpio_set_value(GPIO_NUM_B8, 0);
 
@@ -1471,14 +1507,14 @@ int hb_auto_gpio(void)
     user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B0, 0);
     
-    user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
-    user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);  
-    // user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
-    // user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP); 
+    // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
+    // user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);  
+    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP); 
 
     g_b1_power_state = 0;
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B1, 1);
+    user_gpio_set_value(GPIO_NUM_B1, 0);
 
     //ADC初始化
   // ============ ADC 初始化 ============
