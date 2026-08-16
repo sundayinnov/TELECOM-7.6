@@ -1154,6 +1154,9 @@ if (level == 0) {
     DBG("[G] RecogStop");
     RecogStop();        // 停止识别，释放 DMA/I2S
 
+    RecogCancel();
+
+    RecogFinal();
     
     int again = 10;
     while (retry--) {
