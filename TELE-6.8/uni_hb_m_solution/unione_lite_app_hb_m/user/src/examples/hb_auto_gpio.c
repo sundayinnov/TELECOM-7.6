@@ -68,11 +68,13 @@ static const tts_mapping_t g_tts_mapping[] = {
 #define SENSOR_ENABLE_PIN       GPIO_NUM_B0          // 传感器电源使能引脚
 // ============ 功耗控制相关（上位机休眠/唤醒）============
 #define POWER_CMD_CODE        0xD0
+#define RESET_REQUEST_CMD     0xD1          // 复位请求/查询命令
 #define POWER_MODE_ENTER      0x01     // 上位机请求进入休眠
 #define POWER_MODE_EXIT       0x02     // 上位机请求退出休眠（唤醒确认）
 #define WAKEUP_SEQ_LEN        4
 #define WAKEUP_SEQ_BYTE       0xCC
 
+static uint32_t g_wake_cycle_count = 0;  // 休眠唤醒周期计数器
 static bool g_first_boot = true;   // 新增全局变量
 static bool g_host_sleeping = false;
 static bool g_valid_wakeup = false;   // ★ 新增：是否为有效唤醒（唤醒词唤醒且完成握手）
@@ -210,6 +212,8 @@ static void _goto_sleeping_cb (USER_EVENT_TYPE event, user_event_context_t *cont
 static void _study_event_cb(USER_EVENT_TYPE event, user_event_context_t *context);
 static void _register_event_callback(void);
 static void process_power_command(uint8_t *frame);
+static void send_reset_request(void);
+static void process_reset_command(uint8_t *frame);
 void uart_send_safe(const char* buf, int len);
 static void _wakeup_cb(int flag);
 static void enter_deep_sleep_with_wakeup(void);
@@ -458,6 +462,52 @@ static void process_power_command(uint8_t *frame)
             
         default:
             LOGE(TAG, "Unknown power mode: %d", mode);
+            break;
+    }
+}
+
+// 主动上报复位请求（达到100次时调用）
+static void send_reset_request(void) {
+    // 1. 发送唤醒序列（通知上位机准备接收）
+    uint8_t wakeup_seq[4] = {0xCC, 0xCC, 0xCC, 0xCC};
+    user_uart_send((char*)wakeup_seq, 4);
+    uni_msleep(50);
+    
+    // 2. 发送复位请求帧（0xE4 0x01）
+    uint8_t req[9] = {
+        0xAA, 0x55, RESET_REQUEST_CMD,  // 命令码 0xD1
+        0x01,                            // 子类型：请求复位
+        (g_wake_cycle_count >> 8) & 0xFF,
+        g_wake_cycle_count & 0xFF,
+        0x00,
+        0x55, 0xAA
+    };
+    uart_send_safe((char*)req, 9);
+    LOGT(TAG, "Reset request sent (count reached 100)");
+}
+
+// 处理上位机的复位相关命令（仅查询计数）
+static void process_reset_command(uint8_t *frame) {
+    uint8_t mode = frame[3];  // 子类型
+    
+    switch (mode) {
+        case 0x00:  // 上位机查询当前计数
+            {
+                uint8_t resp[9] = {
+                    0xAA, 0x55, RESET_REQUEST_CMD,
+                    0x00,  // 查询响应
+                    (g_wake_cycle_count >> 8) & 0xFF,
+                    g_wake_cycle_count & 0xFF,
+                    0x00,
+                    0x55, 0xAA
+                };
+                uart_send_safe((char*)resp, 9);
+                LOGT(TAG, "Reset query response: count=%d", g_wake_cycle_count);
+            }
+            break;
+            
+        default:
+            LOGW(TAG, "Unknown reset mode: %d", mode);
             break;
     }
 }
@@ -914,6 +964,9 @@ static void tts_handler_task(void *args)
                                 break;
                         }
                     }
+                    else if (cmd == RESET_REQUEST_CMD) {
+                        process_reset_command((uint8_t*)g_rx_buffer);
+                    }
                     else if (cmd == REBOOT_CMD_CODE) {
                         LOGT(TAG, "Received reboot command from host");
                         // 回复确认
@@ -1006,7 +1059,7 @@ static void deep_sleep_restore(void) {
     uni_msleep(100);
 
     uni_hal_watchdog_feed();
-    DBG("Woke up, reinitializing hardware...");
+    DBG("Woke up, reinitializing hardware...\n");
  //   GIE_ENABLE();
  //   user_gpio_init();
  //   RecogLaunch(NULL);  // 恢复识别
@@ -1038,20 +1091,20 @@ static void deep_sleep_restore(void) {
 
     // 重新初始化软件 UART 硬件（GPIO 中断 + 状态）
     soft_uart_hw_init();
-    DBG("soft_uart_hw_init success");
+    DBG("soft_uart_hw_init success\n");
     // 重新初始化 LED 定时器
     led_init();
-    DBG("led_init success");
+    DBG("led_init success\n");
     doa_uart_reinit_hw();   // 替换原来的 doa_uart_init()
-    DBG("doa_uart_reinit_hw success");
+    DBG("doa_uart_reinit_hw success\n");
     uni_msleep(50);
     uni_hal_watchdog_feed();
 
  // 恢复 ASR（仅尝试一次）
     if (E_OK == RecogLaunch(NULL)) {
-    DBG("RecogLaunch success");
+    DBG("RecogLaunch success\n");
     } else {
-    DBG("RecogLaunch failed, rebooting system");
+    DBG("RecogLaunch failed, rebooting system\n");
     uni_msleep(50);
     uni_hal_reset_system();  // 硬件复位，彻底重置所有状态
     }
@@ -1066,17 +1119,24 @@ static void deep_sleep_restore(void) {
     // user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
     // DBG("[3] B8 pull-up set");
     GPIO_PortBModeSet(GPIOA26, 0);
-    DBG("[1] A26 PortBModeSet done");
+    DBG("[1] A26 PortBModeSet done\n");
     user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
-    DBG("[2] A26 mode set");
+    DBG("[2] A26 mode set\n");
     user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP);
-    DBG("[3] A26 pull-up set");
+    DBG("[3] A26 pull-up set\n");
     uni_msleep(50); 
-    DBG("[4] After 50ms delay");
+    DBG("[4] After 50ms delay\n");
     uni_hal_watchdog_enable(WDG_STEP_4S);
-    DBG("[5] watchdog enabled");
+    DBG("[5] watchdog enabled\n");
     user_gpio_interrupt_enable();
-    DBG("[6] GPIO interrupt enabled");
+    DBG("[6] GPIO interrupt enabled\n");
+
+    g_wake_cycle_count++;
+    if (g_wake_cycle_count >= 100) {
+        g_wake_cycle_count = 0;          // 重置计数器
+        send_reset_request();            // 主动上报请求复位
+        // 注意：此处不立即复位，等待上位机发送 0xF1 指令
+    }
 
  // ！！！重要：上位机仍在休眠，g_host_sleeping 保持 true，不发送任何数据
     DBG( "Deep sleep wakeup complete, g_host_sleeping=%d", g_host_sleeping);
@@ -1084,21 +1144,18 @@ static void deep_sleep_restore(void) {
 
 // ============ 进入深度睡眠（由上位机指令触发）============
 static void enter_deep_sleep_with_wakeup(void) {
-    DBG("Entering deep sleep, wakeup by GPIO B1 falling edge...");
+    DBG("Entering deep sleep, wakeup by GPIO B1 falling edge...\n");
     // 进入深度睡眠，唤醒后继续执行本函数后的代码
-     DBG("[A] pause TIMER_SAMPLING");
+   
     user_timer_pause(TIMER_SAMPLING);
-    DBG("[B] pause TIMER_TIMEOUT");
+ 
     user_timer_pause(TIMER_TIMEOUT);
-    DBG("[C] pause eTIMER2");
+  
     user_timer_pause(eTIMER2);
 
     g_rx_len = 0;
     g_rx_flag = false;
-    DBG("[D] clear RX buffer");
-    // g_adc_enabled = false;
-    // uni_msleep(50);
-    DBG("[E] disable GPIO interrupt");
+  
     user_gpio_interrupt_disable();
 // ★ 检查 A26 电平并确保高电平
 // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
@@ -1124,10 +1181,10 @@ if (level == 0) {
     user_timer_resume(TIMER_TIMEOUT);
     user_timer_resume(eTIMER2);
     return;
-    //uni_hal_reset_system();  // 复位
+   
 }
     // ★ 清除可能挂起的中断标志（A26 唤醒源，A25 软件 UART）
-    DBG("[J] Clear pending interrupt");
+    DBG("Clear pending interrupt.\n");
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX26);
     // 若使用了 A25 作为软件 UART 接收中断，也一并清除
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX25);
@@ -1159,12 +1216,12 @@ if (level == 0) {
     user_gpio_set_mode(GPIO_NUM_B3, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B3, 0);
     uni_msleep(10);
-    DBG("[F] set A28 high");
+   
     user_gpio_set_value(GPIO_NUM_A28, 1);
 
-    DBG("[G] RecogStop");
+    DBG(" RecogStop.\n");
     RecogStop();        // 停止识别，释放 DMA/I2S
-  
+    
     int again = 10;
     while (retry--) {
     uint32_t a = GPIO_INTFlagGet(GPIO_A_SEP_INTC);
@@ -1175,15 +1232,15 @@ if (level == 0) {
     uni_msleep(1);
     }
     if (again == 0) {
-    LOGW(TAG, "GPIO pending clear timeout, force proceed");
+    LOGW(TAG, "GPIO pending clear timeout, force proceed.\n");
     }
     
-    DBG("[H] disable watchdog");
+    DBG(" disable watchdog.\n");
     uni_hal_watchdog_feed();
     uni_msleep(1);  // 
     uni_hal_watchdog_disable();
     uni_msleep(2);
-    DBG("[I] enter deep sleep");
+    DBG("enter deep sleep.\n");
    
  //   uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA26,  WAKEUP_GPIONEGE);
@@ -1235,31 +1292,6 @@ static void led_init(void)
     LOGT(TAG, "LED initialized with timer reuse pool");
 }
 
-/*
-// ============ 初始化软件 UART ============
-static void soft_uart_init(void)
-{
-    // 1. 引脚配置
-    user_gpio_set_mode(SOFT_UART_RX_PIN, GPIO_MODE_IN);
-    user_gpio_set_pull_mode(SOFT_UART_RX_PIN, GPIO_PULL_UP);
-    
-    // 2. 注册下降沿中断
-    user_gpio_set_interrupt(SOFT_UART_RX_PIN, GPIO_INT_NEG_EDGE, gpio_intr_handler);
-    user_gpio_interrupt_enable();
-    
-    // 3. 重置状态
-    g_rx_status = RX_STATE_IDLE;
-    g_rx_len = 0;
-    
-    // 4. 创建喂狗任务（高优先级）
-    uni_pthread_t pid;
-    thread_param param;
-    param.stack_size = STACK_SMALL_SIZE;
-    param.priority = OS_PRIORITY_HIGH;
-    uni_strncpy(param.task_name, "tts_task", sizeof(param.task_name) - 1);
-    uni_pthread_create(&pid, &param, tts_handler_task, NULL);
-}
-*/
 // ============ 软件 UART 硬件初始化（不含任务创建）============
 static void soft_uart_hw_init(void) {
     // 1. 引脚配置

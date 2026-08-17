@@ -182,8 +182,8 @@ Result VuiHandleDestroy(VuiHandle handle) {
   }
   UalAikRelease(vui->aik);
 // ★★★ 新增：重置状态，允许下次重新初始化 ★★★
-  vui->aik = NULL;
-  vui->status = VUI_RECOGN_INIT;
+  // vui->aik = NULL;
+  // vui->status = VUI_RECOGN_INIT;
 
   return E_OK;
 }

@@ -23,8 +23,8 @@
  **************************************************************************/
 #include "uni_recog_service.h"
 
-#include "FreeRTOS.h"
-#include "task.h"
+// #include "FreeRTOS.h"
+// #include "task.h"
 #include "uni_iot.h"
 #include "uni_json.h"
 #include "uni_log.h"
@@ -39,7 +39,7 @@
 #include "uni_config.h"
 
 #define UNI_RECOG_SERVICE_TAG             "recog_service"
-#define VUI_REINIT_HEAP_THRESHOLD  35000   // 剩余堆小于此值时触发重建（单位：字节）
+//#define VUI_REINIT_HEAP_THRESHOLD  35000   // 剩余堆小于此值时触发重建（单位：字节）
 
 static uni_s32 _vui_event_handler(Event *event);
 
@@ -115,45 +115,45 @@ static void _recog_after_engine_cancel_callback(VuiHandle vui, Scene *scene) {
   IdleDetectServiceAccess();
 }
 
-static Result _recog_reinit(void) {
-    // ----- 1. 备份当前场景 -----
-    Scene backup_scene;
-    uni_memset(&backup_scene, 0, sizeof(Scene));
-    if (g_recog_service.cur_scene) {
-        uni_memcpy(&backup_scene, g_recog_service.cur_scene, sizeof(Scene));
-        backup_scene.grammar = NULL;   // 避免野指针
-    } else {
-        _default_scene(&backup_scene); // 使用默认唤醒场景
-    }
+// static Result _recog_reinit(void) {
+//     // ----- 1. 备份当前场景 -----
+//     Scene backup_scene;
+//     uni_memset(&backup_scene, 0, sizeof(Scene));
+//     if (g_recog_service.cur_scene) {
+//         uni_memcpy(&backup_scene, g_recog_service.cur_scene, sizeof(Scene));
+//         backup_scene.grammar = NULL;   // 避免野指针
+//     } else {
+//         _default_scene(&backup_scene); // 使用默认唤醒场景
+//     }
 
-    printf("_recog_reinit: before, heap=%u\n", (unsigned int)xPortGetFreeHeapSize());
+//     printf("_recog_reinit: before, heap=%u\n", (unsigned int)xPortGetFreeHeapSize());
 
-    // ----- 2. 彻底释放所有识别资源 -----
-    RecogFinal();
+//     // ----- 2. 彻底释放所有识别资源 -----
+//     RecogFinal();
 
-    printf("after RecogFinal, heap=%u\n", (unsigned int)xPortGetFreeHeapSize());
+//     printf("after RecogFinal, heap=%u\n", (unsigned int)xPortGetFreeHeapSize());
 
-    // ----- 3. 重新初始化识别服务 -----
-    if (RecogInit() != E_OK) {
-        LOGE(UNI_RECOG_SERVICE_TAG, "RecogInit failed during reinit");
-        return E_FAILED;
-    }
+//     // ----- 3. 重新初始化识别服务 -----
+//     if (RecogInit() != E_OK) {
+//         LOGE(UNI_RECOG_SERVICE_TAG, "RecogInit failed during reinit");
+//         return E_FAILED;
+//     }
 
-    printf("after RecogInit, heap=%u\n", (unsigned int)xPortGetFreeHeapSize());
+//     printf("after RecogInit, heap=%u\n", (unsigned int)xPortGetFreeHeapSize());
 
-    // ----- 4. 恢复备份的场景配置 -----
-    if (g_recog_service.cur_scene) {
-        g_recog_service.cur_scene->asr_mode       = backup_scene.asr_mode;
-        g_recog_service.cur_scene->timeout        = backup_scene.timeout;
-        g_recog_service.cur_scene->low_threshold  = backup_scene.low_threshold;
-        g_recog_service.cur_scene->std_threshold  = backup_scene.std_threshold;
-        g_recog_service.cur_scene->offset_timems  = backup_scene.offset_timems;
-        g_recog_service.cur_scene->grammar        = NULL;
-    }
+//     // ----- 4. 恢复备份的场景配置 -----
+//     if (g_recog_service.cur_scene) {
+//         g_recog_service.cur_scene->asr_mode       = backup_scene.asr_mode;
+//         g_recog_service.cur_scene->timeout        = backup_scene.timeout;
+//         g_recog_service.cur_scene->low_threshold  = backup_scene.low_threshold;
+//         g_recog_service.cur_scene->std_threshold  = backup_scene.std_threshold;
+//         g_recog_service.cur_scene->offset_timems  = backup_scene.offset_timems;
+//         g_recog_service.cur_scene->grammar        = NULL;
+//     }
 
-    printf("_recog_reinit: done, heap=%u\n", (unsigned int)xPortGetFreeHeapSize());
-    return E_OK;
-}
+//     printf("_recog_reinit: done, heap=%u\n", (unsigned int)xPortGetFreeHeapSize());
+//     return E_OK;
+// }
 
 static uni_s32 _vui_event_handler(Event *event) {
   Result rc;
@@ -225,10 +225,10 @@ Result RecogFinal(void) {
 Result RecogLaunch(Scene *scene) {
   Result rc;
 
-  // ★ 自动水位检测：剩余堆不足时重建 VUI
-    if (xPortGetFreeHeapSize() < VUI_REINIT_HEAP_THRESHOLD) {
-        _recog_reinit();
-    }
+  // // ★ 自动水位检测：剩余堆不足时重建 VUI
+  //   if (xPortGetFreeHeapSize() < VUI_REINIT_HEAP_THRESHOLD) {
+  //       _recog_reinit();
+  //   }
 
   rc = EngineCancel(g_recog_service.vui);
   if (E_OK != rc) {
