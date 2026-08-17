@@ -106,7 +106,7 @@
 #define configIDLE_SHOULD_YIELD			1
 #define configUSE_MUTEXES			1
 #define configQUEUE_REGISTRY_SIZE		8
-#define configCHECK_FOR_STACK_OVERFLOW	        0
+#define configCHECK_FOR_STACK_OVERFLOW	        2
 #define configUSE_RECURSIVE_MUTEXES		1
 #define configUSE_MALLOC_FAILED_HOOK	        0
 #define configUSE_APPLICATION_TASK_TAG	        0
@@ -136,6 +136,8 @@ to exclude the API function. */
 #define INCLUDE_xTaskGetSchedulerState          1
 #define INCLUDE_pcTaskGetTaskName 1
 
+#define INCLUDE_uxTaskGetStackHighWaterMark 1
+
 #define configPRIO_BITS       		2        /* 4 priority levels */
 
 
@@ -156,7 +158,7 @@ to all Cortex-M ports, and do not rely on any particular library functions. */
 See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
 //#define configMAX_SYSCALL_INTERRUPT_PRIORITY 	( configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS) )
 
-//0£ºÈÎÎñÇÐ»»Ê±¹Ø±ÕËùÓÐÖÐ¶Ï   1£ºÈÎÎñÇÐ»»Ê±¹Ø±ÕÖÐ¶ÏÓÅÏÈ¼¶Îª1¡¢2¡¢3µÄÖÐ¶Ï  2£ºÈÎÎñÇÐ»»Ê±¹Ø±ÕÖÐ¶ÏÓÅÏÈ¼¶Îª2¡¢3µÄÖÐ¶Ï  3£ºÈÎÎñÇÐ»»Ê±¹Ø±ÕÖÐ¶ÏÓÅÏÈ¼¶Îª3µÄÖÐ¶Ï
+//0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½Ê±ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½   1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½Ê±ï¿½Ø±ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½È¼ï¿½Îª1ï¿½ï¿½2ï¿½ï¿½3ï¿½ï¿½ï¿½Ð¶ï¿½  2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½Ê±ï¿½Ø±ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½È¼ï¿½Îª2ï¿½ï¿½3ï¿½ï¿½ï¿½Ð¶ï¿½  3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½Ê±ï¿½Ø±ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½È¼ï¿½Îª3ï¿½ï¿½ï¿½Ð¶ï¿½
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY 	0
 
 /* Normal assert() semantics without relying on the provision of an assert.h

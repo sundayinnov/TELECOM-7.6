@@ -22,10 +22,12 @@
 #include "user_adc_gp2y.h"
 #include "uni_hal_power.h"
 #include "uni_hal_reset.h"
+#include "FreeRTOS.h"
+#include "task.h"  
 
 #define TAG "auto_gpio"
-#define DBG(...) ((void)0)
-//#define DBG(...) printf(__VA_ARGS__)
+//#define DBG(...) ((void)0)
+#define DBG(...) printf(__VA_ARGS__)
 
 
 // ============ TTS 命令映射表 ============
@@ -799,6 +801,7 @@ static void tts_handler_task(void *args)
     uint32_t last_feed_time = 0;
     uint32_t last_adc_time = 0;
     uint32_t now;
+    static uint32_t loop_cnt = 0;   // 循环计数器
  //   int i;
  
    // B8 检测状态变量（static 保证唤醒后值重置，但我们在每次进入检测分支时初始化）
@@ -813,6 +816,14 @@ static void tts_handler_task(void *args)
             last_feed_time = now;
         }
         
+         // ★ 每 100 次循环打印堆内存信息
+        if (++loop_cnt % 100 == 0) {
+            size_t free_heap = xPortGetFreeHeapSize();
+            size_t min_free = xPortGetMinimumEverFreeHeapSize();
+           printf("Heap: free=%u bytes, min ever=%u bytes\n", 
+       (unsigned int)free_heap, (unsigned int)min_free);
+        }
+
         if (g_adc_enabled &&(now - last_adc_time >= 100)) {
             adc_process_sample();
             last_adc_time = now;
@@ -1153,11 +1164,7 @@ if (level == 0) {
 
     DBG("[G] RecogStop");
     RecogStop();        // 停止识别，释放 DMA/I2S
-
-    RecogCancel();
-
-    RecogFinal();
-    
+  
     int again = 10;
     while (retry--) {
     uint32_t a = GPIO_INTFlagGet(GPIO_A_SEP_INTC);
@@ -1177,6 +1184,7 @@ if (level == 0) {
     uni_hal_watchdog_disable();
     uni_msleep(2);
     DBG("[I] enter deep sleep");
+   
  //   uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA26,  WAKEUP_GPIONEGE);
     // ---------- 唤醒后从这里继续 ----------
@@ -1557,7 +1565,7 @@ int hb_auto_gpio(void)
     uni_pthread_t pid;
     thread_param param;
     uni_memset(&param, 0, sizeof(param));
-    param.stack_size = STACK_SMALL_SIZE;
+    param.stack_size = STACK_NORMAL_SIZE;
     param.priority = OS_PRIORITY_HIGH;
     uni_strncpy(param.task_name, "tts_task", sizeof(param.task_name) - 1);
     if (uni_pthread_create(&pid, &param, tts_handler_task, NULL) != 0) {
@@ -1583,4 +1591,8 @@ int hb_auto_gpio(void)
     return 0;
 }
 
-
+// 栈溢出钩子（放在文件末尾）
+void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName ) {
+    DBG("!!! STACK OVERFLOW in task: %s !!!\n", pcTaskName);
+    while(1);
+}
