@@ -26,8 +26,8 @@
 #include "task.h"  
 
 #define TAG "auto_gpio"
-//#define DBG(...) ((void)0)
-#define DBG(...) printf(__VA_ARGS__)
+#define DBG(...) ((void)0)
+//#define DBG(...) printf(__VA_ARGS__)
 
 
 // ============ TTS 命令映射表 ============
@@ -473,7 +473,7 @@ static void send_reset_request(void) {
     user_uart_send((char*)wakeup_seq, 4);
     uni_msleep(50);
     
-    // 2. 发送复位请求帧（0xE4 0x01）
+    // 2. 发送复位请求帧（0xD1 0x01）
     uint8_t req[9] = {
         0xAA, 0x55, RESET_REQUEST_CMD,  // 命令码 0xD1
         0x01,                            // 子类型：请求复位
@@ -922,7 +922,7 @@ static void tts_handler_task(void *args)
                         process_crc_command((uint8_t*)g_rx_buffer);
                     }
                     else if (cmd == ADC_CMD_CODE) {          // 新增ADC处理
-                        process_adc_command((uint8_t*)g_rx_buffer);
+                    //    process_adc_command((uint8_t*)g_rx_buffer);
                     }
                     else if (cmd == CLEAR_STUDY_CMD) {
                         uint8_t clear_type = g_rx_buffer[3];  // byte3: 0x00清除全部
@@ -997,7 +997,7 @@ static void tts_handler_task(void *args)
 if (g_host_sleeping) {
     if (!g_valid_wakeup) {
         // ★ 检测 A26 电平（唤醒引脚）——注意：此处应读取 GPIO_NUM_A26，您可根据需要修改
-        int a26_level = user_gpio_get_value(GPIO_NUM_A26);  // 请确认引脚号正确
+        int a26_level = user_gpio_get_value(GPIO_NUM_A27);  // 请确认引脚号正确
 
         if (a26_level == 0) {
             // A26 为低电平：重置计时器（无论是否正在计时）
@@ -1056,7 +1056,7 @@ if (g_host_sleeping) {
 // ============ 唤醒后恢复硬件（不创建任务）============
 static void deep_sleep_restore(void) {
 
-    uni_msleep(100);
+    uni_msleep(200);
 
     uni_hal_watchdog_feed();
     DBG("Woke up, reinitializing hardware...\n");
@@ -1068,14 +1068,15 @@ static void deep_sleep_restore(void) {
     // 恢复 GPIO 输出状态（根据实际需求设置）
     user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A26, 0);
-  
+    // user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_OUT);
+    // user_gpio_set_value(GPIO_NUM_A27, 0);
     user_gpio_set_mode(GPIO_NUM_A28, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A28, 0);
     GPIO_PortBModeSet(GPIOB0, 0);
     user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B0, 0);
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B1, 0);
+    user_gpio_set_value(GPIO_NUM_B1, 1);
     g_b1_power_state = 0;
     
     // ============ ADC 恢复 ============
@@ -1086,9 +1087,9 @@ static void deep_sleep_restore(void) {
     g_adc_triggered = false;
     
     // A27 恢复为输出低电平
-    user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
-    user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
-
+    // user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
+    // user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
+  
     // 重新初始化软件 UART 硬件（GPIO 中断 + 状态）
     soft_uart_hw_init();
     DBG("soft_uart_hw_init success\n");
@@ -1118,11 +1119,11 @@ static void deep_sleep_restore(void) {
     // DBG("[2] B8 mode set");
     // user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
     // DBG("[3] B8 pull-up set");
-    GPIO_PortBModeSet(GPIOA26, 0);
+    GPIO_PortBModeSet(GPIOA27, 0);
     DBG("[1] A26 PortBModeSet done\n");
-    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
+    user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
     DBG("[2] A26 mode set\n");
-    user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP);
+    user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
     DBG("[3] A26 pull-up set\n");
     uni_msleep(50); 
     DBG("[4] After 50ms delay\n");
@@ -1160,15 +1161,15 @@ static void enter_deep_sleep_with_wakeup(void) {
 // ★ 检查 A26 电平并确保高电平
 // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
 // user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
-user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
-user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP);
+user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
+user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
 uni_msleep(5);
 
 int retry = 5;
 int level = 0;
 while (retry--) {
 //    level = user_gpio_get_value(GPIO_NUM_B8);
-    level = user_gpio_get_value(GPIO_NUM_A26);
+    level = user_gpio_get_value(GPIO_NUM_A27);
     if (level == 1) break;
     uni_msleep(10);
 }
@@ -1210,7 +1211,7 @@ if (level == 0) {
     user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B0, 0);
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B1, 0);//新电路为0，老电路为1
+    user_gpio_set_value(GPIO_NUM_B1, 1);//新电路为0，老电路为1
     user_gpio_set_mode(GPIO_NUM_B2, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B2, 0);
     user_gpio_set_mode(GPIO_NUM_B3, GPIO_MODE_OUT);
@@ -1243,7 +1244,7 @@ if (level == 0) {
     DBG("enter deep sleep.\n");
    
  //   uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
-    uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA26,  WAKEUP_GPIONEGE);
+    uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA27,  WAKEUP_GPIONEGE);
     // ---------- 唤醒后从这里继续 ----------
     deep_sleep_restore();
 }
@@ -1399,7 +1400,7 @@ static void _goto_awakened_cb(USER_EVENT_TYPE event, user_event_context_t *conte
         }
         if(g_b1_power_state == 0)
         {
-            user_gpio_set_value(GPIO_NUM_B1, 1);//新电路1，老电路0
+            user_gpio_set_value(GPIO_NUM_B1, 0);//新电路1，老电路0
             g_b1_power_state = 1;
             int16_t angle = setting_session_get_last_doa_angle();  
             send_command_with_angle(0x46, angle);
@@ -1432,7 +1433,7 @@ static void _goto_sleeping_cb (USER_EVENT_TYPE event, user_event_context_t *cont
  //   user_player_reply_list_random(sleeping->reply_files);
     (void)sleeping;
     }
-    user_gpio_set_value(GPIO_NUM_B1, 0);
+    user_gpio_set_value(GPIO_NUM_B1, 1);
     g_b1_power_state = 0;
     
     uint8_t report_buf[9] = {
@@ -1539,8 +1540,8 @@ int hb_auto_gpio(void)
    // 初始化LED
     led_init();
     // 配置其他GPIO
-    // user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
-    // user_gpio_set_value(GPIO_NUM_A26, 0);
+    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
+    user_gpio_set_value(GPIO_NUM_A26, 0);
     // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_OUT);
     // user_gpio_set_value(GPIO_NUM_B8, 0);
 
@@ -1552,12 +1553,12 @@ int hb_auto_gpio(void)
     
     // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
     // user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);  
-    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
-    user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP); 
+    // user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
+    // user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP); 
 
     g_b1_power_state = 0;
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B1, 0);
+    user_gpio_set_value(GPIO_NUM_B1, 1);
 
     //ADC初始化
   // ============ ADC 初始化 ============
@@ -1625,6 +1626,6 @@ int hb_auto_gpio(void)
 
 // 栈溢出钩子（放在文件末尾）
 void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName ) {
-    DBG("!!! STACK OVERFLOW in task: %s !!!\n", pcTaskName);
+    printf("!!! STACK OVERFLOW in task: %s !!!\n", pcTaskName);
     while(1);
 }
