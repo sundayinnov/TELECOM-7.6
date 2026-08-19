@@ -1059,7 +1059,7 @@ static void deep_sleep_restore(void) {
     uni_msleep(200);
 
     uni_hal_watchdog_feed();
-    DBG("Woke up, reinitializing hardware...\n");
+    printf("Woke up, reinitializing hardware...\n");
  //   GIE_ENABLE();
  //   user_gpio_init();
  //   RecogLaunch(NULL);  // 恢复识别
@@ -1092,18 +1092,18 @@ static void deep_sleep_restore(void) {
   
     // 重新初始化软件 UART 硬件（GPIO 中断 + 状态）
     soft_uart_hw_init();
-    DBG("soft_uart_hw_init success\n");
+    printf("soft_uart_hw_init success\n");
     // 重新初始化 LED 定时器
     led_init();
-    DBG("led_init success\n");
+    printf("led_init success\n");
     doa_uart_reinit_hw();   // 替换原来的 doa_uart_init()
-    DBG("doa_uart_reinit_hw success\n");
+    printf("doa_uart_reinit_hw success\n");
     uni_msleep(50);
     uni_hal_watchdog_feed();
 
  // 恢复 ASR（仅尝试一次）
     if (E_OK == RecogLaunch(NULL)) {
-    DBG("RecogLaunch success\n");
+    printf("RecogLaunch success\n");
     } else {
     DBG("RecogLaunch failed, rebooting system\n");
     uni_msleep(50);
@@ -1120,17 +1120,17 @@ static void deep_sleep_restore(void) {
     // user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
     // DBG("[3] B8 pull-up set");
     GPIO_PortBModeSet(GPIOA27, 0);
-    DBG("[1] A26 PortBModeSet done\n");
+    printf("[1] A26 PortBModeSet done\n");
     user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
-    DBG("[2] A26 mode set\n");
+    printf("[2] A26 mode set\n");
     user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
-    DBG("[3] A26 pull-up set\n");
+    printf("[3] A26 pull-up set\n");
     uni_msleep(50); 
     DBG("[4] After 50ms delay\n");
     uni_hal_watchdog_enable(WDG_STEP_4S);
-    DBG("[5] watchdog enabled\n");
+    printf("[5] watchdog enabled\n");
     user_gpio_interrupt_enable();
-    DBG("[6] GPIO interrupt enabled\n");
+    printf("[6] GPIO interrupt enabled\n");
 
     g_wake_cycle_count++;
     if (g_wake_cycle_count >= 100) {
@@ -1140,7 +1140,7 @@ static void deep_sleep_restore(void) {
     }
 
  // ！！！重要：上位机仍在休眠，g_host_sleeping 保持 true，不发送任何数据
-    DBG( "Deep sleep wakeup complete, g_host_sleeping=%d", g_host_sleeping);
+    printf( "Deep sleep wakeup complete, g_host_sleeping=%d", g_host_sleeping);
 }
 
 // ============ 进入深度睡眠（由上位机指令触发）============
@@ -1204,9 +1204,9 @@ if (level == 0) {
     user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP); // 或 PULL_DOWN
     user_gpio_clear_interrupt(GPIO_NUM_A27);
 
-    user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
-    user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
-    user_gpio_clear_interrupt(GPIO_NUM_B8);
+    // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
+    // user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
+    // user_gpio_clear_interrupt(GPIO_NUM_B8);
 
     user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B0, 0);
