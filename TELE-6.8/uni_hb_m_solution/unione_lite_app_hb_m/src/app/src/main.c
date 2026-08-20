@@ -361,7 +361,8 @@ int main(void) {
   uni_hal_mic_gain_set(16);
 #endif
 
-//Power_LDO12Config(1050);//1200 1050
+*(volatile uint32_t *)0x20003aa0 = 0;
+Power_LDO12Config(1050);//1200 1050
 
 #if FLASH_BOOT_EN
   uni_hal_enable_uart_upgrade(FLASH_BOOT_EN);
