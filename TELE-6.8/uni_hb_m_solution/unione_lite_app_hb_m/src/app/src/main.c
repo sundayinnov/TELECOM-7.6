@@ -363,7 +363,7 @@ int main(void) {
 #endif
 
 *(volatile uint32_t *)0x20003aa0 = 0;
-Power_LDO12Config(1100);//1200 1050
+Power_LDO12Config(1050);//1200 1050
 
 #if FLASH_BOOT_EN
   uni_hal_enable_uart_upgrade(FLASH_BOOT_EN);
