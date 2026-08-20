@@ -1055,9 +1055,10 @@ if (g_host_sleeping) {
 
 // ============ 唤醒后恢复硬件（不创建任务）============
 static void deep_sleep_restore(void) {
-
+    GIE_ENABLE();
     uni_msleep(200);
-
+    
+    
     uni_hal_watchdog_feed();
     printf("Woke up, reinitializing hardware...\n");
  //   GIE_ENABLE();
@@ -1243,7 +1244,7 @@ if (level == 0) {
     uni_hal_watchdog_disable();
     uni_msleep(2);
     DBG("enter deep sleep.\n");
-   
+    GIE_DISABLE(); 
  //   uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA27,  WAKEUP_GPIONEGE);
     // ---------- 唤醒后从这里继续 ----------
