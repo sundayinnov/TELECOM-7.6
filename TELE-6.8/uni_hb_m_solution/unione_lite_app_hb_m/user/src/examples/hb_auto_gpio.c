@@ -1064,7 +1064,7 @@ static void deep_sleep_restore(void) {
  //   user_gpio_init();
  //   RecogLaunch(NULL);  // 恢复识别
  //   restore_audio_settings();
-
+    GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX27);
     // 恢复 GPIO 输出状态（根据实际需求设置）
     user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A26, 0);
@@ -1125,7 +1125,7 @@ static void deep_sleep_restore(void) {
     // printf("[2] A26 mode set\n");
     // user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
     // printf("[3] A26 pull-up set\n");
-    GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX27);
+    
     uni_msleep(50); 
     DBG("[4] After 50ms delay\n");
     uni_hal_watchdog_enable(WDG_STEP_4S);

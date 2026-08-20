@@ -58,7 +58,8 @@
 // 复位原因上报
 wakeup_type g_boot_status = WAKEUP_BY_UNKNOWN;
 
-#define MAIN_TAG                      "main"
+// 在 main.c 文件开头，或调用 Power_LDO12Config 之前
+extern void Power_LDO12Config(uint32_t voltage_mV);
 
 #define SN_STORAGE_ADDR   USER_DATA_ADDR   // 0x1DC000
 const uint8_t expected_magic[6] = {0x41, 0x30, 0x42, 0x31, 0x43, 0x32};
@@ -362,7 +363,7 @@ int main(void) {
 #endif
 
 *(volatile uint32_t *)0x20003aa0 = 0;
-Power_LDO12Config(1050);//1200 1050
+Power_LDO12Config(1100);//1200 1050
 
 #if FLASH_BOOT_EN
   uni_hal_enable_uart_upgrade(FLASH_BOOT_EN);
