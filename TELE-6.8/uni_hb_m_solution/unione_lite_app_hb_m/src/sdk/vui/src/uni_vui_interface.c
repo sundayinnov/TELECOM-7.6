@@ -176,15 +176,21 @@ VuiHandle VuiHandleCreate(EventHandler vui_event_handler) {
 
 Result VuiHandleDestroy(VuiHandle handle) {
   Vui *vui = (Vui *)handle;
-  if (NULL == vui) {
-    LOGE(VUI_TAG, "handle=%p", handle);
-    return E_FAILED;
+  if (vui && vui->aik) {
+    // 停止引擎
+    UalAikStop(vui->aik, vui->mode);
+    // 解除共享缓冲区引用
+    int32_t size = 0;
+    UalAikSet(vui->aik, AIK_ID_KWS_LP_SET_SHARED_SIZE, &size);
+    UalAikSet(vui->aik, AIK_ID_KWS_LP_SET_SHARED_BUFFER, NULL);
+    // 释放引擎
+    UalAikRelease(vui->aik);
+    vui->aik = NULL;
+    // 清空共享缓冲区（可能残留数据）
+    memset((void*)g_mp3_ais_share_buf, 0, SSP_SHARE_MEMORY_SIZE);
+    vui->shared_buffer = NULL;
+    vui->status = VUI_RECOGN_INIT;
   }
-  UalAikRelease(vui->aik);
-// ★★★ 新增：重置状态，允许下次重新初始化 ★★★
-  vui->aik = NULL;
-  vui->status = VUI_RECOGN_INIT;
-
   return E_OK;
 }
 

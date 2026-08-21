@@ -68,7 +68,6 @@ Result RecogStop(void);
  */
 Result RecogCancel(void);
 
-Result _recog_reinit(void);
 /**
  * Usage:   Launch another recognition
  * Params:
