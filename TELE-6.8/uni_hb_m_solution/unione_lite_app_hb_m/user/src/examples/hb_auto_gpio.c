@@ -47,8 +47,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0xDD                 // CRC低字节
-#define CRC_VALUE_HIGH      0x26                // CRC高字节
+#define CRC_VALUE_LOW       0x0E                 // CRC低字节
+#define CRC_VALUE_HIGH      0xF7                // CRC高字节
 
 // ============ 复位控制相关 ============
 #define REBOOT_CMD_CODE     0xF1   // 上位机请求系统复位
@@ -1020,7 +1020,8 @@ if (g_host_sleeping) {
                     DBG("20s idle (no wakeup), go to deep sleep");
                     sleep_timer_active = 0;
                     sleep_timer_start = 0;
-                    uni_msleep(50);
+                    user_asr_goto_sleep();
+                    uni_msleep(2000);
                     enter_deep_sleep_with_wakeup();
                 }
             }
@@ -1102,14 +1103,17 @@ static void deep_sleep_restore(void) {
     uni_msleep(50);
     uni_hal_watchdog_feed();
 
+    user_asr_recognize_enable();
+
+     _recog_reinit();
  // 恢复 ASR（仅尝试一次）
-    if (E_OK == RecogLaunch(NULL)) {
-    printf("RecogLaunch success\n");
-    } else {
-    DBG("RecogLaunch failed, rebooting system\n");
-    uni_msleep(50);
-    uni_hal_reset_system();  // 硬件复位，彻底重置所有状态
-    }
+    // if (E_OK == RecogLaunch(NULL)) {
+    // printf("RecogLaunch success\n");
+    // } else {
+    // DBG("RecogLaunch failed, rebooting system\n");
+    // uni_msleep(50);
+    // uni_hal_reset_system();  // 硬件复位，彻底重置所有状态
+    // }
 
     uni_msleep(20); 
     user_gpio_set_value(GPIO_NUM_A28, 0);
@@ -1135,7 +1139,7 @@ static void deep_sleep_restore(void) {
     printf("[6] GPIO interrupt enabled\n");
 
     g_wake_cycle_count++;
-    if (g_wake_cycle_count >= 100) {
+    if (g_wake_cycle_count >= 50) {
         g_wake_cycle_count = 0;          // 重置计数器
         send_reset_request();            // 主动上报请求复位
         // 注意：此处不立即复位，等待上位机发送 0xF1 指令
@@ -1149,6 +1153,7 @@ static void deep_sleep_restore(void) {
 static void enter_deep_sleep_with_wakeup(void) {
     DBG("Entering deep sleep, wakeup by GPIO B1 falling edge...\n");
     // 进入深度睡眠，唤醒后继续执行本函数后的代码
+    user_asr_recognize_disable();
    
     user_timer_pause(TIMER_SAMPLING);
  
@@ -1224,6 +1229,7 @@ if (level == 0) {
 
     DBG(" RecogStop.\n");
     RecogStop();        // 停止识别，释放 DMA/I2S
+//    RecogCancel();
     
     int again = 10;
     while (retry--) {
