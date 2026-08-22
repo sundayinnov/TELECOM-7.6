@@ -47,8 +47,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0xC5                 // CRC低字节
-#define CRC_VALUE_HIGH      0x38                // CRC高字节
+#define CRC_VALUE_LOW       0x5D                 // CRC低字节
+#define CRC_VALUE_HIGH      0xF0                // CRC高字节
 
 // ============ 复位控制相关 ============
 #define REBOOT_CMD_CODE     0xF1   // 上位机请求系统复位
@@ -1112,12 +1112,12 @@ static void deep_sleep_restore(void) {
   
     // 重新初始化软件 UART 硬件（GPIO 中断 + 状态）
     soft_uart_hw_init();
-    printf("soft_uart_hw_init success\n");
+    DBG("soft_uart_hw_init success\n");
     // 重新初始化 LED 定时器
     led_init();
-    printf("led_init success\n");
+    DBG("led_init success\n");
     doa_uart_reinit_hw();   // 替换原来的 doa_uart_init()
-    printf("doa_uart_reinit_hw success\n");
+    DBG("doa_uart_reinit_hw success\n");
     uni_msleep(50);
     uni_hal_watchdog_feed();
 
@@ -1146,19 +1146,20 @@ static void deep_sleep_restore(void) {
     // DBG("[2] B8 mode set");
     // user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
     // DBG("[3] B8 pull-up set");
-    // GPIO_PortBModeSet(GPIOA27, 0);
-    // printf("[1] A26 PortBModeSet done\n");
-    // user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
-    // printf("[2] A26 mode set\n");
-    // user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
-    // printf("[3] A26 pull-up set\n");
+    GPIO_PortBModeSet(GPIOA27, 0);
+    DBG("[1] A27 PortBModeSet done\n");
+    user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
+    DBG("[2] A27 mode set\n");
+    user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
+    DBG("[3] A27 pull-up set\n");
+
     GIE_ENABLE();
     uni_msleep(50); 
     DBG("[4] After 50ms delay\n");
     uni_hal_watchdog_enable(WDG_STEP_4S);
-    printf("[5] watchdog enabled\n");
+    DBG("[5] watchdog enabled\n");
     user_gpio_interrupt_enable();
-    printf("[6] GPIO interrupt enabled\n");
+    DBG("[6] GPIO interrupt enabled\n");
 
     g_wake_cycle_count++;
     send_wakeup_report();
@@ -1174,7 +1175,7 @@ static void deep_sleep_restore(void) {
 
 // ============ 进入深度睡眠（由上位机指令触发）============
 static void enter_deep_sleep_with_wakeup(void) {
-    DBG("Entering deep sleep, wakeup by GPIO B1 falling edge...\n");
+    printf("Entering deep sleep, wakeup by GPIO B1 falling edge...\n");
     // 进入深度睡眠，唤醒后继续执行本函数后的代码
     user_asr_recognize_disable();
    
@@ -1245,13 +1246,16 @@ if (level == 0) {
    
     user_gpio_set_value(GPIO_NUM_A28, 1);
 
+    MediaPlayerStop(PLAYER_PCM);
+    uni_msleep(50);   // 等待播放完全停止
+
     DBG(" RecogStop.\n");
     RecogStop();        // 停止识别，释放 DMA/I2S
     DBG("RecogFinal.\n");
     RecogFinal();
     
-    
-    while (retry--) {
+    int again = 10;
+    while (again--) {
     uint32_t a = GPIO_INTFlagGet(GPIO_A_SEP_INTC);
     uint32_t b = GPIO_INTFlagGet(GPIO_B_SEP_INTC);
     if (a == 0 && b == 0) break;
