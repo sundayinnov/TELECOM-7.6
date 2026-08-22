@@ -1022,7 +1022,7 @@ if (g_host_sleeping) {
             if (sleep_timer_active != 0) {
                 sleep_timer_active = 0;
                 sleep_timer_start = 0;
-                DBG( "A26 low, reset idle timer");
+                printf( "A26 low, reset idle timer");
             }
         } else if (a26_level == 1) {
             // A26 为高电平：允许超时计时
@@ -1030,12 +1030,12 @@ if (g_host_sleeping) {
                 // 首次进入，开始计时
                 sleep_timer_start = uni_get_clock_time_ms();
                 sleep_timer_active = 1;
-                DBG( "A26 high, start 20s timer");
+                printf( "A26 high, start 20s timer");
             } else {
                 // 正在计时，检查是否超时
                 now = uni_get_clock_time_ms();
                 if (now - sleep_timer_start >= 20000) {
-                    DBG("20s idle (no wakeup), go to deep sleep");
+                    printf("20s idle (no wakeup), go to deep sleep");
                     sleep_timer_active = 0;
                     sleep_timer_start = 0;
                     user_asr_goto_sleep();
@@ -1048,7 +1048,7 @@ if (g_host_sleeping) {
             if (sleep_timer_active != 0) {
                 sleep_timer_active = 0;
                 sleep_timer_start = 0;
-                DBG("A26 read error, reset timer");
+                printf("A27 read error, reset timer");
             }
         }
     } else {
@@ -1056,7 +1056,7 @@ if (g_host_sleeping) {
         if (sleep_timer_active != 0) {
             sleep_timer_active = 0;
             sleep_timer_start = 0;
-            DBG("Valid wakeup detected, reset idle timer");
+            printf("Valid wakeup detected, reset idle timer");
         }
     }
 } else {
