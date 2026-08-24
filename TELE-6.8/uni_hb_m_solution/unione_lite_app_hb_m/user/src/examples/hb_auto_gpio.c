@@ -47,8 +47,12 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0x5D                 // CRC低字节
-#define CRC_VALUE_HIGH      0xF0                // CRC高字节
+#define CRC_VALUE_LOW       0x43                 // CRC低字节
+#define CRC_VALUE_HIGH      0x6B                // CRC高字节
+
+// ============ 唤醒CCCC ===============
+#define WAKEUP_SEQ_LEN  9
+#define WAKEUP_SEQ_BYTE 0xCC
 
 // ============ 复位控制相关 ============
 #define REBOOT_CMD_CODE     0xF1   // 上位机请求系统复位
@@ -69,10 +73,10 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ 功耗控制相关（上位机休眠/唤醒）============
 #define POWER_CMD_CODE        0xD0
 #define RESET_REQUEST_CMD     0xD1          // 复位请求/查询命令
+#define SLEEP_NOTIFY_CMD      0xD2      // 通知上位机进入休眠
 #define POWER_MODE_ENTER      0x01     // 上位机请求进入休眠
 #define POWER_MODE_EXIT       0x02     // 上位机请求退出休眠（唤醒确认）
-#define WAKEUP_SEQ_LEN        4
-#define WAKEUP_SEQ_BYTE       0xCC
+
 
 static uint32_t g_wake_cycle_count = 0;  // 休眠唤醒周期计数器
 static bool g_first_boot = true;   // 新增全局变量
@@ -211,6 +215,7 @@ static void _goto_awakened_cb(USER_EVENT_TYPE event, user_event_context_t *conte
 static void _goto_sleeping_cb (USER_EVENT_TYPE event, user_event_context_t *context);
 static void _study_event_cb(USER_EVENT_TYPE event, user_event_context_t *context);
 static void _register_event_callback(void);
+static void send_wakeup_seq(void);
 static void process_power_command(uint8_t *frame);
 static void send_reset_request(void);
 static void send_wakeup_report(void);
@@ -423,6 +428,12 @@ void uart_send_safe(const char* buf, int len) {
     }
 }
 
+static void send_wakeup_seq(void) {
+    uint8_t seq[WAKEUP_SEQ_LEN];
+    memset(seq, WAKEUP_SEQ_BYTE, WAKEUP_SEQ_LEN);
+    user_uart_send((char*)seq, WAKEUP_SEQ_LEN);
+}
+
 static void process_power_command(uint8_t *frame)
 {
     uint8_t mode = frame[3];
@@ -470,9 +481,10 @@ static void process_power_command(uint8_t *frame)
 // 主动上报复位请求（达到50次时调用）
 static void send_reset_request(void) {
     // 1. 发送唤醒序列（通知上位机准备接收）
-    uint8_t wakeup_seq[4] = {0xCC, 0xCC, 0xCC, 0xCC};
-    user_uart_send((char*)wakeup_seq, 4);
-    uni_msleep(50);
+    // uint8_t wakeup_seq[4] = {0xCC, 0xCC, 0xCC, 0xCC};
+    // user_uart_send((char*)wakeup_seq, 4);
+    // send_wakeup_seq();
+    // uni_msleep(50);
     
     // 2. 发送复位请求帧（0xD1 0x01）
     uint8_t req[9] = {
@@ -491,6 +503,8 @@ static void send_wakeup_report(void) {
     // 可选：发送唤醒序列（如果上位机需要）
     // uint8_t wakeup_seq[4] = {0xCC, 0xCC, 0xCC, 0xCC};
     // user_uart_send((char*)wakeup_seq, 4);
+    
+    send_wakeup_seq();
 
     uint8_t report[9] = {
         0xAA, 0x55, RESET_REQUEST_CMD,
@@ -1039,7 +1053,7 @@ if (g_host_sleeping) {
                     sleep_timer_active = 0;
                     sleep_timer_start = 0;
                     user_asr_goto_sleep();
-                    uni_msleep(2000);
+                    //uni_msleep(2000);
                     enter_deep_sleep_with_wakeup();
                 }
             }
@@ -1175,6 +1189,15 @@ static void deep_sleep_restore(void) {
 
 // ============ 进入深度睡眠（由上位机指令触发）============
 static void enter_deep_sleep_with_wakeup(void) {
+    uint8_t sleep_notify[9] = {
+        0xAA, 0x55, SLEEP_NOTIFY_CMD,  // 命令码 0xD2
+        0x00,                          // 子类型（可扩展）
+        0x00, 0x00, 0x00,              // 保留
+        0x55, 0xAA
+    };
+    uart_send_safe((char*)sleep_notify, 9);
+    uni_msleep(20);   // 等待数据发出（如果发送队列非阻塞，可能无需延时）
+
     printf("Entering deep sleep, wakeup by GPIO B1 falling edge...\n");
     // 进入深度睡眠，唤醒后继续执行本函数后的代码
     user_asr_recognize_disable();
@@ -1196,14 +1219,14 @@ user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
 user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
 uni_msleep(5);
 
-int retry = 5;
-int level = 0;
-while (retry--) {
-//    level = user_gpio_get_value(GPIO_NUM_B8);
-    level = user_gpio_get_value(GPIO_NUM_A27);
-    if (level == 1) break;
-    uni_msleep(10);
-}
+// int retry = 5;
+int level = user_gpio_get_value(GPIO_NUM_A27);
+// while (retry--) {
+// //    level = user_gpio_get_value(GPIO_NUM_B8);
+//     level = user_gpio_get_value(GPIO_NUM_A27);
+//     if (level == 1) break;
+//     uni_msleep(10);
+// }
 
 if (level == 0) {
     DBG("a26 low, reboot to recover.\n");
@@ -1422,8 +1445,9 @@ static void _goto_awakened_cb(USER_EVENT_TYPE event, user_event_context_t *conte
             LOGT(TAG, "Host is sleeping, sending wakeup sequence (0xCC x4)");
         
             // 发送唤醒序列
-            uint8_t wakeup_seq[4] = {0xCC, 0xCC, 0xCC, 0xCC};
-            user_uart_send((char*)wakeup_seq, 4);  // 直接发送，不经过队列
+            // uint8_t wakeup_seq[4] = {0xCC, 0xCC, 0xCC, 0xCC};
+            // user_uart_send((char*)wakeup_seq, 4);  // 直接发送，不经过队列
+            send_wakeup_seq();
             g_valid_wakeup = true;
             uni_msleep(200);
            
