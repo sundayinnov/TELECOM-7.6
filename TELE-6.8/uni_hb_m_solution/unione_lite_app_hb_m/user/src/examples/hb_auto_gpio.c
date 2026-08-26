@@ -47,8 +47,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0x43                 // CRC低字节
-#define CRC_VALUE_HIGH      0x6B                // CRC高字节
+#define CRC_VALUE_LOW       0x49                 // CRC低字节
+#define CRC_VALUE_HIGH      0x67                // CRC高字节
 
 // ============ 唤醒CCCC ===============
 #define WAKEUP_SEQ_LEN  9
@@ -481,12 +481,10 @@ static void process_power_command(uint8_t *frame)
 // 主动上报复位请求（达到50次时调用）
 static void send_reset_request(void) {
     // 1. 发送唤醒序列（通知上位机准备接收）
-    // uint8_t wakeup_seq[4] = {0xCC, 0xCC, 0xCC, 0xCC};
-    // user_uart_send((char*)wakeup_seq, 4);
-    // send_wakeup_seq();
-    // uni_msleep(50);
-    
+   
+    send_wakeup_seq();
     // 2. 发送复位请求帧（0xD1 0x01）
+    
     uint8_t req[9] = {
         0xAA, 0x55, RESET_REQUEST_CMD,  // 命令码 0xD1
         0x01,                            // 子类型：请求复位
@@ -500,11 +498,9 @@ static void send_reset_request(void) {
 }
 
 static void send_wakeup_report(void) {
-    // 可选：发送唤醒序列（如果上位机需要）
-    // uint8_t wakeup_seq[4] = {0xCC, 0xCC, 0xCC, 0xCC};
-    // user_uart_send((char*)wakeup_seq, 4);
+   
     
-    send_wakeup_seq();
+    //send_wakeup_seq();
 
     uint8_t report[9] = {
         0xAA, 0x55, RESET_REQUEST_CMD,
@@ -1219,14 +1215,14 @@ user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
 user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
 uni_msleep(5);
 
-// int retry = 5;
+int retry = 5;
 int level = user_gpio_get_value(GPIO_NUM_A27);
-// while (retry--) {
-// //    level = user_gpio_get_value(GPIO_NUM_B8);
-//     level = user_gpio_get_value(GPIO_NUM_A27);
-//     if (level == 1) break;
-//     uni_msleep(10);
-// }
+while (retry--) {
+//    level = user_gpio_get_value(GPIO_NUM_B8);
+    level = user_gpio_get_value(GPIO_NUM_A27);
+    if (level == 1) break;
+    uni_msleep(10);
+}
 
 if (level == 0) {
     DBG("a26 low, reboot to recover.\n");
@@ -1294,7 +1290,7 @@ if (level == 0) {
     uni_msleep(1);  // 
     uni_hal_watchdog_disable();
     uni_msleep(2);
-    DBG("enter deep sleep.\n");
+    printf("enter deep sleep.\n");
    
  //   uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA27,  WAKEUP_GPIONEGE);
@@ -1625,7 +1621,11 @@ int hb_auto_gpio(void)
     // A27 默认设置为输出低电平（ADC 未使能时保持低电平）
     user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
     user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
-
+    uni_msleep(5);
+    int a27_level = user_gpio_get_value(GPIO_NUM_A27);
+    bool mute = (a27_level == 0);
+    BbWrite(BB_KEY_BOOT_MUTE, mute);
+    
     // 初始化 DOA UART
     if (doa_uart_init() != 0) {
         LOGE(TAG, "DOA UART init failed");

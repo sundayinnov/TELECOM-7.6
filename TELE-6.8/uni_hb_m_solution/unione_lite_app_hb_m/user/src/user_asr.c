@@ -90,6 +90,6 @@ int user_asr_timeout_disable(void) {
 }
 
 int user_asr_timeout_enable(void) {
-  return uni_user_meeting_enable_asr_timeout(false);
+  return uni_user_meeting_enable_asr_timeout(true);
 }
 
