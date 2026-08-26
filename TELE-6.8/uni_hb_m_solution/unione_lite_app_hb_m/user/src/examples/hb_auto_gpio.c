@@ -1618,13 +1618,17 @@ int hb_auto_gpio(void)
     g_adc_value = 0;                          // 清空ADC值
     g_adc_triggered = false;                  // 默认未触发
     
-    // A27 默认设置为输出低电平（ADC 未使能时保持低电平）
-    user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
-    user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
-    uni_msleep(5);
-    int a27_level = user_gpio_get_value(GPIO_NUM_A27);
-    bool mute = (a27_level == 0);
-    BbWrite(BB_KEY_BOOT_MUTE, mute);
+   if (g_boot_status == WAKEUP_BY_POWERON ) {
+        // 配置 A27 为输入上拉（如果之前未配置）
+        GPIO_PortBModeSet(GPIOA27, 0);
+        user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
+        user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
+        uni_msleep(5);
+        int a27_level = user_gpio_get_value(GPIO_NUM_A27);
+        bool mute = (a27_level == 0);
+        BbWrite(BB_KEY_BOOT_MUTE, mute);
+        LOGT(TAG, "POWERON/RESET_PIN boot, A27=%d, mute=%d", a27_level, mute);
+    }
     
     // 初始化 DOA UART
     if (doa_uart_init() != 0) {
