@@ -6,6 +6,7 @@
 #include "user_timer.h"
 #include "user_uart.h"
 #include "doa_uart.h"
+#include "user_digital_keys.h"
 #include "uni_setting_session.h"
 #include "uni_pcm_default.h"
 #include "uni_hal_watchdog.h"
@@ -63,21 +64,22 @@ static const tts_mapping_t g_tts_mapping[] = {
 #define STUDY_RESULT_CMD  0xE2
 #define CLEAR_STUDY_CMD  0xE3   // 清除学习数据命令
 
-// ============ ADC 控制相关 ============
-#define ADC_CMD_CODE            0xA1                 // ADC操作命令码
-#define ADC_MODE_DISABLE        0x00                 // 去使能ADC
-#define ADC_MODE_ENABLE         0x01                 // 使能ADC，默认阈值为1200
-#define ADC_MODE_REPORT         0x02                 // 上报ADC值
-#define ADC_DEFAULT_THRESHOLD   1200                 // 默认阈值
-#define SENSOR_ENABLE_PIN       GPIO_NUM_B0          // 传感器电源使能引脚
+// ============ SENSOR B0控制/接收相关 ============
+
+#define SENSOR_GET_PIN       GPIO_NUM_B0          // 传感器接收引脚
+#define LID_EVENT_CMD       0xA1          // 盖子状态事件命令码（上位机协议）
+#define LID_STATE_OPEN      0x01
+#define LID_STATE_CLOSE     0x00
+
 // ============ 功耗控制相关（上位机休眠/唤醒）============
+#define WAKEUP_PIN        GPIO_NUM_A26  
 #define POWER_CMD_CODE        0xD0
 #define RESET_REQUEST_CMD     0xD1          // 复位请求/查询命令
 #define SLEEP_NOTIFY_CMD      0xD2      // 通知上位机进入休眠
 #define POWER_MODE_ENTER      0x01     // 上位机请求进入休眠
 #define POWER_MODE_EXIT       0x02     // 上位机请求退出休眠（唤醒确认）
 
-
+#define PWR_DOA_PIN        GPIO_NUM_A27
 static uint32_t g_wake_cycle_count = 0;  // 休眠唤醒周期计数器
 static bool g_first_boot = true;   // 新增全局变量
 static bool g_host_sleeping = false;
@@ -171,17 +173,19 @@ static volatile uint8_t g_rx_buffer[TTS_FRAME_LEN];
 static volatile uint16_t g_rx_len = 0;
 static volatile bool g_rx_flag;
 
-static uint8_t g_b1_power_state = 0;
+static uint8_t g_A27_power_state = 0;
 
 static bool g_sleep_by_command = false;
   
 static QueueHandle_t uart_tx_queue = NULL;
 
-// ADC相关变量
-static volatile bool g_adc_enabled = false;           // ADC使能状态
-static volatile uint16_t g_adc_value = 0;            // 最近ADC值
-static volatile uint16_t g_adc_threshold = ADC_DEFAULT_THRESHOLD; // ADC阈值
-static volatile bool g_adc_triggered = false;        // ADC是否触发（值超过阈值）
+// ADC相关变量/SENSOR B0控制/接收相关
+// static volatile bool g_adc_enabled = false;           // ADC使能状态
+// static volatile uint16_t g_adc_value = 0;            // 最近ADC值
+// static volatile uint16_t g_adc_threshold = ADC_DEFAULT_THRESHOLD; // ADC阈值
+// static volatile bool g_adc_triggered = false;        // ADC是否触发（值超过阈值）
+volatile bool g_lid_open = false;               // 当前盖子状态（true=开，false=关）
+static volatile bool g_lid_state_changed = false; // 状态变化标志（中断中置位，任务中轮询）
 
 // ============ 审核相关全局变量（volatile 保证跨任务可见） ============
 volatile bool g_esp32_online = false;        // ESP32联网状态
@@ -207,6 +211,8 @@ static void gpio_intr_handler(GPIO_NUMBER num, uni_bool is_high);
 static void tts_handler_task(void *args);
 //static void soft_uart_init(void);
 static void soft_uart_hw_init(void);
+static void _lid_key_cb(GPIO_NUMBER num);
+static void send_lid_event_with_cmd(uint8_t state, uint8_t cmd_code);
 static void led_init(void);
 static void send_command_with_angle(uint8_t cmd_code, int16_t angle);
 static void process_listen_command(uint8_t *frame);
@@ -224,8 +230,8 @@ void uart_send_safe(const char* buf, int len);
 static void _wakeup_cb(int flag);
 static void enter_deep_sleep_with_wakeup(void);
 static void deep_sleep_restore(void);
-static void send_adc_response(uint8_t mode, uint16_t adc_value, uint8_t state);
-static void process_adc_command(uint8_t *frame);
+//static void send_adc_response(uint8_t mode, uint16_t adc_value, uint8_t state);
+//static void process_adc_command(uint8_t *frame);
 static void process_crc_command(uint8_t *frame);
 void study_send_result(uint8_t index, uint8_t success);
 void study_send_approval_request(uint8_t type);
@@ -300,7 +306,7 @@ static void process_crc_command(uint8_t *frame)
     uart_send_safe((char*)response, 9);
     LOGT(TAG, "CRC response sent: 0x%02X 0x%02X", CRC_VALUE_HIGH, CRC_VALUE_LOW);
 }
-
+/*
 static void send_adc_response(uint8_t mode, uint16_t adc_value, uint8_t state)
 {
     uint8_t buf[9] = {
@@ -315,7 +321,8 @@ static void send_adc_response(uint8_t mode, uint16_t adc_value, uint8_t state)
     LOGT(TAG, "Send ADC response: mode=%d, value=%d (0x%04X), state=%d", 
          mode, adc_value, adc_value, state);
 }
-
+*/
+/*
 static void process_adc_command(uint8_t *frame)
 {
     uint8_t mode = frame[3];
@@ -373,7 +380,7 @@ static void process_adc_command(uint8_t *frame)
             break;
     }
 }
-
+*/
 static void process_listen_command(uint8_t *frame)
 {
     uint8_t mode = frame[3];
@@ -873,13 +880,39 @@ static void uart_tx_task(void *pvParameters) {
     }
 }
 
+// B0 盖子检测中断回调（由 user_digital_keys 驱动任务调用）
+static void _lid_key_cb(GPIO_NUMBER num)
+{
+    // 读取当前电平
+    int level = user_gpio_get_value(SENSOR_GET_PIN);
+    bool new_state = (level == 1);   // 高电平=开盖（可根据硬件调整）
+    if (new_state != g_lid_open) {
+        g_lid_open = new_state;
+        g_lid_state_changed = true;  // 通知主循环上报
+    }
+}
+
+// 发送盖子状态帧（携带触发指令码）
+static void send_lid_event_with_cmd(uint8_t state, uint8_t cmd_code)
+{
+    uint8_t buf[9] = {
+        0xAA, 0x55, LID_EVENT_CMD,
+        state,          // LID_STATE_OPEN 或 LID_STATE_CLOSE
+        cmd_code,       // 触发指令的命令码，如 0x43（come）
+        0x00, 0x00,
+        0x55, 0xAA
+    };
+    uart_send_safe((char*)buf, 9);
+    LOGT(TAG, "Lid event with cmd: state=%d, cmd=0x%02X", state, cmd_code);
+}
+
 // ============ TTS 帧处理任务（喂狗任务）============
 static void tts_handler_task(void *args)
 {
     uint32_t last_feed_time = 0;
-    uint32_t last_adc_time = 0;
+ //   uint32_t last_adc_time = 0;
     uint32_t now;
-    static uint32_t loop_cnt = 0;   // 循环计数器
+//    static uint32_t loop_cnt = 0;   // 循环计数器
  //   int i;
  
    // B8 检测状态变量（static 保证唤醒后值重置，但我们在每次进入检测分支时初始化）
@@ -895,23 +928,23 @@ static void tts_handler_task(void *args)
         }
         
          // ★ 每 100 次循环打印堆内存信息
-        if (++loop_cnt % 100 == 0) {
-            size_t free_heap = xPortGetFreeHeapSize();
-            size_t min_free = xPortGetMinimumEverFreeHeapSize();
-           printf("Heap: free=%u bytes, min ever=%u bytes\n", 
-       (unsigned int)free_heap, (unsigned int)min_free);
-        }
+    //     if (++loop_cnt % 100 == 0) {
+    //         size_t free_heap = xPortGetFreeHeapSize();
+    //         size_t min_free = xPortGetMinimumEverFreeHeapSize();
+    //        printf("Heap: free=%u bytes, min ever=%u bytes\n", 
+    //    (unsigned int)free_heap, (unsigned int)min_free);
+    //     }
 
-        if (g_adc_enabled &&(now - last_adc_time >= 100)) {
-            adc_process_sample();
-            last_adc_time = now;
-
-              // 只有触发状态才上报
-            if (adc_is_initialized() && adc_is_triggered()) {
-                uint16_t report_value = (uint16_t)adc_get_report_value();
-                send_adc_response(ADC_MODE_REPORT, report_value, 1);
-                LOGT(TAG, "ADC triggered report: value=%d", report_value);
-            }
+        if (g_lid_state_changed) {
+            g_lid_state_changed = false;
+            uint8_t buf[9] = {
+                0xAA, 0x55, LID_EVENT_CMD,
+                g_lid_open ? LID_STATE_OPEN : LID_STATE_CLOSE,
+                0x00, 0x00, 0x00,
+                0x55, 0xAA
+            };
+            uart_send_safe((char*)buf, 9);
+            LOGT(TAG, "Lid state changed: %s", g_lid_open ? "OPEN" : "CLOSE");
         }
 
         if(g_rx_flag == true)
@@ -949,9 +982,9 @@ static void tts_handler_task(void *args)
                     else if (cmd == CRC_CMD_CODE) {          // 新增CRC处理
                         process_crc_command((uint8_t*)g_rx_buffer);
                     }
-                    else if (cmd == ADC_CMD_CODE) {          // 新增ADC处理
-                    //    process_adc_command((uint8_t*)g_rx_buffer);
-                    }
+                    // else if (cmd == ADC_CMD_CODE) {          // 新增ADC处理
+                    //     process_adc_command((uint8_t*)g_rx_buffer);
+                    // }
                     else if (cmd == CLEAR_STUDY_CMD) {
                         uint8_t clear_type = g_rx_buffer[3];  // byte3: 0x00清除全部
                         LOGT(TAG, "Received clear study command, type=%d", clear_type);
@@ -1025,14 +1058,14 @@ static void tts_handler_task(void *args)
 if (g_host_sleeping) {
     if (!g_valid_wakeup) {
         // ★ 检测 A26 电平（唤醒引脚）——注意：此处应读取 GPIO_NUM_A26，您可根据需要修改
-        int a26_level = user_gpio_get_value(GPIO_NUM_A27);  // 请确认引脚号正确
+        int a26_level = user_gpio_get_value(WAKEUP_PIN);  // 新版本A26,旧A27
 
         if (a26_level == 0) {
             // A26 为低电平：重置计时器（无论是否正在计时）
             if (sleep_timer_active != 0) {
                 sleep_timer_active = 0;
                 sleep_timer_start = 0;
-                printf( "A26 low, reset idle timer");
+                DBG( "A26 low, reset idle timer");
             }
         } else if (a26_level == 1) {
             // A26 为高电平：允许超时计时
@@ -1040,12 +1073,12 @@ if (g_host_sleeping) {
                 // 首次进入，开始计时
                 sleep_timer_start = uni_get_clock_time_ms();
                 sleep_timer_active = 1;
-                printf( "A26 high, start 20s timer");
+                DBG( "A26 high, start 20s timer");
             } else {
                 // 正在计时，检查是否超时
                 now = uni_get_clock_time_ms();
                 if (now - sleep_timer_start >= 20000) {
-                    printf("20s idle (no wakeup), go to deep sleep");
+                    DBG("20s idle (no wakeup), go to deep sleep");
                     sleep_timer_active = 0;
                     sleep_timer_start = 0;
                     user_asr_goto_sleep();
@@ -1058,7 +1091,7 @@ if (g_host_sleeping) {
             if (sleep_timer_active != 0) {
                 sleep_timer_active = 0;
                 sleep_timer_start = 0;
-                printf("A27 read error, reset timer");
+                DBG("A27 read error, reset timer");
             }
         }
     } else {
@@ -1066,7 +1099,7 @@ if (g_host_sleeping) {
         if (sleep_timer_active != 0) {
             sleep_timer_active = 0;
             sleep_timer_start = 0;
-            printf("Valid wakeup detected, reset idle timer");
+            DBG("Valid wakeup detected, reset idle timer");
         }
     }
 } else {
@@ -1086,35 +1119,30 @@ if (g_host_sleeping) {
 static void deep_sleep_restore(void) {
    
     uni_msleep(200);
-    
-    
+       
     uni_hal_watchdog_feed();
     printf("Woke up, reinitializing hardware...\n");
- //   GIE_ENABLE();
- //   user_gpio_init();
- //   RecogLaunch(NULL);  // 恢复识别
- //   restore_audio_settings();
-    GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX27);
-    // 恢复 GPIO 输出状态（根据实际需求设置）
-    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_A26, 0);
-    // user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_OUT);
-    // user_gpio_set_value(GPIO_NUM_A27, 0);
+ 
+    GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX26);
+    // 恢复 GPIO 输出状态（根据实际需求设置）   
     user_gpio_set_mode(GPIO_NUM_A28, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A28, 0);
-    GPIO_PortBModeSet(GPIOB0, 0);
-    user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B0, 0);
+    // GPIO_PortBModeSet(GPIOB0, 0);
+    // user_gpio_set_mode(SENSOR_GET_PIN, GPIO_MODE_IN);
+    // user_gpio_set_value(SENSOR_GET_PIN, 0);
+    GPIO_PortBModeSet(GPIOB1, 0);
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B1, 1);
-    g_b1_power_state = 0;
+    user_gpio_set_value(GPIO_NUM_B1, 0);
+    user_gpio_set_mode(PWR_DOA_PIN, GPIO_MODE_OUT);
+    user_gpio_set_value(PWR_DOA_PIN, 0);
+    g_A27_power_state = 0;
     
     // ============ ADC 恢复 ============
     // 唤醒后 ADC 默认关闭，等待上位机重新使能
-    g_adc_enabled = false;
-    g_adc_threshold = ADC_DEFAULT_THRESHOLD;
-    g_adc_value = 0;
-    g_adc_triggered = false;
+    // g_adc_enabled = false;
+    // g_adc_threshold = ADC_DEFAULT_THRESHOLD;
+    // g_adc_value = 0;
+    // g_adc_triggered = false;
     
     // A27 恢复为输出低电平
     // user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
@@ -1150,26 +1178,29 @@ static void deep_sleep_restore(void) {
     uni_msleep(20); 
     user_gpio_set_value(GPIO_NUM_A28, 0);
     
-    // GPIO_PortBModeSet(GPIOB8, 0);
-    // DBG("[1] B8 PortBModeSet done");
-    // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
-    // DBG("[2] B8 mode set");
-    // user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
-    // DBG("[3] B8 pull-up set");
-    GPIO_PortBModeSet(GPIOA27, 0);
-    DBG("[1] A27 PortBModeSet done\n");
-    user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
-    DBG("[2] A27 mode set\n");
-    user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
-    DBG("[3] A27 pull-up set\n");
+ 
+    GPIO_PortBModeSet(GPIOA26, 0);//A26为唤醒脚
+    DBG("[1] A26 PortBModeSet done\n");
+    user_gpio_set_mode(WAKEUP_PIN, GPIO_MODE_IN);//新版本A26为唤醒脚
+    DBG("[2] A26 mode set\n");
+    user_gpio_set_pull_mode(WAKEUP_PIN, GPIO_PULL_UP);
+    DBG("[3] A26 pull-up set\n");
 
     GIE_ENABLE();
     uni_msleep(50); 
     DBG("[4] After 50ms delay\n");
     uni_hal_watchdog_enable(WDG_STEP_4S);
     DBG("[5] watchdog enabled\n");
-    user_gpio_interrupt_enable();
-    DBG("[6] GPIO interrupt enabled\n");
+   // ---- 重新初始化盖子检测（B0）----
+    user_digital_keys_init(GPIO_INT_BOTH_EDGE);
+    if (user_digital_keys_register_key(SENSOR_GET_PIN, _lid_key_cb) != 0) {
+        LOGE(TAG, "Failed to re-register lid key");
+    } else {
+    int level = user_gpio_get_value(SENSOR_GET_PIN);
+    g_lid_open = (level == 1);
+    g_lid_state_changed = false;
+    LOGT(TAG, "Lid state restored: %s", g_lid_open ? "OPEN" : "CLOSE");
+    }
 
     g_wake_cycle_count++;
     send_wakeup_report();
@@ -1206,29 +1237,28 @@ static void enter_deep_sleep_with_wakeup(void) {
 
     g_rx_len = 0;
     g_rx_flag = false;
-  
-    user_gpio_interrupt_disable();
-// ★ 检查 A26 电平并确保高电平
-// user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
-// user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
-user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
-user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
-uni_msleep(5);
 
-int retry = 5;
-int level = user_gpio_get_value(GPIO_NUM_A27);
-while (retry--) {
-//    level = user_gpio_get_value(GPIO_NUM_B8);
-    level = user_gpio_get_value(GPIO_NUM_A27);
-    if (level == 1) break;
-    uni_msleep(10);
-}
+    user_digital_keys_final();
+    uni_msleep(5);
+   
+    // ★ 检查 A26 电平并确保高电平
 
-if (level == 0) {
-    DBG("a26 low, reboot to recover.\n");
+    user_gpio_set_mode(WAKEUP_PIN, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(WAKEUP_PIN, GPIO_PULL_UP);
+    uni_msleep(5);
 
-   uni_hal_reset_system();
-}
+    int retry = 5;
+    int level = user_gpio_get_value(WAKEUP_PIN);
+    while (retry--) {
+        level = user_gpio_get_value(WAKEUP_PIN);
+        if (level == 1) break;
+        uni_msleep(10);
+    }
+
+    if (level == 0) {
+        DBG("a26 low, reboot to recover.\n");
+        uni_hal_reset_system();
+    }
     // ★ 清除可能挂起的中断标志（A26 唤醒源，A25 软件 UART）
     DBG("Clear pending interrupt.\n");
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX26);
@@ -1236,27 +1266,26 @@ if (level == 0) {
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX25);
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX27);
     GPIO_INTFlagClear(GPIO_B_SEP_INTC, GPIO_INDEX8);
+    GPIO_INTFlagClear(GPIO_B_SEP_INTC, GPIO_INDEX0);
 
     user_gpio_set_mode(GPIO_NUM_A25, GPIO_MODE_IN);
     user_gpio_set_pull_mode(GPIO_NUM_A25, GPIO_PULL_UP);
     user_gpio_clear_interrupt(GPIO_NUM_A25);
-
-    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
-    user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP); // 或 PULL_DOWN
-    user_gpio_clear_interrupt(GPIO_NUM_A26);
-
-    user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
-    user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP); // 或 PULL_DOWN
-    user_gpio_clear_interrupt(GPIO_NUM_A27);
-
-    // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
-    // user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);
-    // user_gpio_clear_interrupt(GPIO_NUM_B8);
-
-    user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B0, 0);
+    uni_msleep(5);
+    user_gpio_set_mode(WAKEUP_PIN, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(WAKEUP_PIN, GPIO_PULL_UP); // 或 PULL_DOWN
+    user_gpio_clear_interrupt(WAKEUP_PIN);
+    uni_msleep(5);
+    user_gpio_set_mode(PWR_DOA_PIN, GPIO_MODE_OUT);
+    user_gpio_set_value(PWR_DOA_PIN, 0);
+    uni_msleep(5);
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B1, 1);//新电路为0，老电路为1
+    user_gpio_set_value(GPIO_NUM_B1, 0);
+    uni_msleep(5);
+    user_gpio_set_mode(SENSOR_GET_PIN, GPIO_MODE_IN);
+    user_gpio_set_pull_mode(SENSOR_GET_PIN, GPIO_PULL_UP); // 或 PULL_DOWN
+    user_gpio_clear_interrupt(SENSOR_GET_PIN);
+    uni_msleep(5);
     user_gpio_set_mode(GPIO_NUM_B2, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B2, 0);
     user_gpio_set_mode(GPIO_NUM_B3, GPIO_MODE_OUT);
@@ -1290,10 +1319,9 @@ if (level == 0) {
     uni_msleep(1);  // 
     uni_hal_watchdog_disable();
     uni_msleep(2);
-    printf("enter deep sleep.\n");
+    DBG("enter deep sleep.\n");
    
- //   uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOB8,  WAKEUP_GPIONEGE);
-    uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA27,  WAKEUP_GPIONEGE);
+    uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA26,  WAKEUP_GPIONEGE);
     // ---------- 唤醒后从这里继续 ----------
     deep_sleep_restore();
 }
@@ -1386,6 +1414,11 @@ static void _custom_setting_cb(USER_EVENT_TYPE event, user_event_context_t *cont
     LOGT(TAG, "user command: %s, DOA angle: %d", setting->cmd, angle);
     
     if (0 == uni_strcmp(setting->cmd, "come")) {
+        if (g_lid_open) {
+            play_tts_by_cmd(0x02);   // 播放 [519] 提示
+            send_lid_event_with_cmd(LID_STATE_OPEN, 0x43);
+            return;
+        }
         send_command_with_angle(0x43, angle);
     } else if (0 == uni_strcmp(setting->cmd, "away")) {
         send_command_with_angle(0x47, angle);
@@ -1448,10 +1481,10 @@ static void _goto_awakened_cb(USER_EVENT_TYPE event, user_event_context_t *conte
             uni_msleep(200);
            
         }
-        if(g_b1_power_state == 0)
+        if(g_A27_power_state == 0)
         {
-            user_gpio_set_value(GPIO_NUM_B1, 0);//新电路1，老电路0
-            g_b1_power_state = 1;
+            user_gpio_set_value(PWR_DOA_PIN, 1);//新电路1，老电路0
+            g_A27_power_state = 1;
             int16_t angle = setting_session_get_last_doa_angle();  
             send_command_with_angle(0x46, angle);
             uni_msleep(1000);
@@ -1483,8 +1516,8 @@ static void _goto_sleeping_cb (USER_EVENT_TYPE event, user_event_context_t *cont
  //   user_player_reply_list_random(sleeping->reply_files);
     (void)sleeping;
     }
-    user_gpio_set_value(GPIO_NUM_B1, 1);
-    g_b1_power_state = 0;
+    user_gpio_set_value(PWR_DOA_PIN, 0);
+    g_A27_power_state = 0;
     
     uint8_t report_buf[9] = {
     0xAA, 0x55, LISTEN_CMD_CODE,
@@ -1590,44 +1623,38 @@ int hb_auto_gpio(void)
    // 初始化LED
     led_init();
     // 配置其他GPIO
-    user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_A26, 0);
-    // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_OUT);
-    // user_gpio_set_value(GPIO_NUM_B8, 0);
-
     user_gpio_set_mode(GPIO_NUM_A28, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A28, 0);
     
-    user_gpio_set_mode(GPIO_NUM_B0, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B0, 0);
-    
-    // user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_IN);
-    // user_gpio_set_pull_mode(GPIO_NUM_B8, GPIO_PULL_UP);  
-    // user_gpio_set_mode(GPIO_NUM_A26, GPIO_MODE_IN);
-    // user_gpio_set_pull_mode(GPIO_NUM_A26, GPIO_PULL_UP); 
-
-    g_b1_power_state = 0;
     user_gpio_set_mode(GPIO_NUM_B1, GPIO_MODE_OUT);
-    user_gpio_set_value(GPIO_NUM_B1, 1);
+    user_gpio_set_value(GPIO_NUM_B1, 0);
+    
+    g_A27_power_state = 0;
+    user_gpio_set_mode(PWR_DOA_PIN, GPIO_MODE_OUT);
+    user_gpio_set_value(PWR_DOA_PIN, 0);
 
-    //ADC初始化
-  // ============ ADC 初始化 ============
-    // 注意：ADC 默认是关闭状态，需要上位机发送使能命令后才工作
-    g_adc_enabled = false;                    // 默认关闭
-    g_adc_threshold = ADC_DEFAULT_THRESHOLD;  // 默认阈值 1200
-    g_adc_value = 0;                          // 清空ADC值
-    g_adc_triggered = false;                  // 默认未触发
+    user_digital_keys_init(GPIO_INT_BOTH_EDGE);   // 初始化驱动，创建内部任务
+    // 注册 B0 按键回调
+    if (user_digital_keys_register_key(SENSOR_GET_PIN, _lid_key_cb) != 0) {
+        printf("Failed to register lid key (B0)");
+    } else {
+        // 读取初始电平
+        int init_level = user_gpio_get_value(SENSOR_GET_PIN);
+        g_lid_open = (init_level == 1);
+        g_lid_state_changed = false;
+        printf("Lid initial state: %s", g_lid_open ? "OPEN" : "CLOSE");
+    }
     
    if (g_boot_status == WAKEUP_BY_POWERON ) {
-        // 配置 A27 为输入上拉（如果之前未配置）
-        GPIO_PortBModeSet(GPIOA27, 0);
-        user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
-        user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
+        // 配置 A26为输入上拉（如果之前未配置）
+        GPIO_PortBModeSet(GPIOA26, 0);
+        user_gpio_set_mode(WAKEUP_PIN, GPIO_MODE_IN);
+        user_gpio_set_pull_mode(WAKEUP_PIN, GPIO_PULL_UP);
         uni_msleep(5);
-        int a27_level = user_gpio_get_value(GPIO_NUM_A27);
-        bool mute = (a27_level == 0);
+        int a26_level = user_gpio_get_value(WAKEUP_PIN);
+        bool mute = (a26_level == 0);
         BbWrite(BB_KEY_BOOT_MUTE, mute);
-        LOGT(TAG, "POWERON/RESET_PIN boot, A27=%d, mute=%d", a27_level, mute);
+        LOGT(TAG, "POWERON/RESET_PIN boot, A26=%d, mute=%d", a26_level, mute);
     }
     
     // 初始化 DOA UART

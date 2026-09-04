@@ -23,9 +23,10 @@ user/src/examples/hb_auto_gpio.d user/src/examples/hb_auto_gpio.o: \
  ../user/inc/user_gpio.h ../user/inc/user_player.h \
  ../user/inc/user_event.h ../user/inc/user_pwm.h ../user/inc/user_timer.h \
  ../user/inc/user_uart.h ../user/inc/doa_uart.h \
+ ../user/src/examples/drivers/user_digital_keys.h ../user/inc/unione.h \
  ../src/app/inc/sessions/uni_setting_session.h \
  ../src/hal/inc/uni_hal_watchdog.h \
- ../user/src/examples/drivers/user_sw_timer.h ../user/inc/unione.h \
+ ../user/src/examples/drivers/user_sw_timer.h \
  ../src/utils/black_board/inc/uni_black_board.h \
  ../src/sdk/player/inc/uni_media_player.h \
  ../src/sdk/player/src/pcm/inc/uni_pcm_resource.h \
@@ -114,13 +115,15 @@ user/src/examples/hb_auto_gpio.d user/src/examples/hb_auto_gpio.o: \
 
 ../user/inc/doa_uart.h:
 
+../user/src/examples/drivers/user_digital_keys.h:
+
+../user/inc/unione.h:
+
 ../src/app/inc/sessions/uni_setting_session.h:
 
 ../src/hal/inc/uni_hal_watchdog.h:
 
 ../user/src/examples/drivers/user_sw_timer.h:
-
-../user/inc/unione.h:
 
 ../src/utils/black_board/inc/uni_black_board.h:
 

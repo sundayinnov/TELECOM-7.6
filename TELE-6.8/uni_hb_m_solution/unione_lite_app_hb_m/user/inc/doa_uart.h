@@ -6,8 +6,7 @@
 
 
 // 使用 A26 作为 DOA 触发引脚
-#define DOA_TRIGGER_GPIO_PIN    GPIO_NUM_A26
-//#define DOA_TRIGGER_GPIO_PIN    GPIO_NUM_B0
+#define DOA_TRIGGER_GPIO_PIN    GPIO_NUM_B1  //新版本B1
 #define DOA_TRIGGER_ACTIVE_LEVEL 1   // 高电平有效
 
 // 触发DOA芯片获取角度（拉高GPIO）
