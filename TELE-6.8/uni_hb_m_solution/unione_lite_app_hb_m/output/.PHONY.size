@@ -1,2 +1,2 @@
    text (code + rodata)	   data	    bss	    dec	    hex	filename
-1615782 (319314 + 1296468)	   1848	  67084	1684714	 19b4ea	uni_app.adx
+1624546 (319438 + 1305108)	   1848	  67084	1693478	 19d726	uni_app.adx

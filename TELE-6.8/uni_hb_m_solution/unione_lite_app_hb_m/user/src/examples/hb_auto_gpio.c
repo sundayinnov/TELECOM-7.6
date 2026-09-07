@@ -42,7 +42,7 @@ static const tts_mapping_t g_tts_mapping[] = {
     {0x05, "[504]"}, {0x06, "[505]"}, {0x07, "[506]"}, {0x08, "[507]"},
     {0x09, "[508]"}, {0x0A, "[509]"}, {0x0B, "[510]"}, {0x0C, "[511]"},
     {0x0D, "[512]"}, {0x0E, "[513]"}, {0x0F, "[514]"}, {0x10, "[515]"}, 
-    {0x11, "[516]"}, {0x12, "[519]"}, {0x00, "[0]"}
+    {0x11, "[516]"}, {0x12, "[519]"}, {0x13, "[530]"}, {0x00, "[0]"}
 };
 
 // ============ CRC 校验相关 ============
@@ -70,6 +70,7 @@ static const tts_mapping_t g_tts_mapping[] = {
 #define LID_EVENT_CMD       0xA1          // 盖子状态事件命令码（上位机协议）
 #define LID_STATE_OPEN      0x01
 #define LID_STATE_CLOSE     0x00
+#define LID_QUERY_CMD       0xA2
 
 // ============ 功耗控制相关（上位机休眠/唤醒）============
 #define WAKEUP_PIN        GPIO_NUM_A26  
@@ -1040,6 +1041,17 @@ static void tts_handler_task(void *args)
                         uni_msleep(50);
                         uni_hal_reset_system();
                     }
+                    else if (cmd == LID_QUERY_CMD) {
+                        // 回复当前盖子状态
+                        uint8_t resp[9] = {
+                            0xAA, 0x55, LID_QUERY_CMD,
+                            g_lid_open ? LID_STATE_OPEN : LID_STATE_CLOSE,
+                            0x00, 0x00, 0x00,
+                            0x55, 0xAA
+                        };
+                        uart_send_safe((char*)resp, 9);
+                        LOGT(TAG, "Lid query response: %s", g_lid_open ? "OPEN" : "CLOSE");
+                    }                    
                     else {
                         play_tts_by_cmd(cmd);
                         //user_uart_send((char*)g_rx_buffer, g_rx_len);
@@ -1285,6 +1297,10 @@ static void enter_deep_sleep_with_wakeup(void) {
     user_gpio_set_mode(SENSOR_GET_PIN, GPIO_MODE_IN);
     user_gpio_set_pull_mode(SENSOR_GET_PIN, GPIO_PULL_UP); // 或 PULL_DOWN
     user_gpio_clear_interrupt(SENSOR_GET_PIN);
+    uni_msleep(5);
+    user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_OUT);
+    user_gpio_set_value(GPIO_NUM_B8, 0);
+    user_gpio_clear_interrupt(GPIO_NUM_B8);
     uni_msleep(5);
     user_gpio_set_mode(GPIO_NUM_B2, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B2, 0);
@@ -1636,13 +1652,13 @@ int hb_auto_gpio(void)
     user_digital_keys_init(GPIO_INT_BOTH_EDGE);   // 初始化驱动，创建内部任务
     // 注册 B0 按键回调
     if (user_digital_keys_register_key(SENSOR_GET_PIN, _lid_key_cb) != 0) {
-        printf("Failed to register lid key (B0)");
+        DBG("Failed to register lid key (B0)");
     } else {
         // 读取初始电平
         int init_level = user_gpio_get_value(SENSOR_GET_PIN);
         g_lid_open = (init_level == 1);
         g_lid_state_changed = false;
-        printf("Lid initial state: %s", g_lid_open ? "OPEN" : "CLOSE");
+        DBG("Lid initial state: %s", g_lid_open ? "OPEN" : "CLOSE");
     }
     
    if (g_boot_status == WAKEUP_BY_POWERON ) {
