@@ -269,7 +269,7 @@ static Result _filter_event(Event *event) {
   return rc;
 }
 
-static char *_get_cur_grammar() {
+ char *_get_cur_grammar() {
   BLOB_TYPE_BOOL has_new_grammar;
   int save_len;
   user_flash_get_env_blob(BLOB_KEY_HAS_NEW_GRAMMAR, &has_new_grammar,
@@ -944,19 +944,25 @@ Result StudySessionFinal(void) {
       uni_free(g_study_session->pcm_list);
       g_study_session->pcm_list = NULL;
     }
+
+    // ★ 先把 NLU 链表清空，再释放 session 结构体
+    //    （避免 uni_free(g_study_session) 之后再访问 g_study_session->head 造成空指针崩溃）
+    StudyNLUContent *item, *tmp;
+    uni_list_for_each_entry_safe(item, tmp, &g_study_session->head,
+                                 StudyNLUContent, link) {
+      uni_list_del(&item->link);
+      uni_free(item);
+    }
+
     uni_free(g_study_session);
     g_study_session = NULL;
   }
+
   if (NULL != g_study_session_transition) {
     uni_free(g_study_session_transition);
     g_study_session_transition = NULL;
   }
-  StudyNLUContent *item, *tmp;
-  uni_list_for_each_entry_safe(item, tmp, &g_study_session->head,
-                               StudyNLUContent, link) {
-    uni_list_del(&item->link);
-    uni_free(item);
-  }
+
   return E_OK;
 }
 

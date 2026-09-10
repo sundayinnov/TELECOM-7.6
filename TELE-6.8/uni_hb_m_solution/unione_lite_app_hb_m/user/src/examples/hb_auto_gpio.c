@@ -8,6 +8,7 @@
 #include "doa_uart.h"
 #include "user_digital_keys.h"
 #include "uni_setting_session.h"
+#include "uni_wakeup_session.h"
 #include "uni_pcm_default.h"
 #include "uni_hal_watchdog.h"
 #include "user_sw_timer.h"
@@ -48,8 +49,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0x49                 // CRC低字节
-#define CRC_VALUE_HIGH      0x67                // CRC高字节
+#define CRC_VALUE_LOW       0x4D                 // CRC低字节
+#define CRC_VALUE_HIGH      0x62                // CRC高字节
 
 // ============ 唤醒CCCC ===============
 #define WAKEUP_SEQ_LEN  9
@@ -913,7 +914,7 @@ static void tts_handler_task(void *args)
     uint32_t last_feed_time = 0;
  //   uint32_t last_adc_time = 0;
     uint32_t now;
-//    static uint32_t loop_cnt = 0;   // 循环计数器
+ //   static uint32_t loop_cnt = 0;   // 循环计数器
  //   int i;
  
    // B8 检测状态变量（static 保证唤醒后值重置，但我们在每次进入检测分支时初始化）
@@ -1181,12 +1182,21 @@ static void deep_sleep_restore(void) {
         uni_hal_reset_system();
     }
 
-    DBG("RecogLaunch.\n");
-    if (RecogLaunch(NULL) != E_OK) {   // 传入 NULL 使用默认场景
-        LOGE(TAG, "RecogLaunch failed, rebooting");
+
+    // DBG("RecogLaunch.\n");
+    // if (RecogLaunch(NULL) != E_OK) {   // 传入 NULL 使用默认场景
+    //     LOGE(TAG, "RecogLaunch failed, rebooting");
+    //     uni_hal_reset_system();
+    // }
+    if (WakeupSessionInit() != E_OK) {
+        LOGE(TAG, "WakeupSessionInit failed, rebooting");
         uni_hal_reset_system();
     }
-
+    
+   if (StudySessionInit() != E_OK) {
+        LOGE(TAG, "StudySessionInit failed, rebooting");
+        uni_hal_reset_system();
+    }
     uni_msleep(20); 
     user_gpio_set_value(GPIO_NUM_A28, 0);
     
@@ -1313,6 +1323,8 @@ static void enter_deep_sleep_with_wakeup(void) {
     MediaPlayerStop(PLAYER_PCM);
     uni_msleep(50);   // 等待播放完全停止
 
+    WakeupSessionFinal();
+    StudySessionFinal(); 
     DBG(" RecogStop.\n");
     RecogStop();        // 停止识别，释放 DMA/I2S
     DBG("RecogFinal.\n");

@@ -25,6 +25,7 @@ user/src/examples/hb_auto_gpio.d user/src/examples/hb_auto_gpio.o: \
  ../user/inc/user_uart.h ../user/inc/doa_uart.h \
  ../user/src/examples/drivers/user_digital_keys.h ../user/inc/unione.h \
  ../src/app/inc/sessions/uni_setting_session.h \
+ ../src/app/inc/sessions/uni_wakeup_session.h \
  ../src/hal/inc/uni_hal_watchdog.h \
  ../user/src/examples/drivers/user_sw_timer.h \
  ../src/utils/black_board/inc/uni_black_board.h \
@@ -120,6 +121,8 @@ user/src/examples/hb_auto_gpio.d user/src/examples/hb_auto_gpio.o: \
 ../user/inc/unione.h:
 
 ../src/app/inc/sessions/uni_setting_session.h:
+
+../src/app/inc/sessions/uni_wakeup_session.h:
 
 ../src/hal/inc/uni_hal_watchdog.h:
 
