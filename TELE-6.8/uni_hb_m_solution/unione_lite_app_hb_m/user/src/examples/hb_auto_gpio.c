@@ -254,7 +254,7 @@ static void _wakeup_cb(int flag) {
     // 可置标志或空实现，恢复工作放在 deep_sleep_restore 中
     // 此处仅做简单记录（若需调试，可使用 uni_printf）
     uni_hal_watchdog_feed();
-    DBG("Woke up, flag=%d\n", flag);
+    printf("Woke up, flag=%d\n", flag);
 }
 
 // 保存静音状态到 Flash
@@ -1136,7 +1136,7 @@ if (g_host_sleeping) {
 
 // ============ 唤醒后恢复硬件（不创建任务）============
 static void deep_sleep_restore(void) {
-   
+   printf("[R] enter restore\n");
     uni_msleep(200);
        
     uni_hal_watchdog_feed();
@@ -1182,7 +1182,7 @@ static void deep_sleep_restore(void) {
 
     DMA_ChannelEnable(PERIPHERAL_ID_AUDIO_ADC0_RX);     // ④ 重开 DMA
     uni_msleep(5);
-    RecogMute(false);    
+ //   RecogMute(false);    
     
  // ✅ 全新初始化识别引擎
     // DBG("RecogInit.\n");
@@ -1192,11 +1192,11 @@ static void deep_sleep_restore(void) {
     // }
 
 
-    // DBG("RecogLaunch.\n");
-    // if (RecogLaunch(NULL) != E_OK) {   // 传入 NULL 使用默认场景
-    //     LOGE(TAG, "RecogLaunch failed, rebooting");
-    //     uni_hal_reset_system();
-    // }
+    DBG("RecogLaunch.\n");
+    if (RecogLaunch(NULL) != E_OK) {   // 传入 NULL 使用默认场景
+        LOGE(TAG, "RecogLaunch failed, rebooting");
+        uni_hal_reset_system();
+    }
     // if (WakeupSessionInit() != E_OK) {
     //     LOGE(TAG, "WakeupSessionInit failed, rebooting");
     //     uni_hal_reset_system();
@@ -1217,7 +1217,7 @@ static void deep_sleep_restore(void) {
     user_gpio_set_pull_mode(WAKEUP_PIN, GPIO_PULL_UP);
     DBG("[3] A26 pull-up set\n");
 
-    GIE_ENABLE();
+  //  GIE_ENABLE();
     uni_msleep(50); 
     DBG("[4] After 50ms delay\n");
     uni_hal_watchdog_enable(WDG_STEP_4S);
@@ -1235,11 +1235,11 @@ static void deep_sleep_restore(void) {
 
     g_wake_cycle_count++;
     send_wakeup_report();
-    if (g_wake_cycle_count >= 50) {
-        g_wake_cycle_count = 0;          // 重置计数器
-        send_reset_request();            // 主动上报请求复位
-        // 注意：此处不立即复位，等待上位机发送 0xF1 指令
-    }
+    // if (g_wake_cycle_count >= 50) {
+    //     g_wake_cycle_count = 0;          // 重置计数器
+    //     send_reset_request();            // 主动上报请求复位
+    //     // 注意：此处不立即复位，等待上位机发送 0xF1 指令
+    // }
 
  // ！！！重要：上位机仍在休眠，g_host_sleeping 保持 true，不发送任何数据
     printf( "Deep sleep wakeup complete, g_host_sleeping=%d", g_host_sleeping);
@@ -1331,12 +1331,11 @@ static void enter_deep_sleep_with_wakeup(void) {
 
  //   MediaPlayerStop(PLAYER_PCM);
     uni_msleep(50);   // 等待播放完全停止
-    RecogMute(true); 
+ //   RecogMute(true); 
     // WakeupSessionFinal();
 //    StudySessionFinal(); 
-    // DBG(" RecogStop.\n");
-    // RecogStop();        // 停止识别，释放 DMA/I2S
-
+    DBG(" RecogStop.\n");
+    RecogStop();        // 停止识别
     // DBG("RecogFinal.\n");
     // RecogFinal();
     DMA_CircularFIFOClear(PERIPHERAL_ID_AUDIO_ADC0_RX);   // ★ 清残留
@@ -1356,8 +1355,7 @@ static void enter_deep_sleep_with_wakeup(void) {
     uni_msleep(1);
     }
 
-
-    GIE_DISABLE(); 
+ //   GIE_DISABLE(); 
     DBG(" disable watchdog.\n");
     uni_hal_watchdog_feed();
     uni_msleep(1);  // 
@@ -1365,6 +1363,11 @@ static void enter_deep_sleep_with_wakeup(void) {
     uni_msleep(2);
     DBG("enter deep sleep.\n");
    
+    if (user_gpio_get_value(WAKEUP_PIN) == 0) {
+        printf("[SLEEP] A26 low at last moment, REBOOT\n");
+        uni_hal_reset_system();   // 不复原，复位
+    }
+
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA26,  WAKEUP_GPIONEGE);
     // ---------- 唤醒后从这里继续 ----------
     deep_sleep_restore();
