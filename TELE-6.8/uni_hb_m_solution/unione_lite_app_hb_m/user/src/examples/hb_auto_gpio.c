@@ -31,6 +31,12 @@
 #define DBG(...) ((void)0)
 //#define DBG(...) printf(__VA_ARGS__)
 
+// ============ 底层 DMA 控制（libunihal.a 内部，头文件未暴露）============
+extern int DMA_CircularFIFOClear(int peripheral_id);
+extern int DMA_ChannelDisable(int peripheral_id);
+extern int DMA_ChannelEnable(int peripheral_id);
+
+#define PERIPHERAL_ID_AUDIO_ADC0_RX   0x12
 
 // ============ TTS 命令映射表 ============
 typedef struct {
@@ -49,8 +55,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0x4D                 // CRC低字节
-#define CRC_VALUE_HIGH      0x62                // CRC高字节
+#define CRC_VALUE_LOW       0x0C                 // CRC低字节
+#define CRC_VALUE_HIGH      0x4B                // CRC高字节
 
 // ============ 唤醒CCCC ===============
 #define WAKEUP_SEQ_LEN  9
@@ -912,9 +918,9 @@ static void send_lid_event_with_cmd(uint8_t state, uint8_t cmd_code)
 static void tts_handler_task(void *args)
 {
     uint32_t last_feed_time = 0;
- //   uint32_t last_adc_time = 0;
+ 
     uint32_t now;
- //   static uint32_t loop_cnt = 0;   // 循环计数器
+    static uint32_t loop_cnt = 0;   // 循环计数器
  //   int i;
  
    // B8 检测状态变量（static 保证唤醒后值重置，但我们在每次进入检测分支时初始化）
@@ -930,12 +936,12 @@ static void tts_handler_task(void *args)
         }
         
          // ★ 每 100 次循环打印堆内存信息
-    //     if (++loop_cnt % 100 == 0) {
-    //         size_t free_heap = xPortGetFreeHeapSize();
-    //         size_t min_free = xPortGetMinimumEverFreeHeapSize();
-    //        printf("Heap: free=%u bytes, min ever=%u bytes\n", 
-    //    (unsigned int)free_heap, (unsigned int)min_free);
-    //     }
+        if (++loop_cnt % 100 == 0) {
+            size_t free_heap = xPortGetFreeHeapSize();
+            size_t min_free = xPortGetMinimumEverFreeHeapSize();
+           printf("Heap: free=%u bytes, min ever=%u bytes\n", 
+       (unsigned int)free_heap, (unsigned int)min_free);
+        }
 
         if (g_lid_state_changed) {
             g_lid_state_changed = false;
@@ -1174,13 +1180,16 @@ static void deep_sleep_restore(void) {
 
     user_asr_recognize_enable();
 
+    DMA_ChannelEnable(PERIPHERAL_ID_AUDIO_ADC0_RX);     // ④ 重开 DMA
+    uni_msleep(5);
+    RecogMute(false);    
     
  // ✅ 全新初始化识别引擎
-    DBG("RecogInit.\n");
-    if (RecogInit() != E_OK) {         // 注意：您的接口是 RecogInit(void)，无参数
-        LOGE(TAG, "RecogInit failed, rebooting");
-        uni_hal_reset_system();
-    }
+    // DBG("RecogInit.\n");
+    // if (RecogInit() != E_OK) {         // 注意：您的接口是 RecogInit(void)，无参数
+    //     LOGE(TAG, "RecogInit failed, rebooting");
+    //     uni_hal_reset_system();
+    // }
 
 
     // DBG("RecogLaunch.\n");
@@ -1188,15 +1197,15 @@ static void deep_sleep_restore(void) {
     //     LOGE(TAG, "RecogLaunch failed, rebooting");
     //     uni_hal_reset_system();
     // }
-    if (WakeupSessionInit() != E_OK) {
-        LOGE(TAG, "WakeupSessionInit failed, rebooting");
-        uni_hal_reset_system();
-    }
+    // if (WakeupSessionInit() != E_OK) {
+    //     LOGE(TAG, "WakeupSessionInit failed, rebooting");
+    //     uni_hal_reset_system();
+    // }
     
-   if (StudySessionInit() != E_OK) {
-        LOGE(TAG, "StudySessionInit failed, rebooting");
-        uni_hal_reset_system();
-    }
+//    if (StudySessionInit() != E_OK) {
+//         LOGE(TAG, "StudySessionInit failed, rebooting");
+//         uni_hal_reset_system();
+//     }
     uni_msleep(20); 
     user_gpio_set_value(GPIO_NUM_A28, 0);
     
@@ -1287,7 +1296,7 @@ static void enter_deep_sleep_with_wakeup(void) {
     // 若使用了 A25 作为软件 UART 接收中断，也一并清除
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX25);
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX27);
-    GPIO_INTFlagClear(GPIO_B_SEP_INTC, GPIO_INDEX8);
+   // GPIO_INTFlagClear(GPIO_B_SEP_INTC, GPIO_INDEX8);
     GPIO_INTFlagClear(GPIO_B_SEP_INTC, GPIO_INDEX0);
 
     user_gpio_set_mode(GPIO_NUM_A25, GPIO_MODE_IN);
@@ -1310,7 +1319,7 @@ static void enter_deep_sleep_with_wakeup(void) {
     uni_msleep(5);
     user_gpio_set_mode(GPIO_NUM_B8, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B8, 0);
-    user_gpio_clear_interrupt(GPIO_NUM_B8);
+   // user_gpio_clear_interrupt(GPIO_NUM_B8);
     uni_msleep(5);
     user_gpio_set_mode(GPIO_NUM_B2, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_B2, 0);
@@ -1320,20 +1329,27 @@ static void enter_deep_sleep_with_wakeup(void) {
    
     user_gpio_set_value(GPIO_NUM_A28, 1);
 
-    MediaPlayerStop(PLAYER_PCM);
+ //   MediaPlayerStop(PLAYER_PCM);
     uni_msleep(50);   // 等待播放完全停止
+    RecogMute(true); 
+    // WakeupSessionFinal();
+//    StudySessionFinal(); 
+    // DBG(" RecogStop.\n");
+    // RecogStop();        // 停止识别，释放 DMA/I2S
 
-    WakeupSessionFinal();
-    StudySessionFinal(); 
-    DBG(" RecogStop.\n");
-    RecogStop();        // 停止识别，释放 DMA/I2S
-    DBG("RecogFinal.\n");
-    RecogFinal();
+    // DBG("RecogFinal.\n");
+    // RecogFinal();
+    DMA_CircularFIFOClear(PERIPHERAL_ID_AUDIO_ADC0_RX);   // ★ 清残留
+    uni_msleep(5);
+
+    DMA_ChannelDisable(PERIPHERAL_ID_AUDIO_ADC0_RX);      // 关 DMA
+    uni_msleep(20);
     
     int again = 10;
     while (again--) {
     uint32_t a = GPIO_INTFlagGet(GPIO_A_SEP_INTC);
     uint32_t b = GPIO_INTFlagGet(GPIO_B_SEP_INTC);
+    b &= ~(1 << 8);   // ★ 屏蔽 B8 那一位，不参与清除
     if (a == 0 && b == 0) break;
     if (a) GPIO_INTFlagClear(GPIO_A_SEP_INTC, a);
     if (b) GPIO_INTFlagClear(GPIO_B_SEP_INTC, b);
@@ -1362,7 +1378,7 @@ static void led_init(void)
     user_gpio_set_value(LED_RED_PIN, 0);
     user_gpio_set_mode(LED_BLUE_PIN, GPIO_MODE_OUT);
     user_gpio_set_value(LED_BLUE_PIN, 0);
-    user_sw_timer_init(eTIMER2, 20);
+  //  user_sw_timer_init(eTIMER2, 20);
 
     // 删除旧定时器（如果存在）
     if (g_red_led.timer != INVALID_TIMER_HANDLE) {
@@ -1649,6 +1665,7 @@ int hb_auto_gpio(void)
     user_gpio_init();
     
    // 初始化LED
+    user_sw_timer_init(eTIMER2, 20);
     led_init();
     // 配置其他GPIO
     user_gpio_set_mode(GPIO_NUM_A28, GPIO_MODE_OUT);
