@@ -38,9 +38,10 @@ user/src/examples/hb_auto_gpio.d user/src/examples/hb_auto_gpio.o: \
  ../src/utils/event/inc/uni_event.h \
  ../src/app/inc/sessions/uni_study_session.h \
  ../include/uni_nlu_content_type.h ../src/utils/list/inc/list_head.h \
- ../middleware/rtos/freertos/inc/queue.h ../user/inc/user_adc_gp2y.h \
- ../user/inc/user_gpio.h ../src/hal/inc/uni_hal_power.h \
- ../src/hal/inc/uni_hal_reset.h
+ ../middleware/rtos/freertos/inc/queue.h ../src/hal/inc/irqn.h \
+ ../user/inc/user_adc_gp2y.h ../user/inc/user_gpio.h \
+ ../src/hal/inc/uni_hal_power.h ../src/hal/inc/uni_hal_reset.h \
+ ../src/hal/inc/uni_hal_uart.h
 
 ../user/inc/user_config.h:
 
@@ -154,6 +155,8 @@ user/src/examples/hb_auto_gpio.d user/src/examples/hb_auto_gpio.o: \
 
 ../middleware/rtos/freertos/inc/queue.h:
 
+../src/hal/inc/irqn.h:
+
 ../user/inc/user_adc_gp2y.h:
 
 ../user/inc/user_gpio.h:
@@ -161,3 +164,5 @@ user/src/examples/hb_auto_gpio.d user/src/examples/hb_auto_gpio.o: \
 ../src/hal/inc/uni_hal_power.h:
 
 ../src/hal/inc/uni_hal_reset.h:
+
+../src/hal/inc/uni_hal_uart.h:

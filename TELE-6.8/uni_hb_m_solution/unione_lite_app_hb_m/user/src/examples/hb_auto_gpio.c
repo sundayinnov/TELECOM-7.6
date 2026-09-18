@@ -21,9 +21,12 @@
 //#include "uni_vui_interface.h"   
 #include "uni_study_session.h"
 #include "queue.h"      // FreeRTOS 队列头文件
+#include "irqn.h"  
 #include "user_adc_gp2y.h"
 #include "uni_hal_power.h"
 #include "uni_hal_reset.h"
+#include "uni_hal_pwm.h"   // 用 TIMER_INDEX 类型
+#include "uni_hal_uart.h" 
 #include "FreeRTOS.h"
 #include "task.h"  
 
@@ -35,6 +38,16 @@
 extern int DMA_CircularFIFOClear(int peripheral_id);
 extern int DMA_ChannelDisable(int peripheral_id);
 extern int DMA_ChannelEnable(int peripheral_id);
+
+// 底层定时器中断控制（timer.o 暴露，头文件未暴露）
+extern void Timer_InterrputSrcDisable(TIMER_INDEX TimerIdx);
+extern void Timer_InterrputSrcEnable(TIMER_INDEX TimerIdx);
+extern void Timer_InterruptFlagClear(TIMER_INDEX TimerIdx);
+
+extern UBaseType_t uxTaskGetNumberOfTasks(void);
+
+extern void NVIC_DisableIRQ(IRQn_Type IRQn);
+extern void NVIC_EnableIRQ(IRQn_Type IRQn);
 
 #define PERIPHERAL_ID_AUDIO_ADC0_RX   0x12
 
@@ -55,8 +68,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0x0C                 // CRC低字节
-#define CRC_VALUE_HIGH      0x4B                // CRC高字节
+#define CRC_VALUE_LOW       0x12                 // CRC低字节
+#define CRC_VALUE_HIGH      0xA8                // CRC高字节
 
 // ============ 唤醒CCCC ===============
 #define WAKEUP_SEQ_LEN  9
@@ -248,13 +261,23 @@ void study_send_approval_result(uint8_t type, uint8_t result);
 extern volatile int16_t g_last_doa_angle;  
 extern wakeup_type g_boot_status;
 
+/* UART1 读空 RX FIFO —— 电平触发的 RX 中断读空即清 */
+static void uart1_drain_rx(void)
+{
+    uint8_t dummy;
+    int guard = 128;
+    while (guard-- > 0 && uni_hal_uart_recvbyte(UART_PORT1, &dummy)) {
+        /* drain */
+    }
+}
+
 // ============ 深度睡眠唤醒回调（中断上下文，尽量简单）============
 static void _wakeup_cb(int flag) {
     // 该回调在中断上下文执行，不建议使用 LOGT（可能阻塞）
     // 可置标志或空实现，恢复工作放在 deep_sleep_restore 中
     // 此处仅做简单记录（若需调试，可使用 uni_printf）
     uni_hal_watchdog_feed();
-    printf("Woke up, flag=%d\n", flag);
+    DBG("Woke up, flag=%d\n", flag);
 }
 
 // 保存静音状态到 Flash
@@ -920,7 +943,8 @@ static void tts_handler_task(void *args)
     uint32_t last_feed_time = 0;
  
     uint32_t now;
-    static uint32_t loop_cnt = 0;   // 循环计数器
+ 
+ //  static uint32_t last_cnt = 0;
  //   int i;
  
    // B8 检测状态变量（static 保证唤醒后值重置，但我们在每次进入检测分支时初始化）
@@ -936,12 +960,14 @@ static void tts_handler_task(void *args)
         }
         
          // ★ 每 100 次循环打印堆内存信息
-        if (++loop_cnt % 100 == 0) {
-            size_t free_heap = xPortGetFreeHeapSize();
-            size_t min_free = xPortGetMinimumEverFreeHeapSize();
-           printf("Heap: free=%u bytes, min ever=%u bytes\n", 
-       (unsigned int)free_heap, (unsigned int)min_free);
-        }
+//     if (g_wake_cycle_count != last_cnt) {
+//     last_cnt = g_wake_cycle_count;
+//     printf("[CYCLE] cnt=%u, tasks=%u, free=%u, min=%u\n",
+//            g_wake_cycle_count,
+//            (unsigned)uxTaskGetNumberOfTasks(),
+//            (unsigned)xPortGetFreeHeapSize(),
+//            (unsigned)xPortGetMinimumEverFreeHeapSize());
+// }
 
         if (g_lid_state_changed) {
             g_lid_state_changed = false;
@@ -1136,13 +1162,25 @@ if (g_host_sleeping) {
 
 // ============ 唤醒后恢复硬件（不创建任务）============
 static void deep_sleep_restore(void) {
-   printf("[R] enter restore\n");
+   DBG("[R] enter restore\n");
     uni_msleep(200);
        
     uni_hal_watchdog_feed();
-    printf("Woke up, reinitializing hardware...\n");
+    DBG("Woke up, reinitializing hardware...\n");
  
+    /* 1. 先清 TIMER 挂起标志 */
+    Timer_InterruptFlagClear(TIMER2);
+    Timer_InterruptFlagClear(TIMER5);
+    Timer_InterruptFlagClear(TIMER6);
+
+    /* 2. 再使能 TIMER 中断源 */
+    Timer_InterrputSrcEnable(TIMER2);
+    Timer_InterrputSrcEnable(TIMER5);
+    Timer_InterrputSrcEnable(TIMER6);
+
+    /* 3. 清 GPIO 挂起 */
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX26);
+  
     // 恢复 GPIO 输出状态（根据实际需求设置）   
     user_gpio_set_mode(GPIO_NUM_A28, GPIO_MODE_OUT);
     user_gpio_set_value(GPIO_NUM_A28, 0);
@@ -1175,6 +1213,9 @@ static void deep_sleep_restore(void) {
     DBG("led_init success\n");
     doa_uart_reinit_hw();   // 替换原来的 doa_uart_init()
     DBG("doa_uart_reinit_hw success\n");
+
+     uart1_drain_rx();
+    NVIC_EnableIRQ(UART1_IRQn);
     uni_msleep(50);
     uni_hal_watchdog_feed();
 
@@ -1197,6 +1238,7 @@ static void deep_sleep_restore(void) {
         LOGE(TAG, "RecogLaunch failed, rebooting");
         uni_hal_reset_system();
     }
+    
     // if (WakeupSessionInit() != E_OK) {
     //     LOGE(TAG, "WakeupSessionInit failed, rebooting");
     //     uni_hal_reset_system();
@@ -1242,7 +1284,7 @@ static void deep_sleep_restore(void) {
     // }
 
  // ！！！重要：上位机仍在休眠，g_host_sleeping 保持 true，不发送任何数据
-    printf( "Deep sleep wakeup complete, g_host_sleeping=%d", g_host_sleeping);
+    DBG( "Deep sleep wakeup complete, g_host_sleeping=%d", g_host_sleeping);
 }
 
 // ============ 进入深度睡眠（由上位机指令触发）============
@@ -1256,7 +1298,7 @@ static void enter_deep_sleep_with_wakeup(void) {
     uart_send_safe((char*)sleep_notify, 9);
     uni_msleep(20);   // 等待数据发出（如果发送队列非阻塞，可能无需延时）
 
-    printf("Entering deep sleep, wakeup by GPIO B1 falling edge...\n");
+    DBG("Entering deep sleep, wakeup by GPIO B1 falling edge...\n");
     // 进入深度睡眠，唤醒后继续执行本函数后的代码
     user_asr_recognize_disable();
    
@@ -1266,8 +1308,23 @@ static void enter_deep_sleep_with_wakeup(void) {
   
     user_timer_pause(eTIMER2);
 
+    led_off(&g_red_led);
+    led_off(&g_blue_led);
+// ★ 真正禁中断源
+Timer_InterrputSrcDisable(TIMER5);   // 软 UART 位采样
+Timer_InterrputSrcDisable(TIMER6);   // 软 UART 断帧
+Timer_InterrputSrcDisable(TIMER2);   // LED 软件定时器
+
+// ★ 清挂起标志
+Timer_InterruptFlagClear(TIMER5);
+Timer_InterruptFlagClear(TIMER6);
+Timer_InterruptFlagClear(TIMER2);
+
     g_rx_len = 0;
     g_rx_flag = false;
+
+    NVIC_DisableIRQ(UART1_IRQn);
+    uart1_drain_rx();
 
     user_digital_keys_final();
     uni_msleep(5);
@@ -1356,6 +1413,7 @@ static void enter_deep_sleep_with_wakeup(void) {
     }
 
  //   GIE_DISABLE(); 
+ user_gpio_interrupt_disable();
     DBG(" disable watchdog.\n");
     uni_hal_watchdog_feed();
     uni_msleep(1);  // 
@@ -1364,7 +1422,7 @@ static void enter_deep_sleep_with_wakeup(void) {
     DBG("enter deep sleep.\n");
    
     if (user_gpio_get_value(WAKEUP_PIN) == 0) {
-        printf("[SLEEP] A26 low at last moment, REBOOT\n");
+        DBG("[SLEEP] A26 low at last moment, REBOOT\n");
         uni_hal_reset_system();   // 不复原，复位
     }
 
@@ -1382,6 +1440,15 @@ static void led_init(void)
     user_gpio_set_mode(LED_BLUE_PIN, GPIO_MODE_OUT);
     user_gpio_set_value(LED_BLUE_PIN, 0);
   //  user_sw_timer_init(eTIMER2, 20);
+
+    g_red_led.is_active = false;
+    g_red_led.mode = LED_MODE_OFF;
+    g_red_led.count = 0;
+    g_red_led.state = 0;
+    g_blue_led.is_active = false;
+    g_blue_led.mode = LED_MODE_OFF;
+    g_blue_led.count = 0;
+    g_blue_led.state = 0;
 
     // 删除旧定时器（如果存在）
     if (g_red_led.timer != INVALID_TIMER_HANDLE) {

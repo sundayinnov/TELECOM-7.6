@@ -242,7 +242,7 @@ portBASE_TYPE xPortStartScheduler( void )
 void vPortEndScheduler( void )
 {
 	//printf("Current Task will be deleted\n");
-	printf("[DEL] task=%s\n", pcTaskGetTaskName(xTaskGetCurrentTaskHandle()));
+	//printf("[DEL] task=%s\n", pcTaskGetTaskName(xTaskGetCurrentTaskHandle()));
 	/* 
  	 * FreeRTOS vTaskDelete() just remove TCB from list.
  	 * vTaskDelete() would call vPortYiled change to Idle task which would do garbage collection.
