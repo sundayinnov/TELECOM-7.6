@@ -22,6 +22,7 @@
 #include "uni_study_session.h"
 #include "queue.h"      // FreeRTOS 队列头文件
 #include "irqn.h"  
+#include "/opt/Andestech/BSPv422/toolchains/nds32le-elf-mculib-v3s/lib/gcc/nds32le-elf/4.9.4/include/nds32_intrinsic.h"
 #include "user_adc_gp2y.h"
 #include "uni_hal_power.h"
 #include "uni_hal_reset.h"
@@ -269,6 +270,32 @@ static void uart1_drain_rx(void)
     while (guard-- > 0 && uni_hal_uart_recvbyte(UART_PORT1, &dummy)) {
         /* drain */
     }
+}
+
+/* 打印当前 NVIC 中断使能/挂起状态 */
+static void print_irq_enabled(const char *tag)
+{
+    uint32_t mask = __nds32__mfsr(NDS32_SR_INT_MASK2);
+    uint32_t pend = __nds32__mfsr(NDS32_SR_INT_PEND);
+
+    static const char *n[32] = {
+        "TMR1",  "Wakeup","Gpio",  "Rtc",   "Spdif", "SWI",   "I2C_In","UART0",
+        "Timer2","DMA0",  "DMA1",  "DMA2",  "DMA3",  "DMA4",  "DMA5",  "DMA6",
+        "DMA7",  "DMA8",  "UART1", "USI",   "I2s",   "Timer3","Timer4","Timer5",
+        "Timer6","SDIO0", "SDIO1", "Usb",   "SPIM",  "PSR",   "SPIS",  "FFTInt"
+    };
+    int i;
+
+    printf("=== IRQ state [%s] ===\n", tag);
+    printf("  INT_MASK2 = 0x%08X\n", mask);
+    printf("  INT_PEND  = 0x%08X\n", pend);
+    for (i = 0; i < 32; i++) {
+        if (mask & (1u << i)) printf("  EN  IRQ%2d %s\n", i, n[i]);
+    }
+    for (i = 0; i < 32; i++) {
+        if (pend & (1u << i)) printf("  PND IRQ%2d %s\n", i, n[i]);
+    }
+    printf("=== end ===\n");
 }
 
 // ============ 深度睡眠唤醒回调（中断上下文，尽量简单）============
@@ -1164,20 +1191,22 @@ if (g_host_sleeping) {
 static void deep_sleep_restore(void) {
    DBG("[R] enter restore\n");
     uni_msleep(200);
-       
+ //     print_irq_enabled("wakeup enter restore");   /* ← 加这行 */   
     uni_hal_watchdog_feed();
     DBG("Woke up, reinitializing hardware...\n");
  
     /* 1. 先清 TIMER 挂起标志 */
     Timer_InterruptFlagClear(TIMER2);
     Timer_InterruptFlagClear(TIMER5);
-    Timer_InterruptFlagClear(TIMER6);
+    Timer_InterruptFlagClear(TIMER6);  
 
     /* 2. 再使能 TIMER 中断源 */
     Timer_InterrputSrcEnable(TIMER2);
     Timer_InterrputSrcEnable(TIMER5);
     Timer_InterrputSrcEnable(TIMER6);
-
+    NVIC_EnableIRQ(Timer2_IRQn);
+    NVIC_EnableIRQ(Timer5_IRQn);
+    NVIC_EnableIRQ(Timer6_IRQn);
     /* 3. 清 GPIO 挂起 */
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX26);
   
@@ -1310,12 +1339,17 @@ static void enter_deep_sleep_with_wakeup(void) {
 
     led_off(&g_red_led);
     led_off(&g_blue_led);
-// ★ 真正禁中断源
+/* 1. 先禁 NVIC —— CPU 不再响应任何 timer 中断 */
+NVIC_DisableIRQ(Timer2_IRQn);   /* 8 */
+NVIC_DisableIRQ(Timer5_IRQn);   /* 23 */
+NVIC_DisableIRQ(Timer6_IRQn);   /* 24 */
+
+/* 2. 再禁外设中断源 —— 外设不再产生新中断 */
 Timer_InterrputSrcDisable(TIMER5);   // 软 UART 位采样
 Timer_InterrputSrcDisable(TIMER6);   // 软 UART 断帧
 Timer_InterrputSrcDisable(TIMER2);   // LED 软件定时器
 
-// ★ 清挂起标志
+/* 3. 最后清标志 —— 此时外设和 CPU 都静了，清得最干净 */
 Timer_InterruptFlagClear(TIMER5);
 Timer_InterruptFlagClear(TIMER6);
 Timer_InterruptFlagClear(TIMER2);
@@ -1325,6 +1359,7 @@ Timer_InterruptFlagClear(TIMER2);
 
     NVIC_DisableIRQ(UART1_IRQn);
     uart1_drain_rx();
+ //print_irq_enabled("before sleep"); 
 
     user_digital_keys_final();
     uni_msleep(5);
@@ -1425,16 +1460,11 @@ Timer_InterruptFlagClear(TIMER2);
         DBG("[SLEEP] A26 low at last moment, REBOOT\n");
         uni_hal_reset_system();   // 不复原，复位
     }
-   {
-        uint32_t m2 = __nds32__mfsr(NDS32_SR_INT_MASK2);
-        printf("[NVIC] INT_MASK2 = 0x%08X\n", m2);
-        /* bit 位置 = IRQ 号，1 表示使能 */
-        for (int i = 0; i < 32; i++) {
-            if (m2 & (1 << i)) {
-                printf("[NVIC] IRQ %d still enabled\n", i);
-            }
-        }
-    }
+  //  print_irq_enabled("last check before enterdeepsleep");
+
+    __nds32__mtsr(__nds32__mfsr(NDS32_SR_INT_PEND), NDS32_SR_INT_PEND);
+    __nds32__mtsr(__nds32__mfsr(NDS32_SR_INT_PEND2), NDS32_SR_INT_PEND2);
+   
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA26,  WAKEUP_GPIONEGE);
     // ---------- 唤醒后从这里继续 ----------
     deep_sleep_restore();
