@@ -1425,7 +1425,16 @@ Timer_InterruptFlagClear(TIMER2);
         DBG("[SLEEP] A26 low at last moment, REBOOT\n");
         uni_hal_reset_system();   // 不复原，复位
     }
-
+   {
+        uint32_t m2 = __nds32__mfsr(NDS32_SR_INT_MASK2);
+        printf("[NVIC] INT_MASK2 = 0x%08X\n", m2);
+        /* bit 位置 = IRQ 号，1 表示使能 */
+        for (int i = 0; i < 32; i++) {
+            if (m2 & (1 << i)) {
+                printf("[NVIC] IRQ %d still enabled\n", i);
+            }
+        }
+    }
     uni_hal_enterdeepsleep(_wakeup_cb, WAKEUP_GPIOA26,  WAKEUP_GPIONEGE);
     // ---------- 唤醒后从这里继续 ----------
     deep_sleep_restore();
