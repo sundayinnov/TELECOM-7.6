@@ -1189,7 +1189,6 @@ if (g_host_sleeping) {
 
 // ============ 唤醒后恢复硬件（不创建任务）============
 static void deep_sleep_restore(void) {
-    NVIC_EnableIRQ(TMR1_IRQn);
    DBG("[R] enter restore\n");
     uni_msleep(200);
  //     print_irq_enabled("wakeup enter restore");   /* ← 加这行 */   
@@ -1462,8 +1461,6 @@ Timer_InterruptFlagClear(TIMER2);
         uni_hal_reset_system();   // 不复原，复位
     }
   //  print_irq_enabled("last check before enterdeepsleep");
-    NVIC_DisableIRQ(TMR1_IRQn);
-    Timer_InterruptFlagClear(TIMER1);
 
     __nds32__mtsr(__nds32__mfsr(NDS32_SR_INT_PEND), NDS32_SR_INT_PEND);
     __nds32__mtsr(__nds32__mfsr(NDS32_SR_INT_PEND2), NDS32_SR_INT_PEND2);
