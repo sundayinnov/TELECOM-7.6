@@ -69,8 +69,8 @@ static const tts_mapping_t g_tts_mapping[] = {
 // ============ CRC 校验相关 ============
 #define CRC_CMD_CODE        0xF0                 // CRC校验命令码
 #define CRC_MODE_QUERY      0x00                 // 查询CRC校验值
-#define CRC_VALUE_LOW       0x12                 // CRC低字节
-#define CRC_VALUE_HIGH      0xA8                // CRC高字节
+#define CRC_VALUE_LOW       0x3D                // CRC低字节
+#define CRC_VALUE_HIGH      0xED                // CRC高字节
 
 // ============ 唤醒CCCC ===============
 #define WAKEUP_SEQ_LEN  9
@@ -252,6 +252,7 @@ void uart_send_safe(const char* buf, int len);
 static void _wakeup_cb(int flag);
 static void enter_deep_sleep_with_wakeup(void);
 static void deep_sleep_restore(void);
+static void uart1_drain_rx(void);
 //static void send_adc_response(uint8_t mode, uint16_t adc_value, uint8_t state);
 //static void process_adc_command(uint8_t *frame);
 static void process_crc_command(uint8_t *frame);
@@ -273,6 +274,7 @@ static void uart1_drain_rx(void)
 }
 
 /* 打印当前 NVIC 中断使能/挂起状态 */
+/*
 static void print_irq_enabled(const char *tag)
 {
     uint32_t mask = __nds32__mfsr(NDS32_SR_INT_MASK2);
@@ -297,7 +299,7 @@ static void print_irq_enabled(const char *tag)
     }
     printf("=== end ===\n");
 }
-
+*/
 // ============ 深度睡眠唤醒回调（中断上下文，尽量简单）============
 static void _wakeup_cb(int flag) {
     // 该回调在中断上下文执行，不建议使用 LOGT（可能阻塞）
@@ -1189,10 +1191,9 @@ if (g_host_sleeping) {
 
 // ============ 唤醒后恢复硬件（不创建任务）============
 static void deep_sleep_restore(void) {
-       NVIC_EnableIRQ(TMR1_IRQn);
-   DBG("[R] enter restore\n");
-    uni_msleep(200);
- //     print_irq_enabled("wakeup enter restore");   /* ← 加这行 */   
+    NVIC_EnableIRQ(TMR1_IRQn);
+
+    uni_msleep(200);  
     uni_hal_watchdog_feed();
     DBG("Woke up, reinitializing hardware...\n");
  
@@ -1231,9 +1232,6 @@ static void deep_sleep_restore(void) {
     // g_adc_value = 0;
     // g_adc_triggered = false;
     
-    // A27 恢复为输出低电平
-    // user_gpio_set_mode(GPIO_NUM_A27, GPIO_MODE_IN);
-    // user_gpio_set_pull_mode(GPIO_NUM_A27, GPIO_PULL_UP);
   
     // 重新初始化软件 UART 硬件（GPIO 中断 + 状态）
     soft_uart_hw_init();
@@ -1244,7 +1242,7 @@ static void deep_sleep_restore(void) {
     doa_uart_reinit_hw();   // 替换原来的 doa_uart_init()
     DBG("doa_uart_reinit_hw success\n");
 
-     uart1_drain_rx();
+    uart1_drain_rx();
     NVIC_EnableIRQ(UART1_IRQn);
     uni_msleep(50);
     uni_hal_watchdog_feed();
@@ -1253,8 +1251,7 @@ static void deep_sleep_restore(void) {
 
     DMA_ChannelEnable(PERIPHERAL_ID_AUDIO_ADC0_RX);     // ④ 重开 DMA
     uni_msleep(5);
- //   RecogMute(false);    
-    
+  
  // ✅ 全新初始化识别引擎
     // DBG("RecogInit.\n");
     // if (RecogInit() != E_OK) {         // 注意：您的接口是 RecogInit(void)，无参数
@@ -1269,10 +1266,10 @@ static void deep_sleep_restore(void) {
         uni_hal_reset_system();
     }
     
-    // if (WakeupSessionInit() != E_OK) {
-    //     LOGE(TAG, "WakeupSessionInit failed, rebooting");
-    //     uni_hal_reset_system();
-    // }
+// if (WakeupSessionInit() != E_OK) {
+//     LOGE(TAG, "WakeupSessionInit failed, rebooting");
+//     uni_hal_reset_system();
+// }
     
 //    if (StudySessionInit() != E_OK) {
 //         LOGE(TAG, "StudySessionInit failed, rebooting");
@@ -1289,7 +1286,6 @@ static void deep_sleep_restore(void) {
     user_gpio_set_pull_mode(WAKEUP_PIN, GPIO_PULL_UP);
     DBG("[3] A26 pull-up set\n");
 
-  //  GIE_ENABLE();
     uni_msleep(50); 
     DBG("[4] After 50ms delay\n");
     uni_hal_watchdog_enable(WDG_STEP_4S);
@@ -1341,26 +1337,25 @@ static void enter_deep_sleep_with_wakeup(void) {
     led_off(&g_red_led);
     led_off(&g_blue_led);
 /* 1. 先禁 NVIC —— CPU 不再响应任何 timer 中断 */
-NVIC_DisableIRQ(Timer2_IRQn);   /* 8 */
-NVIC_DisableIRQ(Timer5_IRQn);   /* 23 */
-NVIC_DisableIRQ(Timer6_IRQn);   /* 24 */
+    NVIC_DisableIRQ(Timer2_IRQn);   /* 8 */
+    NVIC_DisableIRQ(Timer5_IRQn);   /* 23 */
+    NVIC_DisableIRQ(Timer6_IRQn);   /* 24 */
 
 /* 2. 再禁外设中断源 —— 外设不再产生新中断 */
-Timer_InterrputSrcDisable(TIMER5);   // 软 UART 位采样
-Timer_InterrputSrcDisable(TIMER6);   // 软 UART 断帧
-Timer_InterrputSrcDisable(TIMER2);   // LED 软件定时器
+    Timer_InterrputSrcDisable(TIMER5);   // 软 UART 位采样
+    Timer_InterrputSrcDisable(TIMER6);   // 软 UART 断帧
+    Timer_InterrputSrcDisable(TIMER2);   // LED 软件定时器
 
 /* 3. 最后清标志 —— 此时外设和 CPU 都静了，清得最干净 */
-Timer_InterruptFlagClear(TIMER5);
-Timer_InterruptFlagClear(TIMER6);
-Timer_InterruptFlagClear(TIMER2);
+    Timer_InterruptFlagClear(TIMER5);
+    Timer_InterruptFlagClear(TIMER6);
+    Timer_InterruptFlagClear(TIMER2);
 
     g_rx_len = 0;
     g_rx_flag = false;
 
     NVIC_DisableIRQ(UART1_IRQn);
     uart1_drain_rx();
- //print_irq_enabled("before sleep"); 
 
     user_digital_keys_final();
     uni_msleep(5);
@@ -1386,7 +1381,6 @@ Timer_InterruptFlagClear(TIMER2);
     // ★ 清除可能挂起的中断标志（A26 唤醒源，A25 软件 UART）
     DBG("Clear pending interrupt.\n");
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX26);
-    // 若使用了 A25 作为软件 UART 接收中断，也一并清除
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX25);
     GPIO_INTFlagClear(GPIO_A_SEP_INTC, GPIO_INDEX27);
    // GPIO_INTFlagClear(GPIO_B_SEP_INTC, GPIO_INDEX8);
@@ -1422,10 +1416,10 @@ Timer_InterruptFlagClear(TIMER2);
    
     user_gpio_set_value(GPIO_NUM_A28, 1);
 
- //   MediaPlayerStop(PLAYER_PCM);
-    uni_msleep(50);   // 等待播放完全停止
+ 
+    uni_msleep(50);   
  //   RecogMute(true); 
-    // WakeupSessionFinal();
+//    WakeupSessionFinal();
 //    StudySessionFinal(); 
     DBG(" RecogStop.\n");
     RecogStop();        // 停止识别
@@ -1448,8 +1442,8 @@ Timer_InterruptFlagClear(TIMER2);
     uni_msleep(1);
     }
 
- //   GIE_DISABLE(); 
- user_gpio_interrupt_disable();
+
+    user_gpio_interrupt_disable();
     DBG(" disable watchdog.\n");
     uni_hal_watchdog_feed();
     uni_msleep(1);  // 
@@ -1461,7 +1455,7 @@ Timer_InterruptFlagClear(TIMER2);
         DBG("[SLEEP] A26 low at last moment, REBOOT\n");
         uni_hal_reset_system();   // 不复原，复位
     }
-  //  print_irq_enabled("last check before enterdeepsleep");
+  
     NVIC_DisableIRQ(TMR1_IRQn);
     Timer_InterruptFlagClear(TIMER1);
     __nds32__mtsr(__nds32__mfsr(NDS32_SR_INT_PEND), NDS32_SR_INT_PEND);
